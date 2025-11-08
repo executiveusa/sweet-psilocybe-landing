@@ -3,28 +3,40 @@ import { getProductImages } from '../../../../libs/images';
 // Product showcase data
 export const showcaseProducts = [
   {
-    id: 'tshirt-1',
-    name: 'Spore Print Tee',
-    description: 'Organic cotton with artistic mushroom design',
-    image: getProductImages()[0], // product-tshirt-1
+    id: 'chocolate-bars',
+    name: 'Artisan Chocolate Bars',
+    description: 'Premium dark chocolate with botanical art',
+    image: getProductImages()[0], // chocolate-bars
   },
   {
-    id: 'hoodie-1',
-    name: 'Mycelium Hoodie',
-    description: 'Cozy fleece with embroidered logo',
-    image: getProductImages()[2], // product-hoodie-1
+    id: 'herbal-tea',
+    name: 'Wellness Tea Blend',
+    description: 'Organic herbal tea for mindful moments',
+    image: getProductImages()[1], // tea-2
   },
   {
-    id: 'hat-1',
-    name: 'Research Cap',
-    description: 'Adjustable cap with subtle branding',
-    image: getProductImages()[4], // product-hat-1
+    id: 'beanie',
+    name: 'Comfort Beanie',
+    description: 'Soft knit beanie with embroidered logo',
+    image: getProductImages()[2], // beanie-1
   },
   {
-    id: 'sticker-1',
-    name: 'Sticker Pack',
-    description: 'Waterproof vinyl stickers (5 pack)',
-    image: getProductImages()[5], // product-sticker-1
+    id: 'mushroom-diary',
+    name: 'Research Journal',
+    description: 'Beautiful diary for notes & reflections',
+    image: getProductImages()[6], // mushroom-diary
+  },
+  {
+    id: 'iphone-case',
+    name: 'Mushroom Art Case',
+    description: 'Protective case with botanical design',
+    image: getProductImages()[5], // iphone-case
+  },
+  {
+    id: 'bon-bons',
+    name: 'Wellness Bon Bons',
+    description: 'Gourmet treats with botanical infusion',
+    image: getProductImages()[4], // bon-bons
   },
 ];
 

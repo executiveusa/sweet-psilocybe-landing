@@ -32,12 +32,13 @@ export const IMAGES = {
   
   // Product images (for showcase)
   products: {
-    tshirt1: '/images/product-tshirt-1.jpg',
-    tshirt2: '/images/product-tshirt-2.jpg',
-    hoodie1: '/images/product-hoodie-1.jpg',
-    hoodie2: '/images/product-hoodie-2.jpg',
-    hat1: '/images/product-hat-1.jpg',
-    sticker1: '/images/product-sticker-1.jpg',
+    chocolateBars: '/images/chocolate-bars.jpg',
+    tea: '/images/tea-2.jpg',
+    beanie1: '/images/beanie-1.jpg',
+    beanie2: '/images/beanie-2.jpg',
+    bonBons: '/images/bon-bons.jpg',
+    iphoneCase: '/images/iphone-case.jpg',
+    diary: '/images/mushroom-diary.jpg',
   },
 };
 
