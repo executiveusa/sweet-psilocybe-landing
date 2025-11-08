@@ -176,16 +176,16 @@ const AgeGate = () => {
             
             <ButtonGroup>
               <Button onClick={() => handleVerify(false)}>
-                I'm Under 18
+                I&apos;m Under 18
               </Button>
               <Button $primary onClick={() => handleVerify(true)}>
-                I'm 18 or Older
+                I&apos;m 18 or Older
               </Button>
             </ButtonGroup>
 
             <Disclaimer>
-              By clicking "I'm 18 or Older" you confirm that you are of legal age in your 
-              jurisdiction and agree to our Terms of Use. This site is for educational 
+              By clicking &quot;I&apos;m 18 or Older&quot; you confirm that you are of legal age in your
+              jurisdiction and agree to our Terms of Use. This site is for educational
               purposes only and does not provide medical advice.
             </Disclaimer>
           </Modal>
