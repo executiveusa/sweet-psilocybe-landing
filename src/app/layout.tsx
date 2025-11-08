@@ -1,6 +1,8 @@
 import Layout from '@/components/Layout';
 import './globals.css';
 import type { Metadata } from 'next';
+import { Analytics } from '@vercel/analytics/react';
+import { WebVitals } from '@/components/WebVitals';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sweetpsilocybe.com';
 
@@ -77,6 +79,8 @@ export default function RootLayout({
     <html lang="en">
       <body>
         <Layout>{children}</Layout>
+        <Analytics />
+        <WebVitals />
       </body>
     </html>
   );

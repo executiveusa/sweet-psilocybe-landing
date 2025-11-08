@@ -1,0 +1,13 @@
+<!-- Twitter Card Image Placeholder - 1200x600 -->
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 600">
+  <defs>
+    <linearGradient id="grad2" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" style="stop-color:#1a1a2e;stop-opacity:1" />
+      <stop offset="100%" style="stop-color:#16213e;stop-opacity:1" />
+    </linearGradient>
+  </defs>
+  <rect width="1200" height="600" fill="url(#grad2)"/>
+  <text x="600" y="260" text-anchor="middle" font-family="Arial, sans-serif" font-size="70" font-weight="bold" fill="#F6AFCF">Sweet Psilocybe</text>
+  <text x="600" y="330" text-anchor="middle" font-family="Arial, sans-serif" font-size="32" fill="#A9C0B0">Evidence-Based Psilocybin Research</text>
+  <text x="600" y="450" text-anchor="middle" font-size="110" fill="#F6AFCF">🍄</text>
+</svg>
