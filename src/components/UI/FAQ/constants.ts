@@ -19,23 +19,23 @@ export const animate = {
 
 export const faqData: FAQItem[] = [
   {
-    question: 'How do I create an account with RAFT?',
+    question: 'What is psilocybin and why is research important?',
     answer:
-      'Lorem Ipsum is simply dummy text of the printing and typesetting industry.',
+      'Psilocybin is a naturally occurring psychedelic compound found in certain mushroom species. Recent scientific research has shown promising potential for therapeutic applications in treating depression, anxiety, PTSD, and addiction. This platform provides educational resources about ongoing research, harm reduction, and the science behind these studies. All content is for educational purposes only and is intended for adults 18 years and older.',
   },
   {
-    question: 'How does RAFT ensure the security of my financial data?',
+    question: 'Does this website sell psilocybin mushrooms or related products?',
     answer:
-      'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+      'No. Sweet Psilocybe is strictly an educational platform focused on sharing research, science, and harm reduction information. We offer artistic merchandise (apparel, accessories, wellness products) that support our educational mission. We do not sell, distribute, or facilitate the sale of psilocybin mushrooms or any controlled substances. Please check your local laws regarding psilocybin research and education.',
   },
   {
-    question: 'What types of transactions can I perform with RAFT?',
+    question: 'Who should use this educational platform?',
     answer:
-      'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+      'This platform is designed for adults 18+ who are interested in learning about psilocybin research, including researchers, students, healthcare professionals, advocates, and curious minds. All information is for educational purposes only and should not be considered medical advice. If you are seeking treatment for mental health conditions, please consult with a qualified healthcare provider. Content focuses on scientific research, harm reduction, and responsible education.',
   },
   {
-    question: 'What benefits does RAFT offer for wealth management?',
+    question: 'How can I support psilocybin research and education?',
     answer:
-      'It is a long established fact that a reader will be distracted by the readable content of a page when looking at its layout.',
+      'There are several ways to support the movement: Stay informed by subscribing to our email list for research updates and educational content. Purchase our artistic merchandise—proceeds support educational initiatives and harm reduction resources. Share credible, science-based information with your community. Support legitimate research organizations like MAPS, Johns Hopkins Center for Psychedelic Research, and other accredited institutions advancing clinical studies.',
   },
 ];

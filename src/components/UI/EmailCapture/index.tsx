@@ -3,7 +3,7 @@ import { useState } from 'react';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
-import { subscribeEmail, isSupabaseConfigured } from '../../../../libs/supabase';
+import { subscribeEmail, isSupabaseConfigured } from '@/libs/supabase';
 import {
   Wrapper,
   Inner,
@@ -79,21 +79,36 @@ const EmailCapture = () => {
           </p>
         </Header>
 
-        <FormWrapper onSubmit={handleSubmit(onSubmit)}>
+        <FormWrapper onSubmit={handleSubmit(onSubmit)} role="form" aria-label="Email signup form">
           <Input
             {...register('email')}
             type="email"
             placeholder="your@email.com"
             disabled={status === 'loading'}
             aria-label="Email address"
+            aria-describedby={errors.email ? 'email-error' : undefined}
+            aria-invalid={!!errors.email}
+            aria-required="true"
           />
-          <SubmitButton type="submit" disabled={status === 'loading'}>
+          <SubmitButton 
+            type="submit" 
+            disabled={status === 'loading'}
+            aria-busy={status === 'loading'}
+          >
             {status === 'loading' ? 'Joining...' : 'Notify Me'}
           </SubmitButton>
         </FormWrapper>
 
-        {errors.email && <ErrorText>{errors.email.message}</ErrorText>}
-        {message && <Message $isError={status === 'error'}>{message}</Message>}
+        {errors.email && (
+          <ErrorText id="email-error" role="alert">
+            {errors.email.message}
+          </ErrorText>
+        )}
+        {message && (
+          <Message $isError={status === 'error'} role={status === 'error' ? 'alert' : 'status'}>
+            {message}
+          </Message>
+        )}
 
         {isDemoMode && status === 'success' && (
           <DemoModeNotice>
