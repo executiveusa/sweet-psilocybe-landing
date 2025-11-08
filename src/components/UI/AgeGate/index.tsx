@@ -63,6 +63,35 @@ const Description = styled.p`
   }
 `;
 
+const DateInput = styled.input`
+  width: 100%;
+  padding: 1rem;
+  margin-bottom: 1rem;
+  border-radius: 0.75rem;
+  border: 2px solid rgba(246, 175, 207, 0.3);
+  background: rgba(11, 11, 11, 0.5);
+  color: var(--white);
+  font-size: 1rem;
+  font-family: 'Inter', sans-serif;
+  text-align: center;
+  transition: border-color 0.3s ease;
+
+  &:focus {
+    outline: none;
+    border-color: var(--primary);
+  }
+
+  &::placeholder {
+    color: rgba(255, 255, 255, 0.4);
+  }
+`;
+
+const ErrorMessage = styled.p`
+  color: #e74c3c;
+  font-size: 0.875rem;
+  margin-bottom: 1rem;
+`;
+
 const ButtonGroup = styled.div`
   display: flex;
   gap: 1rem;
@@ -73,7 +102,7 @@ const ButtonGroup = styled.div`
   }
 `;
 
-const Button = styled.button<{ $primary?: boolean }>`
+const Button = styled.button<{ $primary?: boolean; disabled?: boolean }>`
   padding: 1rem 2.5rem;
   border-radius: 0.75rem;
   border: 2px solid ${props => props.$primary ? 'var(--primary)' : 'rgba(255, 255, 255, 0.2)'};
@@ -82,15 +111,16 @@ const Button = styled.button<{ $primary?: boolean }>`
   font-size: 1rem;
   font-weight: 600;
   font-family: 'Inter', sans-serif;
-  cursor: pointer;
+  cursor: ${props => props.disabled ? 'not-allowed' : 'pointer'};
+  opacity: ${props => props.disabled ? 0.5 : 1};
   transition: all 0.3s ease;
 
-  &:hover {
+  &:hover:not(:disabled) {
     transform: translateY(-2px);
     box-shadow: 0 10px 30px ${props => props.$primary ? 'rgba(246, 175, 207, 0.4)' : 'rgba(255, 255, 255, 0.1)'};
   }
 
-  &:active {
+  &:active:not(:disabled) {
     transform: translateY(0);
   }
 
@@ -107,47 +137,66 @@ const Disclaimer = styled.p`
   line-height: 1.4;
 `;
 
-const AGE_GATE_KEY = 'sweet_psilocybe_age_verified';
-const AGE_GATE_EXPIRY = 30 * 24 * 60 * 60 * 1000; // 30 days in milliseconds
-
 const AgeGate = () => {
   const [showGate, setShowGate] = useState(false);
+  const [birthDate, setBirthDate] = useState('');
+  const [error, setError] = useState('');
+  const [isSubmitting, setIsSubmitting] = useState(false);
 
   useEffect(() => {
-    // Check if user has already verified age
-    const stored = localStorage.getItem(AGE_GATE_KEY);
-    
-    if (stored) {
+    // Check server-side verification status
+    const checkVerification = async () => {
       try {
-        const { timestamp } = JSON.parse(stored);
-        const now = Date.now();
+        const response = await fetch('/api/age-verify');
+        const data = await response.json();
         
-        // Check if verification has expired
-        if (now - timestamp < AGE_GATE_EXPIRY) {
-          return; // Still valid, don't show gate
+        if (!data.verified) {
+          setShowGate(true);
         }
-      } catch (e) {
-        // Invalid stored data, clear it
-        localStorage.removeItem(AGE_GATE_KEY);
+      } catch (err) {
+        // If API fails, show gate as safety measure
+        console.error('Age verification check failed:', err);
+        setShowGate(true);
       }
-    }
-    
-    // Show age gate
-    setShowGate(true);
+    };
+
+    checkVerification();
   }, []);
 
-  const handleVerify = (isOver18: boolean) => {
-    if (isOver18) {
-      // Store verification with timestamp
-      localStorage.setItem(AGE_GATE_KEY, JSON.stringify({
-        verified: true,
-        timestamp: Date.now(),
-      }));
-      setShowGate(false);
-    } else {
-      // Redirect to educational resource
-      window.location.href = 'https://www.samhsa.gov/find-help/national-helpline';
+  const handleVerify = async () => {
+    if (!birthDate) {
+      setError('Please enter your birth date');
+      return;
     }
+
+    setIsSubmitting(true);
+    setError('');
+
+    try {
+      const response = await fetch('/api/age-verify', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ birthDate }),
+      });
+
+      const data = await response.json();
+
+      if (response.ok && data.verified) {
+        setShowGate(false);
+      } else {
+        setError(data.error || 'Verification failed');
+      }
+    } catch (err) {
+      console.error('Age verification error:', err);
+      setError('An error occurred. Please try again.');
+    } finally {
+      setIsSubmitting(false);
+    }
+  };
+
+  const handleExit = () => {
+    // Redirect to educational resource
+    window.location.href = 'https://www.samhsa.gov/find-help/national-helpline';
   };
 
   return (
@@ -158,6 +207,10 @@ const AgeGate = () => {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.3 }}
+          role="dialog"
+          aria-modal="true"
+          aria-labelledby="age-gate-title"
+          aria-describedby="age-gate-description"
         >
           <Modal
             initial={{ scale: 0.9, opacity: 0 }}
@@ -165,26 +218,41 @@ const AgeGate = () => {
             exit={{ scale: 0.9, opacity: 0 }}
             transition={{ duration: 0.3, delay: 0.1 }}
           >
-            <Icon>🍄</Icon>
-            <Title>Age Verification Required</Title>
-            <Description>
+            <Icon role="img" aria-label="Mushroom">🍄</Icon>
+            <Title id="age-gate-title">Age Verification Required</Title>
+            <Description id="age-gate-description">
               This site contains <strong>educational content</strong> about psilocybin research 
               and is intended for adults 18 years and older.
               <br /><br />
-              Please verify your age to continue.
+              Please enter your birth date to continue.
             </Description>
             
+            <DateInput
+              type="date"
+              value={birthDate}
+              onChange={(e) => setBirthDate(e.target.value)}
+              max={new Date().toISOString().split('T')[0]}
+              aria-label="Birth date"
+              aria-required="true"
+            />
+            
+            {error && <ErrorMessage role="alert">{error}</ErrorMessage>}
+            
             <ButtonGroup>
-              <Button onClick={() => handleVerify(false)}>
-                I&apos;m Under 18
+              <Button onClick={handleExit}>
+                Exit Site
               </Button>
-              <Button $primary onClick={() => handleVerify(true)}>
-                I&apos;m 18 or Older
+              <Button 
+                $primary 
+                onClick={handleVerify}
+                disabled={isSubmitting || !birthDate}
+              >
+                {isSubmitting ? 'Verifying...' : 'Verify Age'}
               </Button>
             </ButtonGroup>
 
             <Disclaimer>
-              By clicking &quot;I&apos;m 18 or Older&quot; you confirm that you are of legal age in your
+              By verifying your age you confirm that you are of legal age in your
               jurisdiction and agree to our Terms of Use. This site is for educational
               purposes only and does not provide medical advice.
             </Disclaimer>
