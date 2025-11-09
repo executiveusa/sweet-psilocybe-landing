@@ -5,13 +5,15 @@ import {
   EmailCapture,
   FAQ,
   AgeGate,
-} from '@/components';
+  PlayLearnGrow,
+} from "@/components";
 
 export default function Home() {
   return (
     <main>
       <AgeGate />
       <HeroSection />
+      <PlayLearnGrow />
       <BrandStrip />
       <ProductShowcase />
       <EmailCapture />

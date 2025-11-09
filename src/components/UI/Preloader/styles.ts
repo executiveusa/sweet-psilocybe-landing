@@ -40,7 +40,7 @@ export const Inner = styled.div`
 
     div {
       font-weight: 600;
-      font-size: 9em;
+      font-size: 7.2em;
     }
   }
 
@@ -54,7 +54,7 @@ export const Inner = styled.div`
 
     div {
       div {
-        font-size: 6em;
+        font-size: 4.8em;
       }
     }
   }
@@ -71,7 +71,7 @@ export const Inner = styled.div`
 
     div {
       div {
-        font-size: 4rem;
+        font-size: 3.2rem;
       }
     }
   }

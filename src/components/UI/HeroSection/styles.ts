@@ -44,11 +44,11 @@ export const HeroTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding-bottom: 2rem;
+  padding-bottom: 5rem;
   animation: fadeInUp 0.8s ease-out 0.2s both;
 
   h1 {
-    font-size: 6rem;
+    font-size: 4.8rem;
     font-weight: 700;
     line-height: 1.1;
     letter-spacing: -0.02em;
@@ -59,48 +59,48 @@ export const HeroTextContainer = styled.div`
     animation: fadeInUp 0.8s ease-out 0.4s both;
 
     @media (max-width: 1280px) {
-      font-size: 4.5rem;
+      font-size: 3.6rem;
     }
 
     @media (max-width: 1024px) {
-      font-size: 3.5rem;
+      font-size: 2.8rem;
     }
 
     @media (max-width: 768px) {
-      font-size: 2.5rem;
+      font-size: 2rem;
       font-weight: 400;
       line-height: 1.2;
     }
 
     @media (max-width: 475px) {
-      font-size: 2rem;
+      font-size: 1.6rem;
     }
   }
 
   p {
     max-width: 41.75rem;
     color: #bdbdbd;
-    font-size: 1.5rem;
+    font-size: 1.2rem;
     font-weight: 400;
     line-height: 1.6;
     margin: 0 auto;
     animation: fadeInUp 0.8s ease-out 0.6s both;
 
     @media (max-width: 1280px) {
-      font-size: 1.25rem;
+      font-size: 1rem;
     }
 
     @media (max-width: 1024px) {
-      font-size: 1.125rem;
+      font-size: 0.9rem;
     }
 
     @media (max-width: 768px) {
-      font-size: 1rem;
+      font-size: 0.8rem;
       line-height: 1.5rem;
     }
 
     @media (max-width: 475px) {
-      font-size: 0.9rem;
+      font-size: 0.72rem;
       line-height: 1.4;
     }
   }
