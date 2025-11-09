@@ -1,6 +1,6 @@
 'use client';
 import Image from 'next/image';
-import ic_import from '../../../../public/svgs/ic_import.svg';
+import logo_spinner from '../../../../public/images/publicimageslogo-spinner.svg.png';
 
 import { Wrapper, Inner, SecondOverlay } from './styles';
 import { Dispatch, SetStateAction, useEffect, useRef } from 'react';
@@ -62,7 +62,7 @@ const Preloader = ({
     <>
       <Wrapper ref={wrapperRef}>
         <Inner>
-          <Image ref={imageRef} src={ic_import} alt="import icon" />
+          <Image ref={imageRef} src={logo_spinner} alt="Sweet Psilocybe Logo" />
           <div>
             {word.map((t, i) => (
               <div

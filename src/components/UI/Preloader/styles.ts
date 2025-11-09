@@ -28,6 +28,9 @@ export const Inner = styled.div`
   img {
     width: 25em;
     height: 25em;
+    border-radius: 50%;
+    object-fit: cover;
+    background: transparent;
   }
 
   div {
@@ -46,7 +49,9 @@ export const Inner = styled.div`
     height: 13rem;
     img {
       width: 7rem;
-      height: 100%;
+      height: 7rem;
+      border-radius: 50%;
+      object-fit: cover;
     }
 
     div {
