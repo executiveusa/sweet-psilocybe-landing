@@ -1,0 +1,84 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg xmlns="http://www.w3.org/2000/svg" width="1440" height="720" viewBox="0 0 1440 720" fill="none">
+  <!-- Sweet Psilocybe Hero • transparent background • no text -->
+  <!-- Palette -->
+  <!-- ink:#0B0B0B petal:#F6AFCF spore:#FFEDEE fern:#A9C0B0 cream:#F7F3EF -->
+  <defs>
+    <!-- soft radial gradient rings for energy (mask-friendly shapes, no shadows) -->
+    <radialGradient id="rg1" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(720 420) rotate(90) scale(420 720)">
+      <stop stop-color="#F6AFCF" stop-opacity="0.25"/>
+      <stop offset="0.6" stop-color="#F6AFCF" stop-opacity="0.08"/>
+      <stop offset="1" stop-color="#F6AFCF" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="rg2" cx="0" cy="0" r="1" gradientUnits="userSpaceOnUse" gradientTransform="translate(720 360) rotate(90) scale(360 720)">
+      <stop stop-color="#A9C0B0" stop-opacity="0.22"/>
+      <stop offset="0.7" stop-color="#A9C0B0" stop-opacity="0.06"/>
+      <stop offset="1" stop-color="#A9C0B0" stop-opacity="0"/>
+    </radialGradient>
+    <!-- decorative spores pattern -->
+    <pattern id="spores" patternUnits="userSpaceOnUse" width="24" height="24" patternTransform="rotate(15)">
+      <circle cx="4" cy="4" r="2" fill="#FFEDEE" />
+      <circle cx="16" cy="12" r="1.8" fill="#FFEDEE" />
+      <circle cx="10" cy="20" r="1.4" fill="#FFEDEE" />
+    </pattern>
+    <!-- stroke styles -->
+    <style><![CDATA[
+      .stroke-ink{{stroke:#0B0B0B;stroke-width:4;stroke-linecap:round;stroke-linejoin:round}}
+    ]]></style>
+    <!-- simple leaf shape reusable -->
+    <path id="leaf" d="M0,0 C16,-8 44,-8 64,0 C44,8 16,8 0,0z"/>
+  </defs>
+
+  <!-- Background energy rings (useful for scroll-masked reveals) -->
+  <g id="bg_rings">
+    <ellipse cx="720" cy="420" rx="720" ry="420" fill="url(#rg1)"/>
+    <ellipse cx="720" cy="360" rx="700" ry="360" fill="url(#rg2)"/>
+  </g>
+
+  <!-- Fern fronds left -->
+  <g id="fronds_left" transform="translate(210,420) rotate(-28)">
+    <path d="M0,0 C80,-120 220,-140 360,-120" fill="none" class="stroke-ink"/>
+    <!-- leaflets -->
+    <use href="#leaf" transform="translate(0,0) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(28,-10) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(56,-20) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(84,-30) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(112,-40) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(140,-50) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(168,-60) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(196,-70) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(224,-80) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(252,-90) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(280,-100) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(308,-110) rotate(-18)" fill="#A9C0B0"/>
+  </g>
+
+  <!-- Fern fronds right -->
+  <g id="fronds_right" transform="translate(1230,440) rotate(28) scale(-1,1)">
+    <path d="M0,0 C80,-120 220,-140 360,-120" fill="none" class="stroke-ink"/>
+    <use href="#leaf" transform="translate(0,0) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(28,-10) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(56,-20) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(84,-30) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(112,-40) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(140,-50) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(168,-60) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(196,-70) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(224,-80) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(252,-90) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(280,-100) rotate(-18)" fill="#A9C0B0"/><use href="#leaf" transform="translate(308,-110) rotate(-18)" fill="#A9C0B0"/>
+  </g>
+
+  <!-- Mushroom cluster (centered) -->
+  <g id="cluster" transform="translate(720,420)">
+    <!-- stalks -->
+    <path d="M-24,60 C-36,20 -20,-40 -8,-120 C12,-20 20,40 16,60 C12,90 -8,96 -24,60z" fill="#F7F3EF" class="stroke-ink"/>
+    <path d="M24,60 C36,20 20,-36 8,-116 C-12,-20 -20,40 -16,60 C-12,90 8,96 24,60z" fill="#F7F3EF" class="stroke-ink"/>
+    <path d="M0,84 C-8,60 -6,20 0,-80 C8,20 10,60 0,84z" fill="#F7F3EF" class="stroke-ink"/>
+
+    <!-- caps -->
+    <g id="caps">
+      <!-- center cap -->
+      <path d="M0,-150 C52,-150 96,-100 96,-60 C32,-60 -32,-60 -96,-60 C-96,-100 -52,-150 0,-150z" fill="#F6AFCF" class="stroke-ink"/>
+      <!-- left cap -->
+      <path d="M-120,-120 C-84,-120 -52,-88 -52,-60 C-92,-60 -128,-60 -168,-60 C-168,-88 -144,-120 -120,-120z" fill="#F6AFCF" class="stroke-ink"/>
+      <!-- right cap -->
+      <path d="M120,-120 C84,-120 52,-88 52,-60 C92,-60 128,-60 168,-60 C168,-88 144,-120 120,-120z" fill="#F6AFCF" class="stroke-ink"/>
+    </g>
+
+    <!-- gills (bold lines) -->
+    <g id="gills" stroke="#0B0B0B" stroke-width="3" stroke-linecap="round">
+      <path d="M-96,-60 q96,24 192,0"/>
+      <path d="M-168,-60 q48,16 96,0"/>
+      <path d="M72,-60 q48,16 96,0"/>
+    </g>
+
+    <!-- spores field between stalks -->
+    <ellipse cx="0" cy="100" rx="240" ry="40" fill="url(#spores)" opacity="0.25"/>
+  </g>
+
+  <!-- Foreground waves for overlay slides -->
+  <g id="fg_waves">
+    <path d="M0,620 C240,560 480,580 720,600 C960,620 1200,640 1440,600 L1440,720 L0,720 Z" fill="#FFEDEE" opacity="0.15"/>
+    <path d="M0,650 C240,610 480,630 720,650 C960,670 1200,690 1440,650 L1440,720 L0,720 Z" fill="#A9C0B0" opacity="0.10"/>
+  </g>
+</svg>

@@ -1,12 +1,16 @@
-'use client';
-import { styled } from 'styled-components';
+"use client";
+import { styled } from "styled-components";
 
 export const Wrapper = styled.section`
   margin-top: 6.25rem;
 `;
 
 export const Inner = styled.div`
-  background: radial-gradient(circle at 50% 0%, rgba(246, 175, 207, 0.15), transparent 70%);
+  background: radial-gradient(
+    circle at 50% 0%,
+    rgba(246, 175, 207, 0.15),
+    transparent 70%
+  );
   display: flex;
   flex-direction: column;
   align-items: center;
@@ -44,7 +48,7 @@ export const HeroTextContainer = styled.div`
 
   h1 {
     font-size: 6rem;
-    font-weight: 400;
+    font-weight: 700;
   }
 
   p {
@@ -66,6 +70,34 @@ export const HeroTextContainer = styled.div`
     p {
       font-size: 1rem;
       line-height: 1.5rem;
+    }
+  }
+`;
+
+export const ParallaxWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-bottom: 1.5rem;
+
+  .parallax {
+    overflow: hidden;
+    white-space: nowrap;
+  }
+
+  .scroller {
+    display: flex;
+    font-size: 4rem;
+    font-weight: 800;
+    text-transform: uppercase;
+    letter-spacing: 0.25rem;
+    color: var(--white);
+  }
+
+  @media (max-width: 768px) {
+    .scroller {
+      font-size: 1.8rem;
+      letter-spacing: 0.125rem;
     }
   }
 `;

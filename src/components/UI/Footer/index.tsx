@@ -1,5 +1,6 @@
 import Image from 'next/image';
-import raft_footer_logo from '../../../../public/svgs/raft_footer_logo.svg';
+import Link from 'next/link';
+// raft_footer_logo import removed (legacy Raft asset, not used)
 import qr_code from '../../../../public/svgs/qr_code.svg';
 import ic_google_playstore from '../../../../public/svgs/ic_google_playstore.svg';
 import ic_baseline_apple from '../../../../public/svgs/ic_baseline_apple.svg';
@@ -9,15 +10,27 @@ import ic_copyright from '../../../../public/svgs/ic_copyright.svg';
 const linksArr = [
   {
     title: 'About',
-    links: ['Our Mission', 'Research Partners', 'Contact'],
+    links: [
+      { text: 'Our Mission', url: '/about/our-mission' },
+      { text: 'Research Partners', url: '/about/research-partners' },
+      { text: 'Contact', url: '/about/contact' },
+    ],
   },
   {
     title: 'Legal',
-    links: ['Terms of Use', 'Privacy Policy', 'Disclaimers'],
+    links: [
+      { text: 'Terms of Use', url: '/legal/terms-of-use' },
+      { text: 'Privacy Policy', url: '/legal/privacy-policy' },
+      { text: 'Disclaimers', url: '/legal/disclaimers' },
+    ],
   },
   {
     title: 'Resources',
-    links: ['Research Hub', 'Safety Info', 'FAQ'],
+    links: [
+      { text: 'Research Hub', url: '/resources/research-hub' },
+      { text: 'Safety Info', url: '/resources/safety-info' },
+      { text: 'FAQ', url: '/resources/faq' },
+    ],
   },
 ];
 
@@ -78,8 +91,12 @@ const Footer = () => {
                 <GridColumn key={i}>
                   <h3>{l.title}</h3>
                   <LinksContainer>
-                    {l.links.map((link, i) => (
-                      <li key={i}>{link}</li>
+                    {l.links.map((link, idx) => (
+                      <li key={idx}>
+                        <Link href={link.url} aria-label={link.text}>
+                          {link.text}
+                        </Link>
+                      </li>
                     ))}
                   </LinksContainer>
                 </GridColumn>
@@ -88,7 +105,7 @@ const Footer = () => {
           </FooterMiddle>
           <FooterBottom>
             <div style={{ color: 'var(--light-gray)', fontSize: '0.875rem' }}>
-              Content for harm reduction and research purposes
+              Content for natural alternatives and research purposes
             </div>
             <CopyRight>
               <Image src={ic_copyright} alt="copyright" />

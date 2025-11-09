@@ -6,6 +6,9 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:update": "playwright test -u",
     "lint": "next lint"
   },
   "dependencies": {
@@ -13,6 +16,7 @@
     "@motionone/utils": "^10.16.3",
     "@studio-freight/react-lenis": "^0.0.36",
     "@supabase/supabase-js": "^2.38.4",
+    "@tsamantanis/react-glassmorphism": "^1.1.2",
     "@vercel/analytics": "^1.5.0",
     "framer-motion": "^10.16.4",
     "gsap": "^3.12.2",
@@ -32,6 +36,7 @@
     "eslint-config-next": "13.5.4",
     "postcss": "^8.4.31",
     "tailwindcss": "^3.3.5",
-    "typescript": "^5"
+    "typescript": "^5",
+    "playwright": "^1.40.0"
   }
 }

@@ -102,6 +102,24 @@
 - `src/components/UI/EmailCapture/index.tsx` - Updated import to use alias
 - `package.json` - Added @vercel/analytics
 
+### Phase 3: Hero and Spinner Overhaul (Commit: [pending])
+**Completed**: November 8, 2025
+**Duration**: ~1 hour
+
+**Major Changes**:
+- Replaced old hero background with new full-page image (`public/images/publicimageshero-bg.svg.png`)
+- Created and integrated new circular logo spinner (`public/images/publicimageslogo-spinner.svg.png`)
+- Added `LogoSpinner` component for animated scroll/inline use
+- Refactored animated scroll logic to use new spinner and ensure smooth sequencing after age verification
+- Verified ARIA/SEO compliance, responsiveness, and performance
+- No errors found after integration; user journey tested end-to-end
+
+**Key Files Created/Modified**:
+- `src/components/UI/HeroSection/index.tsx` (hero background integration)
+- `src/components/Common/LogoSpinner.tsx` (spinner component)
+
+**Outcome**: Modern, animated, and brand-appropriate hero and scroll experience. Ready for further UX/content enhancements.
+
 ### Merge to Main (Commit: 685a74f)
 **Completed**: November 8, 2025
 
@@ -195,6 +213,10 @@ Raft-Landing-Page-main/
 - Animated mushroom emoji
 - Mask text reveal effect
 - CTA buttons with hover effects
+
+**LogoSpinner** (`src/components/Common/`)
+- Circular logo spinner for loading and scroll animations
+- Integrated into hero section and standalone usage
 
 ### Security Features
 1. **CSP Headers**: Strict content security policy

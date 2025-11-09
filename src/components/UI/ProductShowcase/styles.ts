@@ -3,10 +3,10 @@ import { styled } from 'styled-components';
 
 export const Wrapper = styled.section`
   background: var(--Background);
-  padding: 8rem 0;
+  padding: 10rem 0;
 
   @media (max-width: 768px) {
-    padding: 4rem 0;
+    padding: 5rem 0;
   }
 `;
 
@@ -84,6 +84,11 @@ export const ProductCard = styled.div`
       transform: scale(1.05);
     }
   }
+
+  &:focus-within {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
 `;
 
 export const ProductImage = styled.div`
@@ -137,6 +142,48 @@ export const ProductInfo = styled.div`
     p {
       font-size: 0.875rem;
     }
+  }
+`;
+
+export const ViewButton = styled.a`
+  display: inline-flex;
+  align-items: center;
+  gap: 0.5rem;
+  margin-top: 1rem;
+  padding: 0.75rem 1.5rem;
+  border-radius: 0.5rem;
+  background: rgba(246, 175, 207, 0.1);
+  border: 1px solid rgba(246, 175, 207, 0.3);
+  color: var(--primary);
+  font-size: 0.875rem;
+  font-weight: 600;
+  text-decoration: none;
+  transition: all 0.3s ease;
+
+  svg {
+    width: 16px;
+    height: 16px;
+    transition: transform 0.3s ease;
+  }
+
+  &:hover {
+    background: rgba(246, 175, 207, 0.2);
+    border-color: var(--primary);
+    transform: translateY(-2px);
+
+    svg {
+      transform: translateX(2px);
+    }
+  }
+
+  &:focus {
+    outline: 2px solid var(--primary);
+    outline-offset: 2px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 0.625rem 1.25rem;
+    font-size: 0.8125rem;
   }
 `;
 

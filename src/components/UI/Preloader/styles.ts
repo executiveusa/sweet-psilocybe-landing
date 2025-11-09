@@ -1,5 +1,5 @@
-'use client';
-import { styled } from 'styled-components';
+"use client";
+import { styled } from "styled-components";
 
 export const Wrapper = styled.div`
   background: var(--Background);
@@ -40,7 +40,22 @@ export const Inner = styled.div`
 
     div {
       font-weight: 600;
-      font-size: 25em;
+      font-size: 9em;
+    }
+  }
+
+  @media (max-width: 1024px) {
+    gap: 1.5rem;
+    height: 16rem;
+    img {
+      width: 15em;
+      height: 15em;
+    }
+
+    div {
+      div {
+        font-size: 6em;
+      }
     }
   }
 
@@ -56,7 +71,7 @@ export const Inner = styled.div`
 
     div {
       div {
-        font-size: 6rem;
+        font-size: 4rem;
       }
     }
   }
