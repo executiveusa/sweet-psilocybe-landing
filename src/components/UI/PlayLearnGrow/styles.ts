@@ -19,7 +19,7 @@ export const Wrapper = styled.section`
     rgba(246, 175, 207, 0.1) 0%,
     rgba(169, 192, 176, 0.1) 100%
   );
-  margin: 3rem 0;
+  margin: 12rem 0 8rem 0;
 `;
 
 export const Inner = styled.div`

@@ -44,7 +44,7 @@ export const HeroTextContainer = styled.div`
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
-  padding-bottom: 5rem;
+  padding-bottom: 15rem;
   animation: fadeInUp 0.8s ease-out 0.2s both;
 
   h1 {
@@ -107,11 +107,12 @@ export const HeroTextContainer = styled.div`
 
   @media (max-width: 768px) {
     gap: 1rem;
-    padding-bottom: 1.5rem;
+    padding-bottom: 6rem;
   }
 
   @media (max-width: 475px) {
     gap: 0.75rem;
+    padding-bottom: 4rem;
   }
 
   @keyframes fadeInUp {
