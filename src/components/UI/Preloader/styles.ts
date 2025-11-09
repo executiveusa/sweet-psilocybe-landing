@@ -26,8 +26,8 @@ export const Inner = styled.div`
   height: 20em;
 
   img {
-    width: 21.25em;
-    height: 21.25em;
+    width: 17em;
+    height: 17em;
     border-radius: 50%;
     object-fit: cover;
     background: transparent;
@@ -40,7 +40,8 @@ export const Inner = styled.div`
 
     div {
       font-weight: 600;
-      font-size: 6.12em;
+      font-size: 5.2em;
+      letter-spacing: 0.1em;
     }
   }
 
@@ -55,6 +56,7 @@ export const Inner = styled.div`
     div {
       div {
         font-size: 4.08em;
+        letter-spacing: 0.08em;
       }
     }
   }
@@ -72,6 +74,7 @@ export const Inner = styled.div`
     div {
       div {
         font-size: 2.72rem;
+        letter-spacing: 0.06em;
       }
     }
   }
