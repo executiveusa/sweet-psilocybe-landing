@@ -45,10 +45,36 @@ export const HeroTextContainer = styled.div`
   flex-direction: column;
   gap: 1.5rem;
   padding-bottom: 2rem;
+  animation: fadeInUp 0.8s ease-out 0.2s both;
 
   h1 {
     font-size: 6rem;
     font-weight: 700;
+    line-height: 1.1;
+    letter-spacing: -0.02em;
+    background: linear-gradient(135deg, #ffffff 0%, #f6afcf 100%);
+    background-clip: text;
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    animation: fadeInUp 0.8s ease-out 0.4s both;
+
+    @media (max-width: 1280px) {
+      font-size: 4.5rem;
+    }
+
+    @media (max-width: 1024px) {
+      font-size: 3.5rem;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 2.5rem;
+      font-weight: 400;
+      line-height: 1.2;
+    }
+
+    @media (max-width: 475px) {
+      font-size: 2rem;
+    }
   }
 
   p {
@@ -56,20 +82,46 @@ export const HeroTextContainer = styled.div`
     color: #bdbdbd;
     font-size: 1.5rem;
     font-weight: 400;
+    line-height: 1.6;
     margin: 0 auto;
+    animation: fadeInUp 0.8s ease-out 0.6s both;
+
+    @media (max-width: 1280px) {
+      font-size: 1.25rem;
+    }
+
+    @media (max-width: 1024px) {
+      font-size: 1.125rem;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 1rem;
+      line-height: 1.5rem;
+    }
+
+    @media (max-width: 475px) {
+      font-size: 0.9rem;
+      line-height: 1.4;
+    }
   }
 
   @media (max-width: 768px) {
     gap: 1rem;
     padding-bottom: 1.5rem;
-    h1 {
-      font-size: 2.5rem;
-      font-weight: 400;
-    }
+  }
 
-    p {
-      font-size: 1rem;
-      line-height: 1.5rem;
+  @media (max-width: 475px) {
+    gap: 0.75rem;
+  }
+
+  @keyframes fadeInUp {
+    from {
+      opacity: 0;
+      transform: translateY(30px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
     }
   }
 `;

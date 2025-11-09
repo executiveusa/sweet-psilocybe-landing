@@ -51,7 +51,7 @@ const HeroSection = () => {
         }}
       >
         <Image
-          src={"/images/sweet pslocybe.jpg"}
+          src={"/images/sweet pslocybe.webp"}
           alt="Sweet Psilocybe Hero Background"
           fill
           style={{
