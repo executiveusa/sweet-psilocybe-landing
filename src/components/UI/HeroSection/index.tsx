@@ -5,8 +5,6 @@ import ic_chevron_right from '../../../../public/svgs/ic_chevron_right.svg';
 import { GetStartedButton } from '@/components';
 import MaskText from '@/components/Common/MaskText';
 import { useIsMobile } from '../../../../libs/useIsMobile';
-import ParallaxText from '@/components/Common/ParallaxText';
-import { ParallaxWrapper } from '@/components/Common/ParallaxText/styles';
 import {
   mobileParagraphPhrases,
   mobilePhrases,
@@ -38,10 +36,7 @@ const HeroSection = () => {
             />
           </div>
       <Inner style={{ position: 'relative', zIndex: 1 }}>
-          <ParallaxWrapper>
-            <ParallaxText baseVelocity={50}>SWEET PSILOCYBE</ParallaxText>
-          </ParallaxWrapper>
-          <Pill>
+        <Pill>
           <span>18+ Educational Content Only</span>
           <Image src={ic_chevron_right} alt="chevron-right" />
         </Pill>
