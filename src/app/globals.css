@@ -1,0 +1,55 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap');
+
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@layer base {
+  :root {
+    /* Sweet Psilocybe Brand Colors */
+    --ink: 11 11 11;          /* #0B0B0B */
+    --petal: 246 175 207;     /* #F6AFCF */
+    --spore: 255 237 238;     /* #FFEDEE */
+    --fern: 169 192 176;      /* #A9C0B0 */
+    --cream: 247 243 239;     /* #F7F3EF */
+  }
+
+  body {
+    background-color: rgb(var(--ink));
+    color: rgb(var(--cream));
+    font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+  }
+}
+
+@layer utilities {
+  .text-ink { color: rgb(var(--ink)); }
+  .text-petal { color: rgb(var(--petal)); }
+  .text-cream { color: rgb(var(--cream)); }
+  .text-fern { color: rgb(var(--fern)); }
+  .text-spore { color: rgb(var(--spore)); }
+  
+  .bg-ink { background-color: rgb(var(--ink)); }
+  .bg-cream { background-color: rgb(var(--cream)); }
+  .bg-petal { background-color: rgb(var(--petal)); }
+  .bg-fern { background-color: rgb(var(--fern)); }
+  .bg-spore { background-color: rgb(var(--spore)); }
+  
+  .glow-petal {
+    box-shadow: 0 10px 30px rgba(246, 175, 207, 0.25);
+  }
+  
+  .glow-fern {
+    box-shadow: 0 10px 30px rgba(169, 192, 176, 0.15);
+  }
+}
+
+/* Reduced motion accessibility */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.01ms !important;
+  }
+}

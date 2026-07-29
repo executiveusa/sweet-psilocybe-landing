@@ -1,0 +1,49 @@
+{
+  "name": "sweet-psilocybe",
+  "version": "0.1.0",
+  "private": true,
+  "scripts": {
+    "dev": "next dev",
+    "build": "next build",
+    "start": "next start",
+    "test:e2e": "playwright test",
+    "test:e2e:headed": "playwright test --headed",
+    "test:e2e:update": "playwright test -u",
+    "lint": "next lint"
+  },
+  "dependencies": {
+    "@hookform/resolvers": "^3.3.2",
+    "@motionone/utils": "^10.16.3",
+    "@react-three/drei": "^10.7.7",
+    "@react-three/fiber": "^9.6.1",
+    "@react-three/postprocessing": "^3.0.4",
+    "@studio-freight/react-lenis": "^0.0.36",
+    "@supabase/supabase-js": "^2.38.4",
+    "@tsamantanis/react-glassmorphism": "^1.1.2",
+    "@vercel/analytics": "^1.5.0",
+    "framer-motion": "^10.16.4",
+    "gsap": "^3.12.2",
+    "maath": "^0.10.8",
+    "next": "^16.2.12",
+    "react": "^19.2.0",
+    "react-dom": "^19.2.0",
+    "react-hook-form": "^7.48.2",
+    "styled-components": "^6.1.19",
+    "three": "^0.185.1",
+    "zod": "^3.22.4"
+  },
+  "devDependencies": {
+    "@playwright/test": "^1.56.1",
+    "@types/node": "^20",
+    "@types/react": "^18",
+    "@types/react-dom": "^18",
+    "autoprefixer": "^10.4.16",
+    "eslint": "^8",
+    "eslint-config-next": "13.5.4",
+    "playwright": "^1.40.0",
+    "postcss": "^8.4.31",
+    "sharp": "^0.34.5",
+    "tailwindcss": "^3.3.5",
+    "typescript": "^5"
+  }
+}

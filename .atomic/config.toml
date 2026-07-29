@@ -1,0 +1,6 @@
+# Atomic repository configuration
+
+[view]
+default = "dev"
+[workspace]
+expose = [".opencode", ".vscode", ".idea", ".claude", ".gemini", ".agents"]
