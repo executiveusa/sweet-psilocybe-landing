@@ -1,8 +1,8 @@
 'use client';
 
-import React, { Suspense } from 'react';
+import React, { Suspense, useState } from 'react';
 import dynamic from 'next/dynamic';
-import { GatewayContainer, OverlayText, SkipLink, LoadingFallback } from './styles';
+import { GatewayContainer, OverlayText, SkipLink, LoadingFallback, ToggleButton } from './styles';
 
 // Dynamically import the scene to prevent SSR issues with Three.js
 const GatewayScene = dynamic(() => import('@/components/3D/GatewayScene'), {
@@ -11,15 +11,24 @@ const GatewayScene = dynamic(() => import('@/components/3D/GatewayScene'), {
 });
 
 export default function GatewayPage() {
+  const [isNight, setIsNight] = useState(true);
+
   return (
-    <GatewayContainer>
+    <GatewayContainer style={{ backgroundColor: isNight ? '#0B0B0B' : '#E6F0E8', transition: 'background-color 1s ease' }}>
       <SkipLink href="/">Skip to Home &rarr;</SkipLink>
       
+      <ToggleButton onClick={() => setIsNight(!isNight)}>
+        {isNight ? '☀️ Day Canopy' : '🌙 Night Bioluminescence'}
+      </ToggleButton>
+
       <Suspense fallback={<LoadingFallback>Entering the Mushroom Forest...</LoadingFallback>}>
-        <GatewayScene />
+        <GatewayScene isNight={isNight} />
       </Suspense>
 
-      <OverlayText>Click a mushroom to explore</OverlayText>
+      <OverlayText style={{ color: isNight ? '#F7F3EF' : '#0B0B0B' }}>
+        Click a mushroom to explore
+      </OverlayText>
     </GatewayContainer>
   );
 }
+

@@ -7,7 +7,11 @@ import MushroomPortal from './MushroomPortal';
 import SporeParticles from './SporeParticles';
 import { EffectComposer, Bloom } from '@react-three/postprocessing';
 
-export default function GatewayScene() {
+interface GatewaySceneProps {
+  isNight?: boolean;
+}
+
+export default function GatewayScene({ isNight = true }: GatewaySceneProps) {
   const [mounted, setMounted] = useState(false);
 
   useEffect(() => {
@@ -16,25 +20,39 @@ export default function GatewayScene() {
 
   if (!mounted) return null;
 
+  const bgColor = isNight ? '#0B0B0B' : '#A9C0B0';
+  const fogColor = isNight ? '#0B0B0B' : '#E6F0E8';
+  const dirLightColor = isNight ? '#F6AFCF' : '#FFF5E6';
+  const dirLightIntensity = isNight ? 1 : 2.5;
+
   return (
-    <div style={{ width: '100%', height: '100%' }}>
+    <div style={{ width: '100%', height: '100%', transition: 'background-color 1s ease' }}>
       <Canvas
         camera={{ position: [0, 2, 8], fov: 60 }}
         dpr={[1, 2]}
         gl={{ antialias: true }}
       >
-        <color attach="background" args={['#0B0B0B']} />
-        <fogExp2 attach="fog" args={['#0B0B0B', 0.05]} />
+        <color attach="background" args={[bgColor]} />
+        <fogExp2 attach="fog" args={[fogColor, isNight ? 0.05 : 0.02]} />
 
-        <ambientLight intensity={0.5} />
-        <directionalLight position={[5, 10, 5]} intensity={1} color="#F7F3EF" />
+        <ambientLight intensity={isNight ? 0.4 : 0.9} />
+        <directionalLight 
+          position={isNight ? [5, 10, 5] : [10, 20, 10]} 
+          intensity={dirLightIntensity} 
+          color={dirLightColor} 
+          castShadow 
+        />
 
         <Suspense fallback={null}>
           <group position={[0, -2, 0]}>
             {/* Ground Plane */}
             <mesh rotation={[-Math.PI / 2, 0, 0]} receiveShadow>
-              <planeGeometry args={[50, 50]} />
-              <meshStandardMaterial color="#050505" roughness={0.6} metalness={0.2} />
+              <planeGeometry args={[60, 60]} />
+              <meshStandardMaterial 
+                color={isNight ? "#050505" : "#2D4A3E"} 
+                roughness={0.6} 
+                metalness={0.2} 
+              />
             </mesh>
 
             {/* Portals */}
@@ -44,11 +62,14 @@ export default function GatewayScene() {
             <MushroomPortal position={[2, 0, -4]} color="#FFD700" label="Play" href="/games" scale={1} />
             <MushroomPortal position={[4, 0, -2]} color="#B19CD9" label="Library" href="/library" scale={1.2} />
 
-            <SporeParticles count={300} />
+            <SporeParticles count={isNight ? 300 : 150} />
           </group>
 
-          <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
-          <Environment preset="night" />
+          {isNight ? (
+            <Stars radius={100} depth={50} count={5000} factor={4} saturation={0} fade speed={1} />
+          ) : null}
+
+          <Environment preset={isNight ? "night" : "forest"} />
         </Suspense>
 
         <OrbitControls 
@@ -58,13 +79,14 @@ export default function GatewayScene() {
           minDistance={3}
           maxDistance={12}
           autoRotate
-          autoRotateSpeed={0.5}
+          autoRotateSpeed={isNight ? 0.5 : 0.3}
         />
 
         <EffectComposer>
-          <Bloom luminanceThreshold={0.2} mipmapBlur intensity={1.5} />
+          <Bloom luminanceThreshold={isNight ? 0.2 : 0.5} mipmapBlur intensity={isNight ? 1.5 : 0.8} />
         </EffectComposer>
       </Canvas>
     </div>
   );
 }
+

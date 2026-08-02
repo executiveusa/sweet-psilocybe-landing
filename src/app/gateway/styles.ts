@@ -51,6 +51,28 @@ export const SkipLink = styled(Link)`
   }
 `;
 
+export const ToggleButton = styled.button`
+  position: absolute;
+  top: 30px;
+  left: 40px;
+  background: rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(10px);
+  border: 1px solid rgba(255, 255, 255, 0.2);
+  border-radius: 20px;
+  color: #F7F3EF;
+  padding: 8px 16px;
+  font-family: 'Inter', sans-serif;
+  font-size: 0.85rem;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  z-index: 10;
+
+  &:hover {
+    background: rgba(255, 255, 255, 0.25);
+    transform: translateY(-2px);
+  }
+`;
+
 export const LoadingFallback = styled.div`
   position: absolute;
   top: 0;
@@ -66,3 +88,4 @@ export const LoadingFallback = styled.div`
   font-size: 1.2rem;
   z-index: 5;
 `;
+
