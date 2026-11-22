@@ -125,9 +125,29 @@ async function runFal(imgFile, outFile) {
   );
 }
 
-(tripoKey ? runTripo(inputPath, outputPath) : runFal(inputPath, outputPath)).catch(
-  (err) => {
-    console.error("❌ image-to-glb failed:", err.message);
-    process.exit(1);
+async function main() {
+  const preferFal = process.argv.includes("--fal");
+  if (preferFal && falKey) {
+    await runFal(inputPath, outputPath);
+    return;
   }
-);
+  if (tripoKey) {
+    try {
+      await runTripo(inputPath, outputPath);
+      return;
+    } catch (err) {
+      if (falKey) {
+        console.warn(`⚠️ Tripo failed (${err.message}); falling back to fal.ai Trellis...`);
+        await runFal(inputPath, outputPath);
+        return;
+      }
+      throw err;
+    }
+  }
+  await runFal(inputPath, outputPath);
+}
+
+main().catch((err) => {
+  console.error("❌ image-to-glb failed:", err.message);
+  process.exit(1);
+});

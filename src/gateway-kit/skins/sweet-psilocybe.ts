@@ -67,12 +67,10 @@ export const sweetPsilocybeSkin: GatewaySkinV1 = {
     maxDistance: 14,
   },
   centerpiece: {
-    mode: "procedural-sanctuary",
-    // Drop a normalized Blender export at public/skins/sweet-psilocybe/sanctuary.glb
-    // and switch mode to "glb" to swap geometry with zero renderer changes.
-    glbUrl: undefined,
+    mode: "glb",
+    glbUrl: "/models/mushroom-spirit.glb",
     rig: "none",
-    position: [0, -1.8, -1.4],
+    position: [0, 0, 0],
     scale: 1.0,
     materials: {
       primaryCap: "#F6AFCF",
@@ -88,8 +86,8 @@ export const sweetPsilocybeSkin: GatewaySkinV1 = {
     name: "Spore Sprite",
     mode: "spore-sprite",
     color: "#FFE9A8",
-    orbitRadius: 2.6,
-    orbitHeight: 1.4,
+    orbitRadius: 1.85,
+    orbitHeight: 0.45,
   },
   particles: {
     kind: "spores",
@@ -175,6 +173,33 @@ export const sweetPsilocybeSkin: GatewaySkinV1 = {
     maxTextureEdgePx: 2048,
   },
   licenses: [
+    {
+      id: "sweet-psilocybe-mushroom-spirit-glb",
+      assetPath: "public/models/mushroom-spirit.glb",
+      sourceUrl: "https://github.com/executiveusa/sweet-psilocybe-landing",
+      author: "The Pauli Effect (generated from original brand concept via fal.ai Trellis)",
+      spdx: "LicenseRef-Proprietary-Brand",
+      attributionRequired: false,
+      attributionText: "Original Sweet Psilocybe Mushroom Spirit 3D figure",
+    },
+    {
+      id: "sweet-psilocybe-store-prop-glb",
+      assetPath: "public/models/store-prop.glb",
+      sourceUrl: "https://github.com/executiveusa/sweet-psilocybe-landing",
+      author: "The Pauli Effect (generated from original brand concept via fal.ai Trellis)",
+      spdx: "LicenseRef-Proprietary-Brand",
+      attributionRequired: false,
+      attributionText: "Original Sweet Psilocybe Apothecary Mushroom Lantern 3D prop",
+    },
+    {
+      id: "sweet-psilocybe-blog-prop-glb",
+      assetPath: "public/models/blog-prop.glb",
+      sourceUrl: "https://github.com/executiveusa/sweet-psilocybe-landing",
+      author: "The Pauli Effect (generated from original brand concept via fal.ai Trellis)",
+      spdx: "LicenseRef-Proprietary-Brand",
+      attributionRequired: false,
+      attributionText: "Original Sweet Psilocybe Mycology Field Grimoire 3D prop",
+    },
     {
       id: "sweet-psilocybe-procedural-sanctuary",
       assetPath: "src/gateway-kit/components/SanctuaryCenterpiece.tsx",

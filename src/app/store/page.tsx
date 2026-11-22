@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import dynamic from 'next/dynamic';
 import Link from 'next/link';
 import { motion } from 'framer-motion';
 import {
@@ -13,6 +14,11 @@ import {
   ProductPrice,
   ViewButton
 } from './styles';
+
+const FloatingPropStage = dynamic(
+  () => import('@/gateway-kit/components/FloatingPropStage'),
+  { ssr: false }
+);
 
 interface DisplayProduct {
   id: string;
@@ -105,6 +111,7 @@ export default function StorePage() {
   return (
     <StoreWrapper>
       <StoreHero as={motion.header} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+        <FloatingPropStage glbUrl="/models/store-prop.glb" height={190} accentColor="#F6AFCF" />
         <h1>The Collection</h1>
         <p>Support the Science. Wear the Movement.{loading ? ' (Syncing catalog...)' : ''}</p>
       </StoreHero>

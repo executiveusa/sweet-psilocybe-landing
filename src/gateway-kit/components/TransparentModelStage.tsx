@@ -69,7 +69,7 @@ function ParallaxRig({
   });
 
   return (
-    <group ref={groupRef} position={[0, -0.2, 0]} scale={0.78}>
+    <group ref={groupRef} position={[0, -0.05, 0]} scale={0.92}>
       {children}
     </group>
   );
@@ -95,7 +95,7 @@ export default function TransparentModelStage({
       <div className="pointer-events-none fixed inset-0 z-20 flex items-center justify-center">
         <Canvas
           className="h-full w-full"
-          camera={{ position: [0, 1.35, 6.4], fov: 44 }}
+          camera={{ position: [0, 0.2, 5.2], fov: 42 }}
           dpr={[1, 2]}
           gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
@@ -106,23 +106,29 @@ export default function TransparentModelStage({
             });
           }}
         >
-          <ambientLight intensity={isNight ? 0.65 : 1.05} />
+          <ambientLight intensity={isNight ? 0.85 : 1.25} />
           <hemisphereLight
             args={[
-              isNight ? "#89A6C4" : "#FFE0B5",
-              isNight ? "#12211B" : "#2D4A3E",
-              isNight ? 0.65 : 0.9,
+              isNight ? "#9BB8D8" : "#FFE6C2",
+              isNight ? "#162A22" : "#2D4A3E",
+              isNight ? 0.75 : 1.0,
             ]}
           />
           <directionalLight
-            position={[4, 8, 6]}
-            intensity={isNight ? 1.7 : 2.3}
-            color={isNight ? "#F6AFCF" : "#FFE8C8"}
+            position={[4, 7, 6]}
+            intensity={isNight ? 2.1 : 2.6}
+            color={isNight ? "#F6AFCF" : "#FFF0D8"}
           />
           <directionalLight
             position={[-6, 4, -4]}
-            intensity={1.1}
+            intensity={1.35}
             color={isNight ? "#A9C0B0" : "#E5B8F4"}
+          />
+          <pointLight
+            position={[0, -0.3, 1.8]}
+            intensity={isNight ? 1.4 : 0.7}
+            color="#FFE0A3"
+            distance={6}
           />
 
           <Suspense fallback={null}>
@@ -135,7 +141,7 @@ export default function TransparentModelStage({
                   ...skin,
                   centerpiece: {
                     ...skin.centerpiece,
-                    position: [0, -1.25, 0],
+                    position: [0, 0, 0],
                   },
                 }}
                 isNight={isNight}

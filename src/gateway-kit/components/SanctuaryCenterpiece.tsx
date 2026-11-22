@@ -21,8 +21,28 @@ function GlbCenterpiece({
   scale: number;
 }) {
   const { scene } = useGLTF(url);
-  const cloned = useMemo(() => scene.clone(true), [scene]);
-  return <primitive object={cloned} scale={scale} />;
+  const normalized = useMemo(() => {
+    const clone = scene.clone(true);
+    const box = new THREE.Box3().setFromObject(clone);
+    const size = new THREE.Vector3();
+    const center = new THREE.Vector3();
+    box.getSize(size);
+    box.getCenter(center);
+
+    const maxDim = Math.max(size.x, size.y, size.z) || 1;
+    const targetHeight = 2.85 * scale;
+    const factor = targetHeight / maxDim;
+
+    clone.scale.setScalar(factor);
+    clone.position.set(
+      -center.x * factor,
+      -center.y * factor,
+      -center.z * factor
+    );
+    return clone;
+  }, [scene, scale]);
+
+  return <primitive object={normalized} />;
 }
 
 /**

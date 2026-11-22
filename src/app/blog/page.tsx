@@ -1,5 +1,6 @@
 "use client";
 
+import dynamic from "next/dynamic";
 import { motion } from "framer-motion";
 import {
   BlogWrapper,
@@ -13,6 +14,11 @@ import {
   ArticleMeta,
   StyledLink,
 } from "./styles";
+
+const FloatingPropStage = dynamic(
+  () => import("@/gateway-kit/components/FloatingPropStage"),
+  { ssr: false }
+);
 
 const SAMPLE_ARTICLES = [
   {
@@ -57,6 +63,7 @@ export default function BlogPage() {
   return (
     <BlogWrapper>
       <BlogHero as={motion.div} initial={{ opacity: 0, y: 20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
+        <FloatingPropStage glbUrl="/models/blog-prop.glb" height={190} accentColor="#A9C0B0" />
         <h1>Research &amp; Education</h1>
         <p>Every claim backed by science. Every article cited.</p>
         <SearchContainer>
