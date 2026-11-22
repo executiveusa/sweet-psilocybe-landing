@@ -186,7 +186,62 @@ export default function Library3DScene({
   onSelectTab,
 }: Library3DSceneProps) {
   const [lost, setLost] = useState(false);
-  if (lost) return null;
+
+  const wings: Array<{
+    id: LibraryTab;
+    icon: string;
+    label: string;
+    hint: string;
+    accent: string;
+  }> = [
+    {
+      id: "books",
+      icon: "📚",
+      label: "Books Wing",
+      hint: "7 verified global mycology works",
+      accent: "#F6AFCF",
+    },
+    {
+      id: "documentaries",
+      icon: "🎥",
+      label: "Documentaries Wing",
+      hint: "6 clinical & ecological films",
+      accent: "#A9C0B0",
+    },
+    {
+      id: "movies",
+      icon: "🎬",
+      label: "Movies & Media",
+      hint: "4 fungal cinema classics",
+      accent: "#B19CD9",
+    },
+  ];
+
+  if (lost) {
+    return (
+      <div className="mx-auto mb-10 grid max-w-4xl gap-4 rounded-3xl border border-fern/30 bg-[#0B0D12]/65 p-6 backdrop-blur-md sm:grid-cols-3">
+        {wings.map((w) => {
+          const isActive = activeTab === w.id;
+          return (
+            <button
+              key={w.id}
+              type="button"
+              onClick={() => onSelectTab(w.id)}
+              className={`rounded-2xl border p-5 text-left transition cursor-pointer ${
+                isActive
+                  ? "border-[#F6AFCF] bg-[#F6AFCF]/15"
+                  : "border-white/15 bg-black/40 hover:border-white/35"
+              }`}
+            >
+              <div className="text-2xl">{w.icon}</div>
+              <div className="mt-2 font-bold text-[#F7F3EF]">{w.label}</div>
+              <div className="mt-1 text-xs text-[#F7F3EF]/70">{w.hint}</div>
+            </button>
+          );
+        })}
+      </div>
+    );
+  }
 
   return (
     <Library3DErrorBoundary>

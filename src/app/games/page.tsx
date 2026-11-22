@@ -162,27 +162,6 @@ export default function GamesPage() {
 
   return (
     <GamesWrapper>
-      {/* Always-visible floating Return Home pill (even when scrolled into a game) */}
-      {!theaterMode && (
-        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2">
-          {selected && (
-            <button
-              type="button"
-              onClick={exitGame}
-              className="rounded-full border border-white/25 bg-[#0B0D12]/90 px-4 py-2.5 text-xs font-semibold text-cream shadow-xl backdrop-blur-md transition hover:border-petal hover:text-petal cursor-pointer"
-            >
-              ✕ Exit Game
-            </button>
-          )}
-          <Link
-            href="/"
-            className="rounded-full bg-petal px-4 py-2.5 text-xs font-bold text-ink shadow-xl transition hover:bg-spore"
-          >
-            🍄 ← Home Screen
-          </Link>
-        </div>
-      )}
-
       {/* Full-Viewport In-App Theater Mode (keeps Return Home permanently pinned above the game) */}
       {theaterMode && selected && (
         <div
@@ -258,25 +237,6 @@ export default function GamesPage() {
           </div>
         </div>
       )}
-
-      {/* Top Quick-Return Bar */}
-      <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
-        <Link
-          href="/"
-          className="inline-flex items-center gap-2 rounded-full border border-fern/40 bg-ink/80 px-4 py-2 text-xs font-semibold text-cream backdrop-blur-md transition hover:border-petal hover:text-petal"
-        >
-          ← Return to 3D Gateway Home
-        </Link>
-        {selected && (
-          <button
-            type="button"
-            onClick={exitGame}
-            className="inline-flex items-center gap-1.5 rounded-full border border-white/20 bg-ink/80 px-4 py-2 text-xs font-semibold text-cream/85 backdrop-blur-md transition hover:border-petal hover:text-petal cursor-pointer"
-          >
-            ✕ Exit Current Game
-          </button>
-        )}
-      </div>
 
       <GamesHero
         as={motion.div}

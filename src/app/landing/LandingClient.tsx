@@ -109,8 +109,8 @@ export default function LandingClient() {
       <AgeGate />
 
       {/* BEAT 1 — HERO: 2-Second Orientation (Single H1 on the page) */}
-      <section className="mx-auto max-w-6xl px-5 pb-16 pt-16 sm:px-8 sm:pt-24">
-        <div className="max-w-3xl">
+      <section className="mx-auto max-w-6xl px-5 pb-16 pt-12 sm:px-8 sm:pt-20">
+        <div className="max-w-3xl rounded-3xl border border-white/12 bg-[#0B0D12]/65 p-7 backdrop-blur-md sm:p-10">
           <p className="mb-4 text-xs font-semibold uppercase tracking-[0.18em] text-[#A9C0B0]">
             Welcome to Sweet Psilocybe &middot; Pacific Northwest &middot; 18+
             Education &amp; Merch

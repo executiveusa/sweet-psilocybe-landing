@@ -7,7 +7,6 @@ import { GlobalStyles } from './GlobalStyles';
 import { Footer, Header } from '..';
 import { usePathname } from 'next/navigation';
 import PageBackdrop from '@/gateway-kit/components/PageBackdrop';
-import HomeButton from '@/gateway-kit/components/HomeButton';
 
 const GATEWAY_ROUTES = new Set(['/', '/gateway']);
 
@@ -32,7 +31,6 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
       >
         <GlobalStyles />
         <PageBackdrop pathname={pathname} />
-        <HomeButton />
         <motion.div
           key={pathname}
           initial={{ opacity: 0 }}

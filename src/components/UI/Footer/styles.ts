@@ -5,7 +5,7 @@ export const Wrapper = styled.footer`
   padding-bottom: 3.5rem;
 `;
 
-export const Inner = styled.main`
+export const Inner = styled.div`
   width: 90%;
   max-width: 1440px;
   margin: 0 auto;
