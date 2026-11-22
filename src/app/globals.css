@@ -21,6 +21,20 @@
   }
 }
 
+.custom-bg {
+  background: rgba(11, 13, 16, 0.42);
+  border: 1px solid rgba(246, 175, 207, 0.35);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  box-shadow: inset 0 17px 5px -9px rgba(246, 175, 207, 0.08);
+  transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
+}
+
+.custom-bg:hover {
+  border-color: rgba(246, 175, 207, 0.78);
+  box-shadow: 0 0 22px 0 rgba(246, 175, 207, 0.38);
+}
+
 @layer utilities {
   .text-ink { color: rgb(var(--ink)); }
   .text-petal { color: rgb(var(--petal)); }
@@ -40,6 +54,24 @@
   
   .glow-fern {
     box-shadow: 0 10px 30px rgba(169, 192, 176, 0.15);
+  }
+
+  .pause {
+    animation-play-state: paused;
+  }
+}
+
+@keyframes firefly-drift {
+  0% {
+    transform: translate(0px, 0px) scale(0.9);
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 0.95;
+  }
+  100% {
+    transform: translate(80px, -90px) scale(1.15);
+    opacity: 0.35;
   }
 }
 

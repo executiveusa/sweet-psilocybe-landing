@@ -14,8 +14,15 @@ import {
   ViewButton
 } from './styles';
 
-// Placeholder data for initial render or fallback
-const DUMMY_PRODUCTS = [
+interface DisplayProduct {
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  image: string;
+}
+
+const FALLBACK_PRODUCTS: DisplayProduct[] = [
   {
     id: '1',
     title: 'Mycelium Network Tee',
@@ -57,22 +64,32 @@ const itemVariants = {
 };
 
 export default function StorePage() {
-  const [products, setProducts] = useState(DUMMY_PRODUCTS);
+  const [products, setProducts] = useState<DisplayProduct[]>(FALLBACK_PRODUCTS);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    // Attempt to fetch from our proxy route
     const fetchProducts = async () => {
       try {
         const res = await fetch('/api/store/printify/products');
         if (res.ok) {
-          const data = await res.json();
-          // If we get actual data from Printify via proxy, we'd map it here.
-          // For now, if the endpoint works but returns our fallback, that's fine.
-          if (data && data.length > 0) {
-            // Map printify product shape to our display shape if needed
-            // This is just defensive check
-            // setProducts(data);
+          const payload = await res.json();
+          const list = Array.isArray(payload) ? payload : payload?.data;
+          if (Array.isArray(list) && list.length > 0) {
+            const mapped: DisplayProduct[] = list.map((item: any) => ({
+              id: String(item.id),
+              title: item.title || 'Sweet Psilocybe Edition',
+              description:
+                typeof item.description === 'string'
+                  ? item.description.replace(/<[^>]*>/g, '').slice(0, 140)
+                  : 'Artistic mycology merchandise printed on demand.',
+              price: item.variants?.[0]?.price
+                ? `$${(Number(item.variants[0].price) / 100).toFixed(2)}`
+                : '$35.00',
+              image:
+                item.images?.[0]?.src ||
+                FALLBACK_PRODUCTS[0].image,
+            }));
+            setProducts(mapped);
           }
         }
       } catch (err) {
@@ -81,7 +98,7 @@ export default function StorePage() {
         setLoading(false);
       }
     };
-    
+
     fetchProducts();
   }, []);
 
@@ -89,7 +106,7 @@ export default function StorePage() {
     <StoreWrapper>
       <StoreHero as={motion.header} initial={{ opacity: 0, y: -20 }} animate={{ opacity: 1, y: 0 }} transition={{ duration: 0.6 }}>
         <h1>The Collection</h1>
-        <p>Support the Science. Wear the Movement.</p>
+        <p>Support the Science. Wear the Movement.{loading ? ' (Syncing catalog...)' : ''}</p>
       </StoreHero>
 
       <ProductGrid as={motion.div} variants={containerVariants} initial="hidden" animate="visible">

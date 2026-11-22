@@ -2,7 +2,7 @@
 import { styled } from 'styled-components';
 
 export const StoreWrapper = styled.main`
-  background: var(--Background);
+  background: transparent;
   min-height: 100vh;
   padding: 8rem 0 4rem;
   font-family: 'Inter', sans-serif;

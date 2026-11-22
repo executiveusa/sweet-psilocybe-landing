@@ -16,14 +16,22 @@ const config: Config = {
         fern: "rgb(169 192 176 / <alpha-value>)",
         cream: "rgb(247 243 239 / <alpha-value>)",
       },
+      backgroundImage: {
+        "firefly-radial":
+          "radial-gradient(50% 50% at 50% 50%, rgba(254, 240, 165, 0.75) 0%, rgba(246, 175, 207, 0.25) 45%, rgba(217, 217, 217, 0) 100%)",
+      },
       boxShadow: {
         "glow-petal": "0 10px 30px rgba(246, 175, 207, 0.25)",
         "glow-fern": "0 10px 30px rgba(169, 192, 176, 0.15)",
+        "glass-inset": "inset 0 17px 5px -9px rgba(246, 175, 207, 0.08)",
+        "glass-sm": "0 0 22px 0 rgba(246, 175, 207, 0.38)",
       },
       animation: {
         "fade-in": "fadeIn 0.6s ease-out",
         "slide-up": "slideUp 0.6s ease-out",
         float: "float 3s ease-in-out infinite",
+        "spin-slow": "spin 40s linear infinite",
+        "spin-slow-reverse": "spin-reverse 40s linear infinite",
       },
       keyframes: {
         fadeIn: {
@@ -38,9 +46,13 @@ const config: Config = {
           "0%, 100%": { transform: "translateY(0)" },
           "50%": { transform: "translateY(-10px)" },
         },
+        "spin-reverse": {
+          "0%": { transform: "rotate(0deg)" },
+          "100%": { transform: "rotate(-360deg)" },
+        },
       },
       screens: {
-        xs: "475px",
+        xs: "480px",
         sm: "640px",
         md: "768px",
         lg: "1024px",
@@ -48,24 +60,19 @@ const config: Config = {
         "2xl": "1536px",
         "3xl": "1920px",
         ultra: "2560px",
-        // Specific device breakpoints
         "mobile-sm": "320px",
         "mobile-lg": "428px",
         "tablet-sm": "768px",
         "tablet-lg": "1024px",
         laptop: "1440px",
         desktop: "1920px",
-        // Touch device optimizations
         touch: { raw: "(hover: none) and (pointer: coarse)" },
         "no-touch": { raw: "(hover: hover) and (pointer: fine)" },
-        // Orientation breakpoints
         portrait: { raw: "(orientation: portrait)" },
         landscape: { raw: "(orientation: landscape)" },
-        // High DPI displays
         retina: {
           raw: "(-webkit-min-device-pixel-ratio: 2), (min-resolution: 192dpi)",
         },
-        // Print styles
         print: { raw: "print" },
       },
     },

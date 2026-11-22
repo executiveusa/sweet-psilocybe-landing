@@ -1,0 +1,125 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Sweet Psilocybe — HyperFrames Hero & Social Loop</title>
+    <script src="https://cdn.jsdelivr.net/npm/gsap@3.12.5/dist/gsap.min.js"></script>
+    <style>
+      * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+      }
+      body {
+        width: 1080px;
+        height: 1920px;
+        overflow: hidden;
+        background: radial-gradient(circle at 50% 35%, #192620 0%, #07090c 68%);
+        color: #f7f3ef;
+        font-family: Inter, system-ui, -apple-system, sans-serif;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        padding: 110px 84px;
+        position: relative;
+      }
+      .glow-orb {
+        position: absolute;
+        width: 640px;
+        height: 640px;
+        border-radius: 50%;
+        background: radial-gradient(circle, rgba(246, 175, 207, 0.36), transparent 68%);
+        top: 420px;
+        left: 220px;
+        filter: blur(40px);
+        z-index: 0;
+      }
+      .layer {
+        position: relative;
+        z-index: 2;
+      }
+      .pill {
+        display: inline-block;
+        padding: 16px 32px;
+        border-radius: 999px;
+        border: 2px solid rgba(169, 192, 176, 0.45);
+        background: rgba(169, 192, 176, 0.14);
+        color: #a9c0b0;
+        font-size: 28px;
+        font-weight: 700;
+        letter-spacing: 0.04em;
+      }
+      h1 {
+        font-size: 116px;
+        line-height: 1.02;
+        font-weight: 800;
+        letter-spacing: -0.03em;
+        margin-top: 42px;
+      }
+      h1 span {
+        color: #f6afcf;
+      }
+      .sub {
+        margin-top: 36px;
+        font-size: 40px;
+        line-height: 1.45;
+        color: rgba(247, 243, 239, 0.82);
+        max-width: 860px;
+      }
+      .footer-card {
+        background: rgba(11, 13, 18, 0.72);
+        border: 2px solid rgba(246, 175, 207, 0.35);
+        border-radius: 32px;
+        padding: 44px 48px;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      }
+      .cta {
+        font-size: 42px;
+        font-weight: 800;
+        color: #f6afcf;
+      }
+      .url {
+        font-size: 32px;
+        color: #a9c0b0;
+      }
+    </style>
+  </head>
+  <body>
+    <div class="glow-orb" id="orb"></div>
+
+    <div class="layer">
+      <div class="pill" id="badge">18+ MYCOLOGY EDUCATION &amp; ARTISTIC MERCH</div>
+      <h1 id="headline">
+        Wear the <span>Mycology</span> Movement.
+      </h1>
+      <p class="sub" id="sub">
+        Peer-reviewed science, a global fungi library, and original print-on-demand apparel.
+      </p>
+    </div>
+
+    <div class="layer footer-card" id="card">
+      <div class="cta">Enter the 3D Canopy &rarr;</div>
+      <div class="url">sweetpsilocybe.com</div>
+    </div>
+
+    <script>
+      const tl = gsap.timeline({ defaults: { ease: "power3.out" } });
+      tl.from("#badge", { y: 40, opacity: 0, duration: 0.7 })
+        .from("#headline", { y: 60, opacity: 0, duration: 0.9 }, "-=0.35")
+        .from("#sub", { y: 40, opacity: 0, duration: 0.8 }, "-=0.45")
+        .from("#card", { y: 60, opacity: 0, duration: 0.85 }, "-=0.35");
+
+      gsap.to("#orb", {
+        scale: 1.18,
+        y: -35,
+        duration: 3.5,
+        repeat: -1,
+        yoyo: true,
+        ease: "sine.inOut",
+      });
+    </script>
+  </body>
+</html>

@@ -230,7 +230,7 @@ const AgeGate = () => {
             <DateInput
               type="date"
               value={birthDate}
-              onChange={(e) => setBirthDate(e.target.value)}
+              onChange={(e: React.ChangeEvent<HTMLInputElement>) => setBirthDate(e.target.value)}
               max={new Date().toISOString().split('T')[0]}
               aria-label="Birth date"
               aria-required="true"

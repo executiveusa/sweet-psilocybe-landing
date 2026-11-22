@@ -180,7 +180,7 @@ const AvatarChat: React.FC<AvatarChatProps> = ({
       <InputContainer>
         <Input
           value={input}
-          onChange={(e) => setInput(e.target.value)}
+          onChange={(e: React.ChangeEvent<HTMLInputElement>) => setInput(e.target.value)}
           onKeyPress={handleKeyPress}
           placeholder="Ask me anything about psilocybin research or our products..."
           disabled={isLoading}

@@ -1,19 +1,14 @@
-import {
-  HeroSection,
-  BrandStrip,
-  AgeGate,
-  PlayLearnGrow,
-  SiteNavCards,
-} from "@/components";
+"use client";
+
+import AgeGate from "@/components/UI/AgeGate";
+import GatewayShell from "@/gateway-kit/components/GatewayShell";
+import { sweetPsilocybeSkin } from "@/gateway-kit/skins/sweet-psilocybe";
 
 export default function Home() {
   return (
-    <main>
+    <>
       <AgeGate />
-      <HeroSection />
-      <PlayLearnGrow />
-      <BrandStrip />
-      <SiteNavCards />
-    </main>
+      <GatewayShell skin={sweetPsilocybeSkin} />
+    </>
   );
 }
