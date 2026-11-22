@@ -99,25 +99,25 @@ export default function SanctuaryCenterpiece({
     const t = state.clock.elapsedTime;
     if (reducedMotion) return;
 
-    // Gentle organic breathing on the hero sanctuary
+    // Noticeable levitation bob + graceful turntable breathing sway
     if (rootRef.current) {
-      const amp = motionState === "hover" || motionState === "focus" ? 0.08 : 0.04;
-      rootRef.current.position.y = position[1] + Math.sin(t * 0.9) * amp;
-      rootRef.current.rotation.y = Math.sin(t * 0.25) * 0.08;
+      const amp = motionState === "hover" || motionState === "focus" ? 0.2 : 0.14;
+      rootRef.current.position.y = position[1] + Math.sin(t * 1.45) * amp;
+      rootRef.current.rotation.y = Math.sin(t * 0.55) * 0.34;
     }
 
     // Orbiting Spore Sprite Companion (Part 17)
     if (spriteRef.current && companion.enabled) {
-      const speed = motionState === "hover" ? 1.1 : 0.65;
+      const speed = motionState === "hover" ? 1.55 : 0.95;
       spriteRef.current.position.x = Math.cos(t * speed) * companion.orbitRadius;
       spriteRef.current.position.z = Math.sin(t * speed) * companion.orbitRadius;
       spriteRef.current.position.y =
-        companion.orbitHeight + Math.sin(t * 2.1) * 0.35;
+        companion.orbitHeight + Math.sin(t * 2.4) * 0.42;
     }
 
     // Mycelium pulse ring at the base
     if (pulseRingRef.current) {
-      const pulse = 1 + Math.sin(t * 1.4) * 0.06;
+      const pulse = 1 + Math.sin(t * 1.8) * 0.09;
       pulseRingRef.current.scale.set(pulse, pulse, 1);
     }
   });

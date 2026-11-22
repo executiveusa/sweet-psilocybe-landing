@@ -8,19 +8,20 @@ type Firefly = {
   left: string;
   size: number;
   animationDuration: string;
+  delay: string;
 };
 
-const createFirefly = (): Firefly => ({
-  id: Math.random(),
-  top: `${Math.random() * 92 + 4}%`,
-  left: `${Math.random() * 92 + 4}%`,
-  size: Math.floor(Math.random() * 6 + 8),
-  animationDuration: `${(Math.random() * 5 + 5).toFixed(1)}s`,
+const createFirefly = (idx: number): Firefly => ({
+  id: idx + Math.random(),
+  top: `${Math.random() * 88 + 6}%`,
+  left: `${Math.random() * 90 + 5}%`,
+  size: Math.floor(Math.random() * 8 + 9),
+  animationDuration: `${(Math.random() * 4 + 4.5).toFixed(1)}s`,
+  delay: `${(Math.random() * 3).toFixed(1)}s`,
 });
 
 /**
- * Layer 4 (Piece #10): Drifting glowing fireflies/spores floating over the painted backdrop.
- * Fixes profilepalette's `roudned-full` typo and cleans up interval on unmount.
+ * Layer 4 (Piece #10): 22 luminous drifting fireflies/spores floating across the PNW scene.
  */
 export default function FireFliesBackground({
   reducedMotion = false,
@@ -30,15 +31,8 @@ export default function FireFliesBackground({
   const [fireflies, setFireflies] = useState<Firefly[]>([]);
 
   useEffect(() => {
-    setFireflies(Array.from({ length: reducedMotion ? 6 : 12 }, createFirefly));
-    if (reducedMotion) return;
-
-    const interval = setInterval(() => {
-      setFireflies((current) => [...current.slice(-14), createFirefly()]);
-    }, 900);
-
-    return () => clearInterval(interval);
-  }, [reducedMotion]);
+    setFireflies(Array.from({ length: 22 }, (_, i) => createFirefly(i)));
+  }, []);
 
   return (
     <div
@@ -48,15 +42,16 @@ export default function FireFliesBackground({
       {fireflies.map((f) => (
         <div
           key={f.id}
-          className="absolute rounded-full bg-firefly-radial"
+          className="living-anim absolute rounded-full bg-firefly-radial"
           style={{
             top: f.top,
             left: f.left,
             width: `${f.size}px`,
             height: `${f.size}px`,
+            boxShadow: "0 0 14px rgba(254, 240, 165, 0.7)",
             animation: reducedMotion
               ? "none"
-              : `firefly-drift ${f.animationDuration} ease-in-out infinite alternate`,
+              : `firefly-drift ${f.animationDuration} ease-in-out ${f.delay} infinite alternate`,
           }}
         />
       ))}

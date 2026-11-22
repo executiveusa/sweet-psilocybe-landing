@@ -2,7 +2,7 @@
 import { styled } from 'styled-components';
 
 export const DetailWrapper = styled.main`
-  background: var(--Background);
+  background: transparent;
   min-height: 100vh;
   padding: 8rem 0 4rem;
   font-family: 'Inter', sans-serif;
@@ -36,11 +36,18 @@ export const BackLink = styled.div`
 export const ProductLayout = styled.div`
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 4rem;
-  
+  gap: 3rem;
+  padding: 2.25rem;
+  border-radius: 1.5rem;
+  background: rgba(11, 13, 18, 0.78);
+  backdrop-filter: blur(18px);
+  -webkit-backdrop-filter: blur(18px);
+  border: 1px solid rgba(246, 175, 207, 0.22);
+
   @media (max-width: 900px) {
     grid-template-columns: 1fr;
     gap: 2rem;
+    padding: 1.5rem;
   }
 `;
 

@@ -10,58 +10,19 @@ import {
   PlayLearnGrow,
   SiteNavCards,
 } from "@/components";
+import { BLOG_ARTICLES } from "@/data/blogArticles";
+import {
+  CURATED_PREVIEW_PRODUCTS,
+  type StoreCatalogResponse,
+  type StoreProduct,
+} from "@/data/storeCatalog";
 
-interface FeaturedItem {
-  id: string;
-  title: string;
-  price: string;
-  image: string;
-}
-
-const FALLBACK_FEATURED: FeaturedItem[] = [
-  {
-    id: "1",
-    title: "Mycelium Network Organic Tee",
-    price: "$35.00",
-    image:
-      "https://images.unsplash.com/photo-1521572163474-6864f9cf17ab?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: "2",
-    title: "Spore Print Heavyweight Hoodie",
-    price: "$65.00",
-    image:
-      "https://images.unsplash.com/photo-1556821840-3a63f95609a7?auto=format&fit=crop&w=800&q=80",
-  },
-  {
-    id: "3",
-    title: "Botanical Mycology Ceramic Mug",
-    price: "$18.00",
-    image:
-      "https://images.unsplash.com/photo-1514228742587-6b1558fcca3d?auto=format&fit=crop&w=800&q=80",
-  },
-];
-
-const RESEARCH_HIGHLIGHTS = [
-  {
-    slug: "psilocybin-research-2026",
-    tag: "Neuroscience",
-    title: "The State of Psilocybin Clinical Research",
-    citations: "12 Peer-Reviewed Citations",
-  },
-  {
-    slug: "washington-state-law-guide",
-    tag: "Washington State Policy",
-    title: "Washington State Regulatory & Legal Framework",
-    citations: "15 Primary Legal Sources",
-  },
-  {
-    slug: "functional-mushrooms-synergy",
-    tag: "Mycology",
-    title: "Functional Mushrooms: Lion's Mane, Reishi & Cordyceps",
-    citations: "24 PubMed Citations",
-  },
-];
+const RESEARCH_HIGHLIGHTS = BLOG_ARTICLES.slice(0, 3).map((a) => ({
+  slug: a.slug,
+  tag: a.tags[0] || "Research",
+  title: a.title,
+  citations: `${a.citations.length} Verified Primary Citations`,
+}));
 
 const PageShell = styled.main`
   background: transparent;
@@ -197,8 +158,10 @@ const CardGrid = styled.div`
 const MerchCard = styled(Link)`
   display: flex;
   flex-direction: column;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(11, 13, 18, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(255, 255, 255, 0.12);
   border-radius: 18px;
   overflow: hidden;
   text-decoration: none;
@@ -241,8 +204,10 @@ const ResearchCard = styled(Link)`
   display: flex;
   flex-direction: column;
   gap: 0.65rem;
-  background: rgba(169, 192, 176, 0.05);
-  border: 1px solid rgba(169, 192, 176, 0.2);
+  background: rgba(11, 13, 18, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(169, 192, 176, 0.25);
   border-radius: 18px;
   padding: 1.4rem;
   text-decoration: none;
@@ -276,28 +241,17 @@ const ResearchCard = styled(Link)`
 `;
 
 export default function LandingClient() {
-  const [featured, setFeatured] = useState<FeaturedItem[]>(FALLBACK_FEATURED);
+  const [featured, setFeatured] = useState<StoreProduct[]>(
+    CURATED_PREVIEW_PRODUCTS.slice(0, 3)
+  );
 
   useEffect(() => {
     let active = true;
     fetch("/api/store/printify/products")
       .then((res) => (res.ok ? res.json() : null))
-      .then((payload) => {
-        if (!active || !payload) return;
-        const list = Array.isArray(payload) ? payload : payload.data;
-        if (Array.isArray(list) && list.length > 0) {
-          const mapped: FeaturedItem[] = list.slice(0, 3).map((item: any) => ({
-            id: String(item.id),
-            title: item.title || "Sweet Psilocybe Edition",
-            price: item.variants?.[0]?.price
-              ? `$${(Number(item.variants[0].price) / 100).toFixed(2)}`
-              : "$35.00",
-            image:
-              item.images?.[0]?.src ||
-              FALLBACK_FEATURED[0].image,
-          }));
-          setFeatured(mapped);
-        }
+      .then((payload: StoreCatalogResponse | null) => {
+        if (!active || !payload?.products?.length) return;
+        setFeatured(payload.products.slice(0, 3));
       })
       .catch(() => {});
     return () => {
@@ -344,7 +298,7 @@ export default function LandingClient() {
                 <img src={item.image} alt={item.title} loading="lazy" />
                 <div className="body">
                   <h3>{item.title}</h3>
-                  <span className="price">{item.price}</span>
+                  <span className="price">{item.priceFormatted}</span>
                 </div>
               </MerchCard>
             ))}

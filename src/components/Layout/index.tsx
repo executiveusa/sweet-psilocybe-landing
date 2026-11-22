@@ -35,7 +35,7 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <PageBackdrop pathname={pathname} />
         <HomeButton />
         <Preloader setComplete={setComplete} />
-        <div className={complete ? 'complete' : 'not_complete'} style={{ position: 'relative', zIndex: 1 }}>
+        <div className={complete ? 'complete' : 'not_complete'} style={{ position: 'relative', zIndex: 20 }}>
           <Header />
           {children}
           <Footer />

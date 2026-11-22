@@ -6,7 +6,8 @@ import Image from "next/image";
 import Link from "next/link";
 import { useForestAudio } from "../audio/useForestAudio";
 import FireFliesBackground from "./FireFliesBackground";
-import OrbitalNavigation from "./OrbitalNavigation";
+import LivingAtmosphere from "./LivingAtmosphere";
+import OrbitalNavigation, { type OrbitalNavItem } from "./OrbitalNavigation";
 import type { GatewaySkinV1 } from "../spec";
 
 const TransparentModelStage = dynamic(
@@ -19,47 +20,52 @@ interface GatewayShellProps {
 }
 
 /**
- * True 7-Layer profilepalette-style Gateway with subtle mouse-parallax depth:
- * - Layer 3 (z-0):  Approved PNW San Juan Islands painted backdrop (Dusk + Twilight cross-fade)
- * - Layer 4 (z-10): Drifting FireFliesBackground over the painting
- * - Layer 5 (z-20): Transparent 3D Canvas holding the centered Mushroom Figure (Piece #05 slot)
- * - Layer 6 (z-30): 40s Orbiting Radial Glassmorphic Navigation Wheel (Piece #09)
- * - Layer 7 (z-40): Minimal Brand Identity badge + Top-Right Audio / Dusk-Twilight / EN-ES controls
+ * Living 7-Layer profilepalette-style Gateway:
+ * - Layer 3 (z-0):  PNW San Juan Islands painted backdrops + mouse parallax
+ * - Layer 4 (z-10): LivingAtmosphere (coastal mist, canopy light rays, breathing aura, bokeh, cursor glow) + FireFlies
+ * - Layer 5 (z-20): Transparent 3D Canvas holding the interactive Mushroom Spirit (portal-tracking + click-to-spin)
+ * - Layer 6 (z-30): Glowing 40s Orbiting Radial Glassmorphic Navigation Wheel
+ * - Layer 7 (z-40): Brand Identity + Top-Right Controls + Live Portal Spotlight Pill
  */
 export default function GatewayShell({ skin }: GatewayShellProps) {
   const [isNight, setIsNight] = useState(false);
   const [lang, setLang] = useState<"en" | "es">("en");
-  const [reducedMotion, setReducedMotion] = useState(false);
+  // Default motion ON so Windows OS power-saver/reduced-motion never silently freezes the 3D scene;
+  // users can toggle motion pause anytime via the top-right Motion button.
+  const [motionPaused, setMotionPaused] = useState(false);
   const [pointerOffset, setPointerOffset] = useState({ x: 0, y: 0 });
+  const [pointerPx, setPointerPx] = useState({ x: 0, y: 0 });
+  const [activeDoor, setActiveDoor] = useState<OrbitalNavItem | null>(null);
+  const [spinTrigger, setSpinTrigger] = useState(0);
 
   const audio = useForestAudio({ volume: skin.audio.volume });
 
   useEffect(() => {
-    const mq = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReducedMotion(mq.matches);
-    const onChange = (e: MediaQueryListEvent) => setReducedMotion(e.matches);
-    mq.addEventListener("change", onChange);
-
     const onPointerMove = (e: PointerEvent) => {
-      if (mq.matches) return;
       const nx = (e.clientX / window.innerWidth - 0.5) * 2;
       const ny = (e.clientY / window.innerHeight - 0.5) * 2;
       setPointerOffset({ x: nx, y: ny });
+      setPointerPx({ x: e.clientX, y: e.clientY });
     };
 
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     return () => {
-      mq.removeEventListener("change", onChange);
       window.removeEventListener("pointermove", onPointerMove);
     };
   }, []);
 
-  const bgTransform = reducedMotion
+  const bgTransform = motionPaused
     ? "scale(1.02)"
-    : `scale(1.05) translate3d(${(-pointerOffset.x * 12).toFixed(1)}px, ${(-pointerOffset.y * 8).toFixed(1)}px, 0)`;
+    : `scale(1.06) translate3d(${(-pointerOffset.x * 16).toFixed(1)}px, ${(-pointerOffset.y * 10).toFixed(1)}px, 0)`;
+
+  const activeAccent = activeDoor?.accent || "#F6AFCF";
 
   return (
-    <main className="relative flex h-screen w-screen flex-col items-center justify-between overflow-hidden bg-ink">
+    <main
+      className={`relative flex h-screen w-screen flex-col items-center justify-between overflow-hidden bg-ink ${
+        motionPaused ? "motion-paused" : ""
+      }`}
+    >
       {/* LAYER 3 (z-0): Piece #01 — Approved San Juan Islands PNW Painted Backdrops + Parallax */}
       <div
         className="pointer-events-none fixed inset-0 z-0 transition-transform duration-300 ease-out"
@@ -72,7 +78,7 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
           src="/background/home-golden-dusk.webp"
           alt="Enchanted Pacific Northwest forest clearing overlooking the San Juan Islands at golden dusk with breaching orcas"
           className={`object-cover object-center transition-opacity duration-1000 ${
-            isNight ? "opacity-0" : "opacity-80"
+            isNight ? "opacity-0" : "opacity-85"
           }`}
         />
         <Image
@@ -82,31 +88,53 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
           src="/background/home-twilight.webp"
           alt="Enchanted Pacific Northwest forest clearing overlooking the San Juan Islands at blue-hour twilight with orcas"
           className={`object-cover object-center transition-opacity duration-1000 ${
-            isNight ? "opacity-80" : "opacity-0"
+            isNight ? "opacity-85" : "opacity-0"
           }`}
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "radial-gradient(circle at 50% 50%, rgba(7, 10, 12, 0.16) 0%, rgba(7, 10, 12, 0.52) 100%)",
+              "radial-gradient(circle at 50% 50%, rgba(7, 10, 12, 0.14) 0%, rgba(7, 10, 12, 0.52) 100%)",
           }}
         />
       </div>
 
-      {/* LAYER 4 (z-10): Piece #10 — Drifting Fireflies / Spores */}
-      <FireFliesBackground reducedMotion={reducedMotion} />
+      {/* LAYER 4 (z-10): Living Atmosphere (Mist, Light Rays, Breathing Aura, Bokeh, Cursor Glow) + FireFlies */}
+      <LivingAtmosphere
+        isNight={isNight}
+        accentColor={activeAccent}
+        pointerPx={pointerPx}
+        reducedMotion={motionPaused}
+      />
+      <FireFliesBackground reducedMotion={motionPaused} />
 
-      {/* LAYER 5 (z-20): Piece #05 + #08 — Transparent 3D Canvas Hero Figure */}
+      {/* LAYER 5 (z-20): Interactive 3D Mushroom Spirit */}
       <TransparentModelStage
         skin={skin}
         isNight={isNight}
-        reducedMotion={reducedMotion}
+        reducedMotion={motionPaused}
         pointerOffset={pointerOffset}
+        activeDoor={activeDoor}
+        spinTrigger={spinTrigger}
       />
 
-      {/* LAYER 6 (z-30): Piece #09 — 40s Orbiting Radial Glassmorphic Nav Wheel */}
-      <OrbitalNavigation lang={lang} reducedMotion={reducedMotion} />
+      {/* Center transparent click-target over the Mushroom Spirit for celebratory 360° twirl + spore burst */}
+      <button
+        type="button"
+        onClick={() => setSpinTrigger((n) => n + 1)}
+        aria-label="Spin the Sweet Psilocybe Mushroom Spirit"
+        title="Click to spin the Mushroom Spirit"
+        className="fixed left-1/2 top-1/2 z-[25] h-52 w-44 -translate-x-1/2 -translate-y-1/2 cursor-pointer rounded-full bg-transparent focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-petal/60"
+      />
+
+      {/* LAYER 6 (z-30): Glowing 28s Orbiting Radial Glassmorphic Nav Wheel */}
+      <OrbitalNavigation
+        lang={lang}
+        reducedMotion={motionPaused}
+        activeDoor={activeDoor}
+        onHoverDoor={setActiveDoor}
+      />
 
       {/* LAYER 7 (z-40): Top Identity Bar & Controls */}
       <header className="pointer-events-none fixed left-0 right-0 top-0 z-40 flex flex-wrap items-start justify-between gap-3 p-4 sm:p-6">
@@ -127,6 +155,16 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
             aria-label="Toggle Golden Dusk or Twilight Mist backdrop"
           >
             {isNight ? "🌅 Golden Dusk" : "🌙 Twilight Mist"}
+          </button>
+
+          <button
+            type="button"
+            onClick={() => setMotionPaused((v) => !v)}
+            className="custom-bg rounded-full px-3 py-2 text-xs font-semibold text-cream"
+            aria-label="Pause or resume animations"
+            title={motionPaused ? "Resume animations" : "Pause animations"}
+          >
+            {motionPaused ? "▶️ Motion" : "⏸ Motion"}
           </button>
 
           {skin.audio.enabled && (
@@ -159,12 +197,34 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
         </div>
       </header>
 
-      <div className="pointer-events-none fixed bottom-4 left-1/2 z-40 -translate-x-1/2 text-center">
-        <p className="rounded-full bg-ink/55 px-4 py-1.5 text-[11px] font-medium tracking-widest uppercase text-cream/80 backdrop-blur-md">
-          {lang === "en"
-            ? "Hover any orbiting portal to pause • Click to enter"
-            : "Pasa el cursor para pausar • Haz clic para entrar"}
-        </p>
+      {/* Live Bottom Portal Spotlight Pill */}
+      <div className="pointer-events-none fixed bottom-5 left-1/2 z-40 w-[min(92vw,520px)] -translate-x-1/2 text-center">
+        <div
+          className="custom-bg inline-flex items-center gap-2.5 rounded-full px-5 py-2 text-xs font-medium text-cream transition-all duration-300"
+          style={
+            activeDoor
+              ? {
+                  borderColor: `${activeDoor.accent}99`,
+                  boxShadow: `0 0 24px ${activeDoor.accent}44`,
+                }
+              : undefined
+          }
+        >
+          {activeDoor ? (
+            <>
+              <span className="text-base">{activeDoor.icon}</span>
+              <span className="font-bold">{activeDoor.label[lang]}</span>
+              <span className="opacity-60">·</span>
+              <span className="text-cream/85">{activeDoor.subtitle[lang]}</span>
+            </>
+          ) : (
+            <span className="tracking-wider uppercase text-[11px] text-cream/85">
+              {lang === "en"
+                ? "Click the Mushroom Spirit to spin • Hover any portal to explore"
+                : "Haz clic en el Espíritu Hongo • Pasa el cursor por cualquier portal"}
+            </span>
+          )}
+        </div>
       </div>
     </main>
   );

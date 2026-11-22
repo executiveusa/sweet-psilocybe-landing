@@ -5,22 +5,21 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import SanctuaryCenterpiece from "./SanctuaryCenterpiece";
 import type { GatewaySkinV1 } from "../spec";
+import type { OrbitalNavItem } from "./OrbitalNavigation";
 
 interface TransparentModelStageProps {
   skin: GatewaySkinV1;
   isNight: boolean;
   reducedMotion: boolean;
   pointerOffset: { x: number; y: number };
+  activeDoor: OrbitalNavItem | null;
+  spinTrigger: number;
 }
 
 interface ErrorBoundaryState {
   hasError: boolean;
 }
 
-/**
- * Isolates WebGL / GLB runtime failures so a missing WebGL context or corrupt model
- * never breaks the San Juan Islands painted backdrop or orbiting navigation wheel.
- */
 class Gateway3DErrorBoundary extends Component<
   { children: React.ReactNode },
   ErrorBoundaryState
@@ -32,7 +31,10 @@ class Gateway3DErrorBoundary extends Component<
   }
 
   componentDidCatch(err: Error) {
-    console.warn("[Gateway3DErrorBoundary] Falling back to 2D layered view:", err.message);
+    console.warn(
+      "[Gateway3DErrorBoundary] Falling back to 2D layered view:",
+      err.message
+    );
   }
 
   render() {
@@ -41,54 +43,107 @@ class Gateway3DErrorBoundary extends Component<
   }
 }
 
-function ParallaxRig({
+function InteractiveHeroRig({
   pointerOffset,
   reducedMotion,
+  activeDoor,
+  spinTrigger,
+  accentColor,
   children,
 }: {
   pointerOffset: { x: number; y: number };
   reducedMotion: boolean;
+  activeDoor: OrbitalNavItem | null;
+  spinTrigger: number;
+  accentColor: string;
   children: React.ReactNode;
 }) {
   const groupRef = useRef<THREE.Group>(null);
+  const burstRingRef = useRef<THREE.Mesh>(null);
+  const spinOffsetRef = useRef(0);
+  const lastTriggerRef = useRef(spinTrigger);
+  const burstProgressRef = useRef(1);
 
-  useFrame(() => {
-    if (!groupRef.current || reducedMotion) return;
-    const targetRotY = pointerOffset.x * 0.28;
-    const targetRotX = -pointerOffset.y * 0.12;
-    groupRef.current.rotation.y = THREE.MathUtils.lerp(
-      groupRef.current.rotation.y,
-      targetRotY,
-      0.06
-    );
-    groupRef.current.rotation.x = THREE.MathUtils.lerp(
-      groupRef.current.rotation.x,
-      targetRotX,
-      0.06
-    );
+  if (spinTrigger !== lastTriggerRef.current) {
+    lastTriggerRef.current = spinTrigger;
+    spinOffsetRef.current += Math.PI * 2;
+    burstProgressRef.current = 0;
+  }
+
+  useFrame((_, delta) => {
+    if (reducedMotion) return;
+
+    if (groupRef.current) {
+      const doorYaw = activeDoor
+        ? Math.cos((activeDoor.angleDeg * Math.PI) / 180) * 0.42
+        : 0;
+      const targetRotY = pointerOffset.x * 0.3 + doorYaw + spinOffsetRef.current;
+      const targetRotX = -pointerOffset.y * 0.14;
+      const targetScale = activeDoor ? 0.98 : 0.92;
+
+      groupRef.current.rotation.y = THREE.MathUtils.lerp(
+        groupRef.current.rotation.y,
+        targetRotY,
+        0.075
+      );
+      groupRef.current.rotation.x = THREE.MathUtils.lerp(
+        groupRef.current.rotation.x,
+        targetRotX,
+        0.07
+      );
+      const s = THREE.MathUtils.lerp(
+        groupRef.current.scale.x,
+        targetScale,
+        0.08
+      );
+      groupRef.current.scale.setScalar(s);
+    }
+
+    // Celebratory glowing spore ring burst when Mushroom Spirit is clicked
+    if (burstRingRef.current && burstProgressRef.current < 1) {
+      burstProgressRef.current = Math.min(1, burstProgressRef.current + delta * 1.4);
+      const p = burstProgressRef.current;
+      const scale = 0.6 + p * 2.8;
+      burstRingRef.current.scale.set(scale, scale, 1);
+      const mat = burstRingRef.current.material as THREE.MeshBasicMaterial;
+      mat.opacity = (1 - p) * 0.75;
+    }
   });
 
   return (
     <group ref={groupRef} position={[0, -0.05, 0]} scale={0.92}>
       {children}
+      <mesh ref={burstRingRef} rotation={[-Math.PI / 2, 0, 0]} position={[0, -0.2, 0]}>
+        <ringGeometry args={[0.9, 1.06, 48]} />
+        <meshBasicMaterial
+          color={accentColor}
+          transparent
+          opacity={0}
+          side={THREE.DoubleSide}
+        />
+      </mesh>
     </group>
   );
 }
 
 /**
- * Layer 5 (Piece #08 + Piece #05 slot):
- * True transparent Three.js Canvas floating directly OVER the painted PNW backdrop,
- * protected by Gateway3DErrorBoundary + webglcontextlost handler.
+ * Layer 5 (Piece #08 + Piece #05 + Upgrade #2):
+ * Transparent 3D Canvas with portal-tracking rotation, dynamic lantern accent glow,
+ * and click-to-spin spore burst reaction.
  */
 export default function TransparentModelStage({
   skin,
   isNight,
   reducedMotion,
   pointerOffset,
+  activeDoor,
+  spinTrigger,
 }: TransparentModelStageProps) {
   const [webglLost, setWebglLost] = useState(false);
 
   if (webglLost) return null;
+
+  const accentColor = activeDoor?.accent || "#FFE0A3";
 
   return (
     <Gateway3DErrorBoundary>
@@ -124,17 +179,21 @@ export default function TransparentModelStage({
             intensity={1.35}
             color={isNight ? "#A9C0B0" : "#E5B8F4"}
           />
+          {/* Dynamic lantern / portal-reactive accent light */}
           <pointLight
-            position={[0, -0.3, 1.8]}
-            intensity={isNight ? 1.4 : 0.7}
-            color="#FFE0A3"
-            distance={6}
+            position={[0, -0.25, 1.9]}
+            intensity={activeDoor ? 2.4 : isNight ? 1.5 : 0.85}
+            color={accentColor}
+            distance={7}
           />
 
           <Suspense fallback={null}>
-            <ParallaxRig
+            <InteractiveHeroRig
               pointerOffset={pointerOffset}
               reducedMotion={reducedMotion}
+              activeDoor={activeDoor}
+              spinTrigger={spinTrigger}
+              accentColor={accentColor}
             >
               <SanctuaryCenterpiece
                 skin={{
@@ -145,10 +204,10 @@ export default function TransparentModelStage({
                   },
                 }}
                 isNight={isNight}
-                motionState={isNight ? "night" : "day"}
+                motionState={activeDoor ? "hover" : isNight ? "night" : "day"}
                 reducedMotion={reducedMotion}
               />
-            </ParallaxRig>
+            </InteractiveHeroRig>
           </Suspense>
         </Canvas>
       </div>

@@ -30,8 +30,9 @@ function resolveBackdrop(pathname: string): { src: string; alt: string } {
 }
 
 /**
- * Pieces #02, #03, #04: Route-aware PNW painterly backdrop + subtle scrim + drifting fireflies
- * rendered behind all inner pages (/landing, /store, /blog, /library, /games).
+ * Pieces #02, #03, #04: Route-aware PNW painterly backdrop at z-0 (above body's dark base,
+ * below z-10 page content) so Store, Blog, Library, Games, and Landing all display their
+ * painted PNW worlds behind frosted-glass cards.
  */
 export default function PageBackdrop({ pathname }: { pathname: string }) {
   const { src, alt } = resolveBackdrop(pathname || "/landing");
@@ -40,21 +41,21 @@ export default function PageBackdrop({ pathname }: { pathname: string }) {
     <>
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 -z-20 overflow-hidden bg-ink"
+        className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-ink"
       >
         <Image
           src={src}
           alt={alt}
           fill
           sizes="100vw"
-          priority={false}
-          className="object-cover object-center opacity-45"
+          priority
+          className="object-cover object-center opacity-70"
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(7, 10, 12, 0.58) 0%, rgba(7, 10, 12, 0.72) 55%, rgba(7, 10, 12, 0.88) 100%)",
+              "linear-gradient(180deg, rgba(7, 10, 12, 0.42) 0%, rgba(7, 10, 12, 0.58) 55%, rgba(7, 10, 12, 0.80) 100%)",
           }}
         />
       </div>

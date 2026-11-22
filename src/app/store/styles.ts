@@ -62,10 +62,11 @@ export const ProductGrid = styled.div`
 export const ProductCard = styled.div`
   display: flex;
   flex-direction: column;
-  border-radius: 1rem;
-  border: 1px solid rgba(255, 255, 255, 0.08);
-  background: rgba(255, 255, 255, 0.02);
-  backdrop-filter: blur(10px);
+  border-radius: 1.25rem;
+  border: 1px solid rgba(246, 175, 207, 0.22);
+  background: rgba(11, 13, 18, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
   overflow: hidden;
   transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
   text-decoration: none;

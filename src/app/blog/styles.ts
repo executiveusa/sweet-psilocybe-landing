@@ -3,8 +3,9 @@ import { styled } from "styled-components";
 import Link from "next/link";
 
 export const BlogWrapper = styled.main`
-  padding: 8rem 2rem;
+  padding: 7.5rem 1.5rem 5rem;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
 `;
 
@@ -62,18 +63,22 @@ export const SearchInput = styled.input`
 
 export const ArticleGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1.75rem;
+  align-items: stretch;
 `;
 
 export const StyledLink = styled(Link)`
   text-decoration: none;
   display: block;
+  height: 100%;
 `;
 
 export const ArticleCard = styled.div`
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(11, 13, 18, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(169, 192, 176, 0.24);
   border-radius: 1.5rem;
   padding: 2rem;
   transition: all 0.3s ease;
@@ -83,8 +88,8 @@ export const ArticleCard = styled.div`
 
   &:hover {
     transform: translateY(-5px);
-    border-color: rgba(246, 175, 207, 0.3);
-    background: rgba(255, 255, 255, 0.05);
+    border-color: rgba(246, 175, 207, 0.55);
+    background: rgba(11, 13, 18, 0.84);
   }
 
   h2 {

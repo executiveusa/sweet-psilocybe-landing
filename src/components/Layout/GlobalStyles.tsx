@@ -28,7 +28,6 @@ export const GlobalStyles = styled.createGlobalStyle`
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
     background-color: var(--Background);
     color: var(--white);
-    scroll-snap-type: y mandatory;
 
     &::-webkit-scrollbar {
       width: 0.5rem;

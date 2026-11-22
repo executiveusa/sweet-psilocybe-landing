@@ -3,8 +3,9 @@ import { styled } from "styled-components";
 import Link from "next/link";
 
 export const GamesWrapper = styled.main`
-  padding: 8rem 2rem;
+  padding: 7.5rem 1.5rem 5rem;
   max-width: 1200px;
+  width: 100%;
   margin: 0 auto;
 `;
 
@@ -40,13 +41,16 @@ export const GamesHero = styled.div`
 
 export const GamesGrid = styled.div`
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(340px, 1fr));
-  gap: 2rem;
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
+  gap: 1.75rem;
+  align-items: stretch;
 `;
 
 export const GameCard = styled.div`
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.05);
+  background: rgba(11, 13, 18, 0.72);
+  backdrop-filter: blur(14px);
+  -webkit-backdrop-filter: blur(14px);
+  border: 1px solid rgba(246, 175, 207, 0.22);
   border-radius: 1.5rem;
   padding: 2rem;
   display: flex;

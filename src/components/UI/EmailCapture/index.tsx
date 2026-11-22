@@ -1,5 +1,6 @@
 'use client';
 import { useState } from 'react';
+import Link from 'next/link';
 import { useForm } from 'react-hook-form';
 import { zodResolver } from '@hookform/resolvers/zod';
 import { z } from 'zod';
@@ -113,15 +114,15 @@ const EmailCapture = () => {
         {isDemoMode && status === 'success' && (
           <DemoModeNotice>
             <p>
-              <strong>Demo Mode:</strong> To save emails to your database, follow the setup
-              instructions in <code>SUPABASE-SETUP.md</code>
+              <strong>Preview Mode:</strong> Your interest has been recorded
+              locally while our mailing list backend finishes provisioning.
             </p>
           </DemoModeNotice>
         )}
 
         <Disclaimer>
           We respect your privacy. Unsubscribe anytime.{' '}
-          <a href="#privacy">Privacy Policy</a>
+          <Link href="/legal/privacy-policy">Privacy Policy</Link>
         </Disclaimer>
       </Inner>
     </Wrapper>

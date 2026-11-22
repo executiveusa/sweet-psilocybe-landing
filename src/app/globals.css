@@ -6,12 +6,11 @@
 
 @layer base {
   :root {
-    /* Sweet Psilocybe Brand Colors */
-    --ink: 11 11 11;          /* #0B0B0B */
-    --petal: 246 175 207;     /* #F6AFCF */
-    --spore: 255 237 238;     /* #FFEDEE */
-    --fern: 169 192 176;      /* #A9C0B0 */
-    --cream: 247 243 239;     /* #F7F3EF */
+    --ink: 11 11 11;
+    --petal: 246 175 207;
+    --spore: 255 237 238;
+    --fern: 169 192 176;
+    --cream: 247 243 239;
   }
 
   body {
@@ -22,17 +21,140 @@
 }
 
 .custom-bg {
-  background: rgba(11, 13, 16, 0.42);
-  border: 1px solid rgba(246, 175, 207, 0.35);
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
-  box-shadow: inset 0 17px 5px -9px rgba(246, 175, 207, 0.08);
+  background: rgba(11, 13, 18, 0.52);
+  border: 1px solid rgba(246, 175, 207, 0.42);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  box-shadow: inset 0 17px 5px -9px rgba(246, 175, 207, 0.1), 0 6px 20px rgba(0, 0, 0, 0.35);
   transition: box-shadow 0.25s ease, border-color 0.25s ease, transform 0.25s ease;
 }
 
 .custom-bg:hover {
-  border-color: rgba(246, 175, 207, 0.78);
-  box-shadow: 0 0 22px 0 rgba(246, 175, 207, 0.38);
+  border-color: rgba(246, 175, 207, 0.9);
+  box-shadow: 0 0 26px 0 rgba(246, 175, 207, 0.55);
+}
+
+/* Explicit orbital wheel animations (never silently stripped by Tailwind purge or Windows OS reduced-motion) */
+@keyframes orbit-cw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+@keyframes orbit-ccw {
+  from {
+    transform: rotate(0deg);
+  }
+  to {
+    transform: rotate(-360deg);
+  }
+}
+
+.orbital-wheel {
+  animation: orbit-cw 28s linear infinite;
+  will-change: transform;
+}
+
+.orbital-counter {
+  animation: orbit-ccw 28s linear infinite;
+  will-change: transform;
+}
+
+.orbital-wheel:hover,
+.orbital-wheel:hover .orbital-counter {
+  animation-play-state: paused;
+}
+
+.motion-paused .orbital-wheel,
+.motion-paused .orbital-counter,
+.motion-paused .living-anim {
+  animation-play-state: paused !important;
+}
+
+@keyframes firefly-drift {
+  0% {
+    transform: translate3d(0px, 0px, 0) scale(0.8);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translate3d(48px, -54px, 0) scale(1.3);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(-32px, -110px, 0) scale(0.9);
+    opacity: 0.3;
+  }
+}
+
+@keyframes mist-drift {
+  0% {
+    transform: translate3d(-6%, 0, 0) scale(1.05);
+    opacity: 0.28;
+  }
+  50% {
+    transform: translate3d(6%, -2%, 0) scale(1.1);
+    opacity: 0.54;
+  }
+  100% {
+    transform: translate3d(-6%, 0, 0) scale(1.05);
+    opacity: 0.28;
+  }
+}
+
+@keyframes ray-breathe {
+  0%,
+  100% {
+    opacity: 0.2;
+    transform: rotate(-16deg) scaleY(1);
+  }
+  50% {
+    opacity: 0.45;
+    transform: rotate(-10deg) scaleY(1.08);
+  }
+}
+
+@keyframes aura-breathe {
+  0%,
+  100% {
+    transform: translate(-50%, -50%) scale(0.92);
+    opacity: 0.55;
+  }
+  50% {
+    transform: translate(-50%, -50%) scale(1.18);
+    opacity: 0.92;
+  }
+}
+
+@keyframes bokeh-rise {
+  0% {
+    transform: translate3d(0, 14vh, 0) scale(0.85);
+    opacity: 0;
+  }
+  20% {
+    opacity: 0.65;
+  }
+  80% {
+    opacity: 0.42;
+  }
+  100% {
+    transform: translate3d(36px, -36vh, 0) scale(1.25);
+    opacity: 0;
+  }
+}
+
+@keyframes ring-pulse {
+  0%,
+  100% {
+    transform: scale(0.99);
+    opacity: 0.7;
+  }
+  50% {
+    transform: scale(1.02);
+    opacity: 1;
+  }
 }
 
 @layer utilities {
@@ -41,47 +163,11 @@
   .text-cream { color: rgb(var(--cream)); }
   .text-fern { color: rgb(var(--fern)); }
   .text-spore { color: rgb(var(--spore)); }
-  
   .bg-ink { background-color: rgb(var(--ink)); }
   .bg-cream { background-color: rgb(var(--cream)); }
   .bg-petal { background-color: rgb(var(--petal)); }
   .bg-fern { background-color: rgb(var(--fern)); }
   .bg-spore { background-color: rgb(var(--spore)); }
-  
-  .glow-petal {
-    box-shadow: 0 10px 30px rgba(246, 175, 207, 0.25);
-  }
-  
-  .glow-fern {
-    box-shadow: 0 10px 30px rgba(169, 192, 176, 0.15);
-  }
-
-  .pause {
-    animation-play-state: paused;
-  }
-}
-
-@keyframes firefly-drift {
-  0% {
-    transform: translate(0px, 0px) scale(0.9);
-    opacity: 0.4;
-  }
-  50% {
-    opacity: 0.95;
-  }
-  100% {
-    transform: translate(80px, -90px) scale(1.15);
-    opacity: 0.35;
-  }
-}
-
-/* Reduced motion accessibility */
-@media (prefers-reduced-motion: reduce) {
-  *,
-  *::before,
-  *::after {
-    animation-duration: 0.01ms !important;
-    animation-iteration-count: 1 !important;
-    transition-duration: 0.01ms !important;
-  }
+  .glow-petal { box-shadow: 0 10px 30px rgba(246, 175, 207, 0.25); }
+  .glow-fern { box-shadow: 0 10px 30px rgba(169, 192, 176, 0.15); }
 }

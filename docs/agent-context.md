@@ -1,41 +1,33 @@
-# Agent Context — Sweet Psilocybe
+# Sweet Psilocybe — Agent Context
 
-## Purpose
-Faceless mycology education & artistic merchandise brand (18+ education + print-on-demand apparel via Printify; never sells psilocybin).
+## Repo Purpose
+**Sweet Psilocybe** (`executiveusa/sweet-psilocybe-landing`, production: `https://sweet-psilocybe-landing-nine.vercel.app`) — an independent, faceless Pacific Northwest mycology education & artistic merchandise brand (18+ evidence-based research + print-on-demand apparel via Printify; never sells controlled substances).
 
 ## Stack
-- Next.js 16.2.12 (App Router, Turbopack), React 19.2.0, TypeScript 5, Styled-Components 6
-- 3D Gateway: Three.js 0.185, `@react-three/fiber` 9.6, `@react-three/drei` 10.7, `@react-three/postprocessing` 3.0
-- Motion / Video: Framer Motion, GSAP, HyperFrames (`media/hyperframes/`), Blender (`assets-src/blender/`)
-- Hosting: Vercel (`the-pauli-effect/sweet-psilocybe-landing` → `https://sweet-psilocybe-landing-nine.vercel.app`)
-- Planned Backend: Hostinger self-hosted Supabase (`31.220.58.212`, schema `sweet_psilocybe.*` with strict RLS)
+- **Framework:** Next.js `16.4.6` (App Router, Turbopack), React 19, TypeScript
+- **3D & Motion:** Three.js / `@react-three/fiber` / `@react-three/drei`, Framer Motion, `styled-components` + Tailwind CSS
+- **Commerce & Backend:** Printify API (`/api/store/printify/products`), Supabase email capture (planned self-hosted Hostinger `sweet_psilocybe.*` schema)
+- **Pre-build Safety Gate:** `scripts/validate-gateway-skin.mjs` (`prebuild` script) verifies all 5 PNW WebP backdrops, 3 GLB models, licensed assets, and `SECRET_GUARD`.
 
-## Architecture & Key Paths
-- `src/gateway-kit/spec.ts` — Universal `gateway-skin/v1` contract (25-part anatomy)
-- `src/gateway-kit/skins/sweet-psilocybe.ts` — Sweet Psilocybe skin manifest + budgets + SPDX licenses
-- `src/gateway-kit/components/` — `GatewayShell.tsx`, `GatewayWorld.tsx`, `SanctuaryCenterpiece.tsx`
-- `src/gateway-kit/audio/useForestAudio.ts` — Consent-gated WebAudio forest soundscape
-- `src/app/(home)/page.tsx` & `src/app/gateway/page.tsx` — 3D Enchanted Canopy Gateway (primary `/` entrance)
-- `src/app/landing/` — Rebuilt faceless brand landing page (`/landing`)
-- `src/app/store/` — Standalone Printify-backed merch store (`/store`, `/store/[productId]`)
-- `src/app/blog/`, `src/app/library/`, `src/app/games/` — Education, global library, and arcade routes
-- `scripts/validate-gateway-skin.mjs` — Pre-build skin, asset, GLB budget, and SPDX license validator
-- `assets-src/blender/build_sanctuary.py` — Blender 4.x `.blend` → Draco `.glb` generator
-- `media/hyperframes/hero-loop/index.html` — HyperFrames HTML/CSS/GSAP motion reel template
+## Main Directories & Data Modules
+- `src/gateway-kit/` — 3D Gateway shell, `LivingAtmosphere`, `OrbitalNavigation`, `TransparentModelStage`, `FloatingPropStage`, `Library3DScene`, `PageBackdrop`, `FireFliesBackground`
+- `src/data/blogArticles.ts` — Single typed source of truth for `/blog`, `/blog/[slug]`, and `/landing` research highlights (13 live-verified primary citations)
+- `src/data/libraryItems.ts` — Single typed source of truth for `/library` (17 live-verified HTTP 200 references across Books, Documentaries, Movies)
+- `src/data/storeCatalog.ts` & `src/lib/storeCart.ts` — Single typed catalog + `localStorage` bag shared across `/store`, `/store/[productId]`, `/api/store/printify/products`, and `/landing`
+- `src/components/Games/CanopyCatchGame.tsx` — Native 60fps HTML5 Canvas game (*Mushroom Spirit: Canopy Catch*) embedded in `/games` alongside 6 live-verified open-source games
+- `public/background/*.webp` & `public/models/*.glb` — 5 PNW backdrops + 3 custom 3D `.glb` assets
 
-## Validation & Deploy Commands
-```bash
-node scripts/validate-gateway-skin.mjs
-npm run build
-npx vercel deploy --prod --yes
-```
+## Stacked Local Changes (Uncommitted — Not Yet Deployed to Vercel)
+1. **Gateway & Animations:** Fixed Windows `prefers-reduced-motion` freeze, added top-bar `⏸ Motion` toggle, removed untextured square particles, fixed `PageBackdrop` `z-0` layering behind all inner pages, built interactive 3D Library (`Library3DScene.tsx`).
+2. **`/games` Arcade:** Built `CanopyCatchGame.tsx` + sandboxed Arcade Cabinet hosting 6 live-verified open-source games (`next.config.js` CSP updated for `*.github.io` & `*.vercel.app`).
+3. **`/blog` & `/blog/[slug]`:** Extracted `src/data/blogArticles.ts` with 13 HTTP-200 verified primary citations, live search + tag filters, typed JSX (removed `dangerouslySetInnerHTML`), dynamic `useParams()` lookup.
+4. **`/library`:** Extracted `src/data/libraryItems.ts` replacing all 16 `#` dead links with 17 HTTP-200 verified URLs, added live search + language filter pills + hover contrast fix.
+5. **`/store` & `/store/[productId]`:** Fixed Printify API 1-item fallback bug with unified `StoreCatalogResponse`, removed deprecated `legacyBehavior` and `alert()`, added category filters, size/variant selector, and persistent `localStorage` bag.
+6. **`/landing` & `EmailCapture`:** Migrated `LandingClient.tsx` to `CURATED_PREVIEW_PRODUCTS` + `StoreCatalogResponse` contract, frosted-glass cards, fixed `#privacy` dead link → `/legal/privacy-policy`, removed developer-facing `SUPABASE-SETUP.md` notice.
 
-## Decisions Made
-- Promoted 3D Gateway (`gateway-skin/v1`) to `/` and moved the faceless brand landing page to `/landing` so visitors enter the 3D experience immediately with a 1-click skip/door.
-- Replaced external Drei `<Environment preset>` CDN fetches with a self-hosted procedural sky dome + explicit key/fill/rim lights to stay 100% CSP-compliant and eliminate CDN fetch failures.
-- Wired `/store` and `/landing` featured merch to live `/api/store/printify/products` with graceful fallback when Printify env vars are unset.
+## Build & Validation Commands
+- `Set-Location 'C:\Users\execu\Downloads\sweet-psilocybe-landing'; npm run build` (runs `prebuild` safety gate + Turbopack + TypeScript + 29 routes)
 
-## Next Recommended Steps
-1. Execute the Hostinger self-hosted Supabase `sweet_psilocybe.*` schema + RLS migration (`implementation_plan.md`) and wire `/blog` & `/library` to live Supabase tables.
-2. Add `PRINTIFY_API_TOKEN` and `PRINTIFY_SHOP_ID` in Vercel Project Settings so `/store` renders live Printify products.
-3. Run `blender --background --python assets-src/blender/build_sanctuary.py` on a machine with Blender 4.x to generate `public/skins/sweet-psilocybe/sanctuary.glb`.
+## Known Issues / Next Steps
+- **Ready for single batch deploy:** All 5 pages (`/games`, `/blog`, `/library`, `/store`, `/landing`) + animations are stacked and verified locally with zero Vercel deploys burned. Next step: user approval to `git commit` → `git push origin main` → single `npx vercel deploy --prod --yes` + live HTTP 200 smoke test.
+- **Later backend phase:** Connect live `PRINTIFY_API_TOKEN` / `PRINTIFY_SHOP_ID` + Stripe checkout + Hostinger self-hosted Supabase `sweet_psilocybe.*` schema.
