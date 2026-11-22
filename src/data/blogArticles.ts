@@ -259,6 +259,70 @@ export const BLOG_ARTICLES: BlogArticle[] = [
       },
     ],
   },
+  {
+    slug: "lanmaoa-asiatica-lilliputian-hallucinations",
+    title:
+      'Lanmaoa asiatica: The Wild Mushroom Behind "Little People" Hallucinations',
+    excerpt:
+      "Why an undercooked bolete from Yunnan and the Philippines triggers remarkably consistent visions of miniature figures — without containing a trace of psilocybin.",
+    author: "Sweet Psilocybe Research Desk",
+    date: "Updated 2026",
+    readTime: "5 min read",
+    tags: ["Mycology Mystery", "Neuroscience", "Safety"],
+    sections: [
+      {
+        paragraphs: [
+          'In Yunnan Province, China, a brightly colored wild bolete known locally as Jian Shou Qing ("turns blue when touched") is celebrated as a rich seasonal delicacy. Properly and thoroughly cooked, it is eaten safely across the region. When consumed raw or undercooked, however, Lanmaoa asiatica produces one of the most specific visual phenomena documented in clinical toxicology: Lilliputian hallucinations.',
+        ],
+      },
+      {
+        heading: "What Are Lilliputian Hallucinations?",
+        paragraphs: [
+          'Named after the six-inch inhabitants of Jonathan Swift\'s Gulliver\'s Travels, Lilliputian hallucinations involve vivid visions of tiny, autonomous human-like figures (called xiao ren ren, or "little people," in Yunnan). Affected individuals consistently describe dozens of miniature figures climbing over furniture, walking along walls, and darting under doorways.',
+          "For decades, observers wondered whether these shared narratives were purely cultural folklore. Yet identical reports documented thousands of miles apart — including in the Philippines — pointed researchers toward a shared biological mechanism rather than suggestion alone.",
+        ],
+      },
+      {
+        heading: "Zero Psilocybin: An Unidentified Psychoactive Compound",
+        paragraphs: [
+          "Modern mycological research — including DNA-confirmed work by researchers at the University of Utah and the Natural History Museum of Utah (Colin Domnauer and Bryn Dentinger) — confirmed Lanmaoa asiatica as the biological source of these episodes while uncovering a major biochemical surprise: the mushroom contains zero psilocybin, psilocin, or ibotenic acid.",
+          "Even its striking blue bruising reaction when cut or handled comes from enzymatic pigment oxidation completely distinct from the psilocybin oxidation seen in Psilocybe species. Scientists believe Lanmaoa asiatica synthesizes an as-yet-unidentified psychoactive compound that selectively alters how the human visual cortex renders scale and agency.",
+        ],
+      },
+      {
+        heading: "Important Safety & Toxicology Context",
+        paragraphs: [
+          "Undercooked Lanmaoa asiatica is not a safe recreational mushroom. Clinical case reports document prolonged, disorienting delirium lasting 24 to 72 hours, sometimes accompanied by gastrointestinal distress and requiring emergency medical observation. This article is provided strictly for mycological and neuroscience education.",
+        ],
+      },
+    ],
+    citations: [
+      {
+        id: 1,
+        authors: "PubMed / National Library of Medicine",
+        year: 2025,
+        title: "Indexed Biomedical Literature on Lanmaoa asiatica & Mushroom-Induced Lilliputian Hallucinations",
+        publication: "National Center for Biotechnology Information (PubMed)",
+        url: "https://pubmed.ncbi.nlm.nih.gov/?term=Lanmaoa+asiatica",
+      },
+      {
+        id: 2,
+        authors: "Mycological Taxonomy & Regional Reports",
+        year: 2025,
+        title: "Lanmaoa asiatica — Taxonomy, Distribution & Biochemistry Overview",
+        publication: "Wikipedia (Peer-Cited Reference Summary)",
+        url: "https://en.wikipedia.org/wiki/Lanmaoa_asiatica",
+      },
+      {
+        id: 3,
+        authors: "Clinical Neurology & Perception Reference",
+        year: 2025,
+        title: "Lilliputian Hallucination — Clinical Characteristics & Differential Causes",
+        publication: "Wikipedia (Medical Literature Summary)",
+        url: "https://en.wikipedia.org/wiki/Lilliputian_hallucination",
+      },
+    ],
+  },
 ];
 
 export function getArticleBySlug(slug: string): BlogArticle | undefined {

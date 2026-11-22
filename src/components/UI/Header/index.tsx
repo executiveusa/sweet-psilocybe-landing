@@ -1,6 +1,7 @@
 'use client';
 
 import React, { useEffect, useState } from 'react';
+import Image from 'next/image';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
 import { links } from './constants';
@@ -26,13 +27,20 @@ const Header = () => {
   return (
     <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0B0D12]/80 backdrop-blur-xl">
       <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
-        {/* Top-left clickable Brand Identity */}
+        {/* Top-left clickable Brand Identity with Original Crest Logo */}
         <Link
           href="/"
-          className="inline-flex min-h-[44px] items-center gap-2 text-lg font-bold tracking-tight text-[#F6AFCF] transition hover:text-[#FFEDEE] sm:text-xl"
+          className="inline-flex min-h-[44px] items-center gap-2.5 text-lg font-bold tracking-tight text-[#F6AFCF] transition hover:text-[#FFEDEE] sm:text-xl"
           aria-label="Sweet Psilocybe — Return to 3D Gateway Home"
         >
-          <span aria-hidden="true">🍄</span>
+          <Image
+            src="/images/sweet-psilocybe-crest-transparent.png"
+            alt="Sweet Psilocybe Logo"
+            width={40}
+            height={40}
+            priority
+            className="h-9 w-9 shrink-0 rounded-full object-contain sm:h-10 sm:w-10"
+          />
           <span>Sweet Psilocybe</span>
         </Link>
 

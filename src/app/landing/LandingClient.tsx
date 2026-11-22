@@ -157,25 +157,23 @@ export default function LandingClient() {
         className="mx-auto max-w-6xl border-t border-white/10 px-5 py-16 sm:px-8 sm:py-20"
       >
         <div className="mb-10 max-w-2xl">
-          <p className="text-xs font-semibold uppercase tracking-[0.16em] text-[#A9C0B0]">
-            How to Explore
-          </p>
           <h2
             id="gateway-guide-heading"
-            className="mt-2 text-2xl font-bold tracking-tight text-[#F7F3EF] sm:text-4xl"
+            className="text-2xl font-bold tracking-tight text-[#F7F3EF] sm:text-4xl"
           >
-            Four worlds orbiting one 3D Gateway.
+            How to Explore
           </h2>
           <p className="mt-3 text-sm leading-relaxed text-[#F7F3EF]/75 sm:text-base">
-            On our interactive{" "}
+            Enter our interactive{" "}
             <Link
               href="/gateway"
               className="text-[#F6AFCF] underline underline-offset-4 hover:text-[#FFEDEE]"
             >
               3D Gateway
             </Link>
-            , four glowing portals orbit the central Mushroom Spirit. Choose any
-            area below to see what lives inside and jump straight in.
+            . You will see four glowing portals orbiting the central Mushroom
+            Spirit. Choose any area to see what lives inside and jump straight
+            in.
           </p>
         </div>
 

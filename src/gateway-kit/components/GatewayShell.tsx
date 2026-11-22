@@ -138,13 +138,23 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
 
       {/* LAYER 7 (z-40): Top Identity Bar & Controls */}
       <header className="pointer-events-none fixed left-0 right-0 top-0 z-40 flex flex-wrap items-start justify-between gap-3 p-4 sm:p-6">
-        <div className="custom-bg pointer-events-auto max-w-xs rounded-2xl px-4 py-2.5 text-cream">
-          <h1 className="text-base font-bold tracking-tight sm:text-lg">
-            🍄 {skin.identity.brandName}
-          </h1>
-          <p className="mt-0.5 text-[11px] leading-snug text-cream/80 sm:text-xs">
-            {skin.identity.complianceBadge[lang]}
-          </p>
+        <div className="custom-bg pointer-events-auto flex max-w-xs items-center gap-3 rounded-2xl px-3.5 py-2.5 text-cream">
+          <Image
+            src="/images/sweet-psilocybe-crest-transparent.png"
+            alt="Sweet Psilocybe Logo"
+            width={40}
+            height={40}
+            priority
+            className="h-10 w-10 shrink-0 rounded-full object-contain"
+          />
+          <div>
+            <h1 className="text-base font-bold tracking-tight text-petal sm:text-lg">
+              {skin.identity.brandName}
+            </h1>
+            <p className="mt-0.5 text-[11px] leading-snug text-cream/80 sm:text-xs">
+              {skin.identity.complianceBadge[lang]}
+            </p>
+          </div>
         </div>
 
         <div className="pointer-events-auto flex flex-wrap items-center gap-2">
