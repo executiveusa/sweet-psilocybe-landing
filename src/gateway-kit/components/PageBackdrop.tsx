@@ -23,6 +23,12 @@ function resolveBackdrop(pathname: string): { src: string; alt: string } {
       alt: "Misty Pacific Northwest Victorian glass conservatory and mycology archive",
     };
   }
+  if (pathname.startsWith("/games")) {
+    return {
+      src: "/background/games-background.webp",
+      alt: "Bioluminescent Pacific Northwest old-growth mushroom grove and twilight arcade clearing",
+    };
+  }
   return {
     src: "/background/home-twilight.webp",
     alt: "Enchanted Pacific Northwest forest clearing overlooking the San Juan Islands",
@@ -44,18 +50,19 @@ export default function PageBackdrop({ pathname }: { pathname: string }) {
         className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-ink"
       >
         <Image
+          key={src}
           src={src}
           alt={alt}
           fill
           sizes="100vw"
           priority
-          className="object-cover object-center opacity-70"
+          className="object-cover object-center opacity-95"
         />
         <div
           className="absolute inset-0"
           style={{
             background:
-              "linear-gradient(180deg, rgba(7, 10, 12, 0.42) 0%, rgba(7, 10, 12, 0.58) 55%, rgba(7, 10, 12, 0.80) 100%)",
+              "linear-gradient(180deg, rgba(7, 10, 12, 0.22) 0%, rgba(7, 10, 12, 0.34) 55%, rgba(7, 10, 12, 0.62) 100%)",
           }}
         />
       </div>

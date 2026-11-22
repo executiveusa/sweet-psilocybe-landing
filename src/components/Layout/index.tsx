@@ -1,10 +1,10 @@
 'use client';
 
 import { ReactLenis } from '@studio-freight/react-lenis';
+import { motion } from 'framer-motion';
 import StyledComponentsRegistry from '../../../libs/registry';
 import { GlobalStyles } from './GlobalStyles';
-import { Footer, Header, Preloader } from '..';
-import { useState } from 'react';
+import { Footer, Header } from '..';
 import { usePathname } from 'next/navigation';
 import PageBackdrop from '@/gateway-kit/components/PageBackdrop';
 import HomeButton from '@/gateway-kit/components/HomeButton';
@@ -12,7 +12,6 @@ import HomeButton from '@/gateway-kit/components/HomeButton';
 const GATEWAY_ROUTES = new Set(['/', '/gateway']);
 
 const Layout = ({ children }: { children: React.ReactNode }) => {
-  const [complete, setComplete] = useState(false);
   const pathname = usePathname() || '/';
   const isGateway = GATEWAY_ROUTES.has(pathname);
 
@@ -34,12 +33,17 @@ const Layout = ({ children }: { children: React.ReactNode }) => {
         <GlobalStyles />
         <PageBackdrop pathname={pathname} />
         <HomeButton />
-        <Preloader setComplete={setComplete} />
-        <div className={complete ? 'complete' : 'not_complete'} style={{ position: 'relative', zIndex: 20 }}>
+        <motion.div
+          key={pathname}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
+          transition={{ duration: 0.22, ease: 'easeOut' }}
+          style={{ position: 'relative', zIndex: 20 }}
+        >
           <Header />
           {children}
           <Footer />
-        </div>
+        </motion.div>
       </ReactLenis>
     </StyledComponentsRegistry>
   );

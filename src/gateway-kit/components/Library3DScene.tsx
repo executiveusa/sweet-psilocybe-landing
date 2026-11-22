@@ -190,7 +190,7 @@ export default function Library3DScene({
 
   return (
     <Library3DErrorBoundary>
-      <div className="custom-bg relative mx-auto mb-10 h-[340px] w-full max-w-4xl overflow-hidden rounded-3xl sm:h-[400px]">
+      <div className="relative mx-auto mb-10 h-[340px] w-full max-w-4xl overflow-hidden rounded-3xl border border-fern/30 bg-[#0B0D12]/30 backdrop-blur-[4px] shadow-2xl sm:h-[400px]">
         <Canvas
           camera={{ position: [0, 0.8, 6.2], fov: 44 }}
           dpr={[1, 2]}

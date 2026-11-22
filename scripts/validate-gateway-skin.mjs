@@ -22,6 +22,7 @@ const REQUIRED_BACKDROPS = [
   "public/background/store-background.webp",
   "public/background/blog-background.webp",
   "public/background/library-background.webp",
+  "public/background/games-background.webp",
 ];
 
 const SECRET_PATTERNS = [

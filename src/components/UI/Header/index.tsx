@@ -1,62 +1,147 @@
 'use client';
 
-import Image from 'next/image';
-import {
-  Wrapper,
-  Inner,
-  LogoContainer,
-  Nav,
-  CallToActions,
-  AbsoluteLinks,
-  BurgerMenu,
-} from './styles';
-// raft_logo import removed (legacy Raft asset, not used)
-import ic_bars from '../../../../public/svgs/ic_bars.svg';
-import { GetStartedButton } from '@/components';
-import AnimatedLink from '@/components/Common/AnimatedLink';
-import { useState } from 'react';
-import { motion } from 'framer-motion';
-import { links, menu } from './constants';
+import React, { useEffect, useState } from 'react';
+import Link from 'next/link';
+import { usePathname } from 'next/navigation';
+import { links } from './constants';
 
 const Header = () => {
+  const pathname = usePathname() || '/';
   const [isOpen, setIsOpen] = useState(false);
-  const storeUrl = process.env.NEXT_PUBLIC_STORE_URL;
-  
+
+  // Close mobile menu on route change or Escape key
+  useEffect(() => {
+    setIsOpen(false);
+  }, [pathname]);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKeyDown = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') setIsOpen(false);
+    };
+    window.addEventListener('keydown', onKeyDown);
+    return () => window.removeEventListener('keydown', onKeyDown);
+  }, [isOpen]);
+
   return (
-    <Wrapper>
-      <Inner>
-        <LogoContainer>
-          <h1 style={{ 
-            fontSize: '1.5rem', 
-            fontWeight: 700, 
-            color: 'var(--primary)',
-            margin: 0,
-            fontFamily: 'Inter, sans-serif'
-          }}>
-            Sweet Psilocybe
-          </h1>
-          <BurgerMenu onClick={() => setIsOpen(!isOpen)}>
-            <motion.div
-              variants={menu}
-              animate={isOpen ? 'open' : 'closed'}
-              initial="closed"
-            ></motion.div>
-            <Image src={ic_bars} alt="menu" />
-          </BurgerMenu>
-        </LogoContainer>
-        <Nav className={isOpen ? 'active' : ''}>
-          {links.filter(link => link.url !== '#store' || storeUrl).map((link, i) => (
-            <a key={i} href={link.url} target={link.linkTo === 'Store' ? '_blank' : undefined} rel={link.linkTo === 'Store' ? 'noopener noreferrer' : undefined}>
-              <AnimatedLink title={link.linkTo} />
-            </a>
-          ))}
-        </Nav>
-        <CallToActions className={isOpen ? 'active' : ''}>
-          <AnimatedLink title="18+ Only" />
-          <GetStartedButton padding="0.5rem 0.75rem" />
-        </CallToActions>
-      </Inner>
-    </Wrapper>
+    <header className="sticky top-0 z-50 w-full border-b border-white/10 bg-[#0B0D12]/80 backdrop-blur-xl">
+      <div className="mx-auto flex max-w-7xl items-center justify-between gap-4 px-4 py-3.5 sm:px-6">
+        {/* Top-left clickable Brand Identity */}
+        <Link
+          href="/"
+          className="inline-flex min-h-[44px] items-center gap-2 text-lg font-bold tracking-tight text-[#F6AFCF] transition hover:text-[#FFEDEE] sm:text-xl"
+          aria-label="Sweet Psilocybe — Return to 3D Gateway Home"
+        >
+          <span aria-hidden="true">🍄</span>
+          <span>Sweet Psilocybe</span>
+        </Link>
+
+        {/* Desktop Navigation */}
+        <nav
+          aria-label="Primary navigation"
+          className="hidden items-center gap-6 md:flex"
+        >
+          {links.map((link) => {
+            const isActive =
+              pathname === link.url ||
+              (link.url !== '/' &&
+                link.url !== '/landing' &&
+                pathname.startsWith(link.url));
+            return (
+              <Link
+                key={link.url}
+                href={link.url}
+                aria-current={isActive ? 'page' : undefined}
+                className={`text-sm font-medium transition ${
+                  isActive
+                    ? 'text-[#F6AFCF]'
+                    : 'text-[#F7F3EF]/75 hover:text-[#F7F3EF]'
+                }`}
+              >
+                {link.linkTo}
+              </Link>
+            );
+          })}
+        </nav>
+
+        {/* Desktop Right Action */}
+        <div className="hidden items-center gap-3 md:flex">
+          <span className="rounded-full border border-[#A9C0B0]/35 bg-[#A9C0B0]/10 px-2.5 py-1 text-[11px] font-semibold uppercase tracking-wider text-[#A9C0B0]">
+            18+ Education
+          </span>
+          <Link
+            href="/gateway"
+            className="rounded-full bg-[#F6AFCF] px-4 py-2 text-xs font-bold text-[#0B0D12] transition hover:bg-[#FFEDEE]"
+          >
+            3D Gateway →
+          </Link>
+        </div>
+
+        {/* Mobile Menu Button (44x44 minimum tap target) */}
+        <button
+          type="button"
+          onClick={() => setIsOpen((v) => !v)}
+          aria-expanded={isOpen}
+          aria-controls="mobile-primary-nav"
+          aria-label={isOpen ? 'Close navigation menu' : 'Open navigation menu'}
+          className="inline-flex h-11 w-11 items-center justify-center rounded-xl border border-white/15 bg-white/5 text-[#F7F3EF] transition hover:border-[#F6AFCF] md:hidden cursor-pointer"
+        >
+          {isOpen ? (
+            <span className="text-lg font-bold leading-none">✕</span>
+          ) : (
+            <span className="flex flex-col gap-1.5">
+              <span className="block h-0.5 w-5 bg-current" />
+              <span className="block h-0.5 w-5 bg-current" />
+              <span className="block h-0.5 w-5 bg-current" />
+            </span>
+          )}
+        </button>
+      </div>
+
+      {/* Mobile Navigation Drawer */}
+      {isOpen && (
+        <nav
+          id="mobile-primary-nav"
+          aria-label="Mobile navigation"
+          className="border-t border-white/10 bg-[#0B0D12]/95 px-4 py-4 backdrop-blur-xl md:hidden"
+        >
+          <div className="flex flex-col gap-1">
+            {links.map((link) => {
+              const isActive =
+                pathname === link.url ||
+                (link.url !== '/' &&
+                  link.url !== '/landing' &&
+                  pathname.startsWith(link.url));
+              return (
+                <Link
+                  key={link.url}
+                  href={link.url}
+                  aria-current={isActive ? 'page' : undefined}
+                  className={`flex min-h-[44px] items-center rounded-xl px-3 text-base font-medium transition ${
+                    isActive
+                      ? 'bg-[#F6AFCF]/15 text-[#F6AFCF]'
+                      : 'text-[#F7F3EF]/85 hover:bg-white/5 hover:text-[#F7F3EF]'
+                  }`}
+                >
+                  {link.linkTo}
+                </Link>
+              );
+            })}
+          </div>
+          <div className="mt-3 flex items-center justify-between border-t border-white/10 pt-3">
+            <span className="text-xs font-medium text-[#A9C0B0]">
+              18+ Educational Platform
+            </span>
+            <Link
+              href="/gateway"
+              className="rounded-full bg-[#F6AFCF] px-4 py-2 text-xs font-bold text-[#0B0D12]"
+            >
+              Enter 3D Gateway →
+            </Link>
+          </div>
+        </nav>
+      )}
+    </header>
   );
 };
 

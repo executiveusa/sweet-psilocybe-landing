@@ -104,72 +104,161 @@ export default function GamesPage() {
   const [selected, setSelected] = useState<ArcadeGame | null>(ARCADE_GAMES[0]);
   const [iframeKey, setIframeKey] = useState(0);
   const [iframeLoading, setIframeLoading] = useState(false);
-  const [isFullscreen, setIsFullscreen] = useState(false);
+  const [theaterMode, setTheaterMode] = useState(false);
   const cabinetRef = useRef<HTMLDivElement | null>(null);
-  const frameWrapRef = useRef<HTMLDivElement | null>(null);
 
   useEffect(() => {
-    const onFsChange = () => {
-      setIsFullscreen(Boolean(document.fullscreenElement));
-    };
     const onKeyDown = (e: KeyboardEvent) => {
       if (e.key === "Escape") {
-        if (document.fullscreenElement) {
-          document.exitFullscreen().catch(() => {});
+        if (theaterMode) {
+          setTheaterMode(false);
         } else if (selected) {
           setSelected(null);
         }
       }
     };
-    document.addEventListener("fullscreenchange", onFsChange);
     window.addEventListener("keydown", onKeyDown);
-    return () => {
-      document.removeEventListener("fullscreenchange", onFsChange);
-      window.removeEventListener("keydown", onKeyDown);
-    };
-  }, [selected]);
+    return () => window.removeEventListener("keydown", onKeyDown);
+  }, [theaterMode, selected]);
 
-  const selectGame = (game: ArcadeGame) => {
+  // Lock background page scroll while in Full-Screen Theater mode
+  useEffect(() => {
+    if (!theaterMode) return;
+    const prevOverflow = document.body.style.overflow;
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = prevOverflow;
+    };
+  }, [theaterMode]);
+
+  const selectGame = (game: ArcadeGame, openTheater = false) => {
     setSelected(game);
+    setTheaterMode(openTheater);
     if (game.kind === "embed") {
       setIframeLoading(true);
       setIframeKey((k) => k + 1);
     }
-    window.setTimeout(() => {
-      cabinetRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
-    }, 40);
+    if (!openTheater) {
+      window.setTimeout(() => {
+        cabinetRef.current?.scrollIntoView({ behavior: "smooth", block: "start" });
+      }, 40);
+    }
   };
 
   const exitGame = () => {
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
-    }
+    setTheaterMode(false);
     setSelected(null);
   };
 
   const returnHome = () => {
-    if (document.fullscreenElement) {
-      document
-        .exitFullscreen()
-        .catch(() => {})
-        .finally(() => router.push("/"));
-    } else {
-      router.push("/");
-    }
+    setTheaterMode(false);
+    router.push("/");
   };
 
-  const toggleFullscreen = () => {
-    const el = frameWrapRef.current;
-    if (!el) return;
-    if (document.fullscreenElement) {
-      document.exitFullscreen().catch(() => {});
-    } else {
-      el.requestFullscreen?.().catch(() => {});
-    }
+  const restartEmbed = () => {
+    setIframeLoading(true);
+    setIframeKey((k) => k + 1);
   };
 
   return (
     <GamesWrapper>
+      {/* Always-visible floating Return Home pill (even when scrolled into a game) */}
+      {!theaterMode && (
+        <div className="fixed bottom-5 right-5 z-50 flex items-center gap-2">
+          {selected && (
+            <button
+              type="button"
+              onClick={exitGame}
+              className="rounded-full border border-white/25 bg-[#0B0D12]/90 px-4 py-2.5 text-xs font-semibold text-cream shadow-xl backdrop-blur-md transition hover:border-petal hover:text-petal cursor-pointer"
+            >
+              ✕ Exit Game
+            </button>
+          )}
+          <Link
+            href="/"
+            className="rounded-full bg-petal px-4 py-2.5 text-xs font-bold text-ink shadow-xl transition hover:bg-spore"
+          >
+            🍄 ← Home Screen
+          </Link>
+        </div>
+      )}
+
+      {/* Full-Viewport In-App Theater Mode (keeps Return Home permanently pinned above the game) */}
+      {theaterMode && selected && (
+        <div
+          className="fixed inset-0 z-[9999] flex flex-col bg-[#070A0C]"
+          role="dialog"
+          aria-modal="true"
+          aria-label={`${selected.title} Full-Screen Arcade`}
+        >
+          <header className="flex shrink-0 flex-wrap items-center justify-between gap-2 border-b border-white/15 bg-[#0B0D12]/95 px-4 py-2.5 backdrop-blur-md">
+            <div className="flex items-center gap-2.5">
+              <button
+                type="button"
+                onClick={returnHome}
+                className="rounded-full bg-petal px-4 py-1.5 text-xs font-bold text-ink transition hover:bg-spore cursor-pointer"
+              >
+                🍄 ← Return Home
+              </button>
+              <button
+                type="button"
+                onClick={() => setTheaterMode(false)}
+                className="rounded-full border border-fern/50 bg-fern/15 px-3.5 py-1.5 text-xs font-semibold text-fern transition hover:bg-fern/25 cursor-pointer"
+              >
+                🕹️ All Games
+              </button>
+              <span className="hidden text-sm font-bold text-cream sm:inline">
+                {selected.title}
+              </span>
+            </div>
+
+            <div className="flex items-center gap-2">
+              {selected.kind === "embed" && (
+                <button
+                  type="button"
+                  onClick={restartEmbed}
+                  className="rounded-full border border-white/20 bg-white/5 px-3.5 py-1.5 text-xs font-semibold text-cream hover:border-petal cursor-pointer"
+                >
+                  ↻ Restart
+                </button>
+              )}
+              <button
+                type="button"
+                onClick={exitGame}
+                className="rounded-full border border-white/25 bg-white/10 px-3.5 py-1.5 text-xs font-semibold text-cream hover:border-petal hover:text-petal cursor-pointer"
+              >
+                ✕ Close Game
+              </button>
+            </div>
+          </header>
+
+          <div className="relative flex-1 overflow-auto">
+            {selected.kind === "native" ? (
+              <div className="flex min-h-full items-center justify-center p-4">
+                <CanopyCatchGame />
+              </div>
+            ) : (
+              <>
+                {iframeLoading && (
+                  <div className="absolute inset-0 z-10 flex items-center justify-center bg-[#070A0C]/90 text-sm text-petal">
+                    <span>🍄 Loading {selected.title}...</span>
+                  </div>
+                )}
+                <iframe
+                  key={`theater-${selected.id}-${iframeKey}`}
+                  src={selected.embedUrl}
+                  title={selected.title}
+                  sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"
+                  allow="autoplay"
+                  onLoad={() => setIframeLoading(false)}
+                  className="h-full w-full border-0"
+                />
+              </>
+            )}
+          </div>
+        </div>
+      )}
+
       {/* Top Quick-Return Bar */}
       <div className="mb-6 flex flex-wrap items-center justify-between gap-3">
         <Link
@@ -199,12 +288,12 @@ export default function GamesPage() {
         <p>
           Play our original Sweet Psilocybe game or launch 5 live-verified
           open-source mushroom games right inside the arcade — 100% free, no
-          downloads.
+          downloads, and always one click back home.
         </p>
       </GamesHero>
 
       {/* Active In-Page Arcade Cabinet */}
-      {selected && (
+      {selected && !theaterMode && (
         <section
           ref={cabinetRef}
           className="custom-bg mb-14 rounded-3xl p-4 sm:p-6"
@@ -223,9 +312,16 @@ export default function GamesPage() {
               <button
                 type="button"
                 onClick={returnHome}
+                className="rounded-full bg-petal px-3.5 py-1.5 text-xs font-bold text-ink hover:bg-spore transition cursor-pointer"
+              >
+                🍄 ← Return Home
+              </button>
+              <button
+                type="button"
+                onClick={() => setTheaterMode(true)}
                 className="rounded-full border border-fern/50 bg-fern/15 px-3.5 py-1.5 text-xs font-semibold text-fern hover:bg-fern/25 transition cursor-pointer"
               >
-                ← Return Home
+                ⛶ Full Screen (With Home Bar)
               </button>
               <button
                 type="button"
@@ -235,40 +331,20 @@ export default function GamesPage() {
                 ✕ Close Game
               </button>
               {selected.kind === "embed" && selected.embedUrl && (
-                <>
-                  <button
-                    type="button"
-                    onClick={() => {
-                      setIframeLoading(true);
-                      setIframeKey((k) => k + 1);
-                    }}
-                    className="rounded-full border border-white/20 bg-ink/70 px-3.5 py-1.5 text-xs font-semibold text-cream hover:border-petal cursor-pointer"
-                  >
-                    ↻ Restart
-                  </button>
-                  <button
-                    type="button"
-                    onClick={toggleFullscreen}
-                    className="rounded-full border border-white/20 bg-ink/70 px-3.5 py-1.5 text-xs font-semibold text-cream hover:border-petal cursor-pointer"
-                  >
-                    {isFullscreen ? "✕ Exit Fullscreen" : "⛶ Fullscreen"}
-                  </button>
-                  <a
-                    href={selected.embedUrl}
-                    target="_blank"
-                    rel="noopener noreferrer"
-                    className="rounded-full bg-petal px-3.5 py-1.5 text-xs font-bold text-ink hover:bg-spore"
-                  >
-                    Open Tab ↗
-                  </a>
-                </>
+                <button
+                  type="button"
+                  onClick={restartEmbed}
+                  className="rounded-full border border-white/20 bg-ink/70 px-3.5 py-1.5 text-xs font-semibold text-cream hover:border-petal cursor-pointer"
+                >
+                  ↻ Restart
+                </button>
               )}
               {selected.repoUrl && (
                 <a
                   href={selected.repoUrl}
                   target="_blank"
                   rel="noopener noreferrer"
-                  className="rounded-full border border-fern/40 bg-fern/10 px-3.5 py-1.5 text-xs font-semibold text-fern hover:border-fern"
+                  className="rounded-full border border-white/20 bg-ink/70 px-3.5 py-1.5 text-xs font-semibold text-cream/80 hover:border-fern hover:text-fern"
                 >
                   GitHub Source
                 </a>
@@ -277,34 +353,9 @@ export default function GamesPage() {
           </div>
 
           {selected.kind === "native" ? (
-            <div ref={frameWrapRef} className="relative">
-              <CanopyCatchGame />
-            </div>
+            <CanopyCatchGame />
           ) : (
-            <div
-              ref={frameWrapRef}
-              className="relative h-[540px] w-full overflow-hidden rounded-2xl border border-petal/25 bg-ink sm:h-[640px]"
-            >
-              {/* Always-clickable Escape / Return Home overlay inside Fullscreen */}
-              {isFullscreen && (
-                <div className="absolute right-3 top-3 z-30 flex items-center gap-2 rounded-full border border-white/20 bg-ink/90 px-2.5 py-1.5 backdrop-blur-md shadow-xl">
-                  <button
-                    type="button"
-                    onClick={toggleFullscreen}
-                    className="rounded-full bg-white/10 px-3 py-1 text-xs font-semibold text-cream hover:bg-white/20 cursor-pointer"
-                  >
-                    ✕ Exit Fullscreen
-                  </button>
-                  <button
-                    type="button"
-                    onClick={returnHome}
-                    className="rounded-full bg-petal px-3 py-1 text-xs font-bold text-ink hover:bg-spore cursor-pointer"
-                  >
-                    ← Return Home
-                  </button>
-                </div>
-              )}
-
+            <div className="relative h-[540px] w-full overflow-hidden rounded-2xl border border-petal/25 bg-ink sm:h-[640px]">
               {iframeLoading && (
                 <div className="absolute inset-0 z-10 flex flex-col items-center justify-center gap-2 bg-ink/85 text-sm text-petal">
                   <span>🍄 Loading {selected.title}...</span>
@@ -315,18 +366,12 @@ export default function GamesPage() {
                 src={selected.embedUrl}
                 title={selected.title}
                 sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-forms"
-                allow="fullscreen; autoplay"
+                allow="autoplay"
                 onLoad={() => setIframeLoading(false)}
                 className="h-full w-full border-0"
               />
             </div>
           )}
-
-          <p className="mt-3 text-center text-xs text-cream/60">
-            Tip: Click <strong>✕ Close Game</strong> or{" "}
-            <strong>← Return Home</strong> anytime to leave the game and
-            return to the 3D Gateway.
-          </p>
         </section>
       )}
 
@@ -358,17 +403,26 @@ export default function GamesPage() {
               <GameDescription>{game.description}</GameDescription>
 
               <div className="mt-auto flex flex-wrap items-center justify-between gap-2 pt-3">
-                <button
-                  type="button"
-                  onClick={() => selectGame(game)}
-                  className={`rounded-full px-5 py-2 text-xs font-bold transition cursor-pointer ${
-                    isCurrent
-                      ? "bg-fern text-ink"
-                      : "bg-petal text-ink hover:bg-spore"
-                  }`}
-                >
-                  {isCurrent ? "● Playing Now" : "▶ Play in Arcade"}
-                </button>
+                <div className="flex flex-wrap items-center gap-2">
+                  <button
+                    type="button"
+                    onClick={() => selectGame(game, false)}
+                    className={`rounded-full px-4 py-2 text-xs font-bold transition cursor-pointer ${
+                      isCurrent
+                        ? "bg-fern text-ink"
+                        : "bg-petal text-ink hover:bg-spore"
+                    }`}
+                  >
+                    {isCurrent ? "● Playing Now" : "▶ Play Here"}
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => selectGame(game, true)}
+                    className="rounded-full border border-white/20 bg-white/5 px-3.5 py-2 text-xs font-semibold text-cream hover:border-petal hover:text-petal transition cursor-pointer"
+                  >
+                    ⛶ Full Screen
+                  </button>
+                </div>
 
                 <span className="text-[11px] text-cream/60">{game.credit}</span>
               </div>

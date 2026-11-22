@@ -463,10 +463,16 @@ export default function CanopyCatchGame() {
           <button
             type="button"
             onClick={() => setSfxOn((v) => !v)}
-            className="rounded-full border border-white/20 px-2.5 py-1 text-xs text-cream hover:border-petal"
+            className="rounded-full border border-white/20 px-2.5 py-1 text-xs text-cream hover:border-petal cursor-pointer"
           >
             {sfxOn ? "🔊 SFX" : "🔇 SFX"}
           </button>
+          <Link
+            href="/"
+            className="rounded-full border border-fern/50 bg-fern/15 px-3 py-1 text-xs font-semibold text-fern hover:bg-fern/25 transition"
+          >
+            ← Home
+          </Link>
         </div>
       </div>
 
@@ -505,10 +511,17 @@ export default function CanopyCatchGame() {
               <button
                 type="button"
                 onClick={startGame}
-                className="rounded-full bg-petal px-6 py-2.5 text-sm font-bold text-ink shadow-glow-petal transition hover:bg-spore"
+                className="rounded-full bg-petal px-6 py-2.5 text-sm font-bold text-ink shadow-glow-petal transition hover:bg-spore cursor-pointer"
               >
                 {phase === "idle" ? "Start Foraging" : "Play Again"}
               </button>
+
+              <Link
+                href="/"
+                className="rounded-full border border-white/25 bg-ink/80 px-5 py-2.5 text-sm font-semibold text-cream transition hover:border-petal hover:text-petal"
+              >
+                ← Return Home
+              </Link>
 
               {phase === "gameover" && score >= 250 && (
                 <Link
