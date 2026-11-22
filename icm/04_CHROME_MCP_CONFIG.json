@@ -1,0 +1,21 @@
+{
+  "name": "sweet-psilocybe-chrome-mcp",
+  "purpose": "Enables Aaron's Instinct.com agent to drive a real Chrome browser to inspect live pages, verify mobile/desktop layouts, test Printify store checkout, research worldwide mycology studies, and manage web workflows.",
+  "mcpServers": {
+    "chrome-devtools": {
+      "command": "npx",
+      "args": ["-y", "chrome-devtools-mcp@latest"],
+      "capabilities": [
+        "navigate_page",
+        "click",
+        "fill",
+        "take_screenshot",
+        "take_snapshot",
+        "resize_page",
+        "list_console_messages",
+        "list_network_requests",
+        "evaluate_script"
+      ]
+    }
+  }
+}

@@ -1,301 +1,43 @@
-# AGENTS.md
+# AGENTS.md — Sweet Psilocybe ICM Root Entry Point
 
-## Non-negotiable
-
-This project uses **Beads (`bd`)** + **Atomic (`atomic`)** for all agent work.
-
-| Layer | Tool | Owns |
-|-------|------|------|
-| Work graph | Beads | Tasks, blockers, claims, memory, session context |
-| Change graph | Atomic | Code changes, views, provenance, model/cost, attestations |
-
-**Hard rule:** Do **not** write, edit, delete, refactor, or generate project code until the **Pre-Code Gate** passes.
-
-If either tool is missing, uninitialized, or failing → **STOP**, report the failure, and wait for a human. No fallbacks. No “quick fixes.” No markdown TODO lists for task tracking.
+> **Welcome, Agent (Instinct.com or any autonomous partner).**
+> This repository is governed by an **ICM (Indexed Context Management)** architecture. Read this file first — it gives you immediate orientation, authority boundaries, and exact routing to every operational playbook.
 
 ---
 
-## Pre-Code Gate (every session, before any code)
+## 1. ICM Walk Test (10-Field Orientation)
 
-Run these checks in order. All must succeed.
-
-```bash
-# 1) Tools installed
-bd --version
-atomic --version
-
-# 2) Project initialized
-test -d .beads   || { echo "FAIL: run bd init"; exit 1; }
-test -d .atomic  || { echo "FAIL: run atomic init"; exit 1; }
-
-# 3) Agent hooks enabled (once per machine/agent; safe to re-run)
-atomic agent enable
-atomic agent status
-
-# 4) Session context
-bd prime
-bd ready --json
-atomic status
-```
-
-**Pass criteria**
-- Both CLIs respond with a version
-- `.beads/` and `.atomic/` exist
-- Agent hooks show enabled/active
-- You have either a claimable bead from `bd ready` **or** you create + claim one before coding
-
-**Fail action:** Stop. Do not touch source files. Tell the user exactly which check failed and the fix command.
+| Field | Value |
+|---|---|
+| **1. Purpose** | **Sweet Psilocybe** (`sweetpsilocybe.com` / `sweet-psilocybe-landing-nine.vercel.app`) — an independent, faceless Pacific Northwest mycology education platform & print-on-demand artistic merchandise store (18+ education, cited research, 3D library, free arcade, and Printify apparel/gifts). |
+| **2. Owner** | **Aaron** (**she/her**) — the non-technical owner and creative visionary of Sweet Psilocybe. |
+| **3. Current Stage** | `PRODUCTION_LIVE` (Frontend + 10 live Printify Holiday/Winter products in Shop `29862406` deployed on Vercel; Server Agent handoff ready for `sweetpsilocybe.com` DNS + 24/7 Hostinger Supabase + Stripe/email alerts). |
+| **4. Read Scope** | Full repository (`src/`, `public/`, `scripts/`, `icm/`, `ops/`, `docs/`). Never read or expose `.env.local` values in chat or commits. |
+| **5. Write Scope** | Content, blog articles (`src/data/blogArticles.ts`), library items (`src/data/libraryItems.ts`), store & UI polish (`src/app/`, `src/components/`), Printify catalog via `scripts/seed-printify-holiday-merch.mjs`, and docs. **Protected:** `.env*`, production DNS/billing/Stripe secrets, destructive DB migrations (always require Aaron's explicit "yes"). |
+| **6. Required Policies** | Read `icm/00_SOUL_AND_HEART.md` BEFORE speaking to Aaron. Use friendly, jargon-free English, Matt Pocock's **Grill Me** (1 question at a time, never guess), strict 18+ compliance (**never** sell or imply selling psilocybin), and `npm run build` pre-flight safety gate. |
+| **7. Expected Outputs** | Plain-English explanations for Aaron + verified code/content updates + live Chrome MCP visual verification + revenue/research/partnership recommendations. |
+| **8. Pass Bar** | `npm run build` passes (`validate-gateway-skin.mjs` + TypeScript + all routes) AND live browser check via Chrome MCP confirms zero broken links or layout issues. |
+| **9. Proof** | Build exit code `0`, HTTP `200` on affected routes, live Printify product count, and Chrome MCP screenshot/DOM verification. |
+| **10. Next Handoff** | For Aaron's first session → run `icm/02_AARON_ONBOARDING_GRILL.md`. For 24/7 server & domain setup → execute `ops/SERVER_AGENT_HANDOFF.md`. |
 
 ---
 
-## First-time project setup (humans or agents, once)
+## 2. ICM Directory Map (Load Only What You Need)
 
-Only if the project is not yet initialized:
-
-```bash
-# Install (examples — use official docs if these fail)
-# Beads: https://beads.gascity.com/
-# Atomic: https://docs.atomic.dev/
-
-bd init
-atomic init
-atomic agent enable
-atomic vault init   # if vault not already present
-
-# Seed initial work (example)
-bd create "Project bootstrap / baseline" -t epic -p 1
-bd create "Define first milestone" -t task -p 1
-bd dep add <child-id> <parent-epic-id>
-```
-
-After setup, every agent session still runs the **Pre-Code Gate**.
+- **`icm/00_SOUL_AND_HEART.md`** — **READ FIRST.** Who Aaron is (she/her, non-technical), how to talk to her, her core goals (maximize revenue, grow the brand, study worldwide mushroom science, draft blogs, find partnerships), and hard safety rules.
+- **`icm/01_SYSTEM_MAP.md`** — Complete map of everything built in this repo (6 custom PNW backdrops, 3 custom 3D `.glb` models, 3D Gateway, 3D Library, 6-game Arcade, 10 live Printify products, sticky Header, Footer social links).
+- **`icm/02_AARON_ONBOARDING_GRILL.md`** — Friendly, plain-English **Matt Pocock Grill Me** onboarding script to gather Aaron's preferences, email for sale alerts, social handles, and goals — one warm question at a time.
+- **`icm/03_AUTONOMOUS_PLAYBOOKS.md`** — Step-by-step recipes for updating blogs, adding Printify merch, tracking orders, managing TikTok/IG/X/Facebook, studying global mycology research, and browsing/verifying with Chrome MCP.
+- **`icm/04_CHROME_MCP_CONFIG.json`** & **`.mcp.json`** — Chrome DevTools MCP server configuration so you can browse the web, visually verify changes, and research worldwide mushroom news.
+- **`ops/AUTONOMY_MANIFEST.json`** — Canonical project manifest (repo, Printify Shop `29862406`, domain `sweetpsilocybe.com`, approval boundaries).
+- **`ops/SERVER_AGENT_HANDOFF.md`** — Complete handoff for the 24/7 Hostinger Server Agent (`sweetpsilocybe.com` domain wiring, Supabase `sweet_psilocybe.*`, Stripe + Printify order webhook + instant sale-alert emails to Aaron).
 
 ---
 
-## Session protocol (mandatory for the life of the project)
+## 3. Golden Rules for Every Session
 
-### A. Boot
-
-```bash
-bd prime
-bd ready --json
-```
-
-Then **exactly one** of:
-
-```bash
-# Claim existing ready work
-bd update <bead-id> --claim
-
-# OR create then claim
-bd create "<clear title>" -t task -p <0-4> --json
-bd update <new-id> --claim
-```
-
-Start an Atomic goal linked to the bead:
-
-```bash
-atomic vault goal start --title "<same title as bead>" --intent <bead-id>
-```
-
-If multi-agent or parallel work needs isolation:
-
-```bash
-atomic view create agent-<session-or-bead-id> --draft --parent dev
-atomic view switch agent-<session-or-bead-id>
-```
-
-### B. During work
-
-1. **Only** implement the claimed bead (and its explicit child beads).
-2. Keep Atomic hooks on — every agent turn should be recorded with model, session, tokens, cost, provenance.
-3. After meaningful progress, update both systems:
-
-```bash
-bd update <bead-id> --notes "Progress: <what changed and why>"
-atomic record -m "<type>: <summary> (<bead-id>)"
-# types: feat|fix|refactor|docs|test|chore
-```
-
-4. Discover new work → create beads + deps. Do **not** bury new work only in chat.
-5. Blocked? Record it:
-
-```bash
-bd update <bead-id> --status blocked --notes "Blocked by: ..."
-bd dep add <blocked-id> <blocker-id>
-bd create "Unblock: ..." -t task -p 1
-```
-
-6. Persistent project knowledge:
-
-```bash
-bd remember "<durable insight, convention, or decision>"
-atomic vault memory add "<architecture/decision worth keeping>"
-```
-
-### C. Done / close task
-
-```bash
-# Verify (project-specific)
-# e.g. tests, lint, typecheck — run what the repo requires
-
-bd close <bead-id> --reason "Done: <one-line outcome>"
-atomic vault goal stop --promote
-atomic status
-```
-
-### D. End of session / handoff
-
-```bash
-bd prime                    # confirms remaining context
-bd ready --json             # next claimable work
-atomic agent attest         # session attestation (cost/coverage)
-atomic log                  # recent changes
-# If remotes configured:
-# bd dolt push
-# atomic push origin
-```
-
-Handoff truth order:
-1. `bd prime` + open/ready beads  
-2. `atomic log` / attestations  
-3. Chat history is disposable  
-
----
-
-## ID cross-linking (required)
-
-Every unit of work must be traceable both ways.
-
-| Direction | Rule | Example |
-|-----------|------|---------|
-| Atomic → Beads | Include bead ID in every Atomic record message | `fix: validate token expiry (bd-a1b2)` |
-| Beads → Atomic | Put change hash / view name in bead notes when useful | `change:XMJZ3IPF view:agent-bd-a1b2` |
-| Commits/PRs (if git still used) | Include bead ID | `feat: add age gate (bd-a1b2)` |
-
-No orphan code: if it shipped, a bead was claimed and closed (or explicitly deferred).
-
----
-
-## Roles of each tool (do not confuse)
-
-### Beads owns
-- What work exists
-- Priority, type, status
-- Dependencies / blockers
-- Who claimed what
-- `bd remember` project memory
-- `bd ready` queue
-
-### Atomic owns
-- What files changed
-- Why (provenance graph: goal → exploration → edit → verify)
-- Which model/provider/session
-- Token usage and cost
-- Views/sandboxes for agent isolation
-- Attestations and vault goals/memory of a technical nature
-
-### Neither replaces
-- Product requirements from the human
-- Secrets management
-- Production deploy approvals
-
----
-
-## Multi-agent rules
-
-1. **One agent claims one bead** (or a parent assigns explicit child beads).
-2. Never edit another agent’s in-progress bead without transferring claim.
-3. Prefer Atomic **draft views** for isolation; insert/merge into shared view when done.
-4. Use `bd dep add` before parallelizing so `bd ready` stays correct.
-5. Conflicts: stop, write notes on both beads, create a resolver bead, do not force-merge blindly.
-
----
-
-## Forbidden
-
-- Coding before Pre-Code Gate passes
-- Markdown TODO/checklist files as the task system (`TODO.md`, ad-hoc plan dumps)
-- Creating `MEMORY.md` instead of `bd remember` / Atomic vault memory
-- Working from chat memory without a claimed bead
-- “Tiny fix” outside Beads + Atomic
-- Closing a bead without verification notes/reason
-- Disabling Atomic agent hooks to “go faster”
-- Inventing bead IDs or faking gate output
-
----
-
-## Essential commands
-
-### Beads
-```bash
-bd prime
-bd ready --json
-bd create "Title" -t task|bug|feature|epic -p 0-4
-bd update <id> --claim
-bd update <id> --notes "..."
-bd update <id> --status blocked|in_progress|open
-bd show <id>
-bd dep add <child> <parent>
-bd close <id> --reason "..."
-bd remember "insight"
-bd list
-```
-
-### Atomic
-```bash
-atomic init
-atomic agent enable
-atomic agent status
-atomic agent attest
-atomic status
-atomic diff
-atomic record -m "feat: ... (bd-xxxx)"
-atomic log
-atomic view create <name> --draft --parent dev
-atomic view switch <name>
-atomic view list
-atomic vault init
-atomic vault goal start --title "..." --intent <bd-id>
-atomic vault goal stop --promote
-atomic vault memory add "..."
-atomic query search "..."
-atomic push origin
-atomic pull origin
-```
-
----
-
-## Minimal happy path (copy this mental model)
-
-```text
-GATE → bd prime → bd ready → claim bead
-     → atomic vault goal start
-     → code (hooks record turns)
-     → atomic record + bd notes (cross-link IDs)
-     → verify
-     → bd close + atomic vault goal stop
-     → atomic agent attest (session end)
-```
-
----
-
-## Quality bar before closing any bead
-
-- [ ] Claimed bead matches the work actually done
-- [ ] Atomic history contains the changes (record/hooks)
-- [ ] Bead ID appears in Atomic change message(s)
-- [ ] Notes/reason explain outcome
-- [ ] No new untracked work left only in chat (new beads created if needed)
-- [ ] Project checks passed (test/lint/typecheck as applicable)
-
----
-
-## Enforcement statement (read aloud to yourself)
-
-> I will not produce or modify project code until Beads and Atomic gates pass.  
-> I will not track work in markdown TODOs.  
-> I will claim a bead before coding, cross-link IDs, and close or block honestly.  
-> I will leave the next agent a clean `bd ready` queue and Atomic history.
-
-**This workflow is mandatory for the entire life of the project.**
+1. **Talk to Aaron like a trusted, warm creative partner — never like a developer.** Translate technical steps into everyday outcomes (*"I added your new winter hoodie to the shop and checked how it looks on a phone"* instead of *"I pushed a PR touching `route.ts`"*).
+2. **Never guess.** If anything is unclear (pricing, tone, a new product idea, a partnership), ask Aaron **one simple question at a time** with a clear recommendation (Matt Pocock Grill Me style).
+3. **Always run `npm run build`** before committing or deploying — the built-in `prebuild` safety gate (`scripts/validate-gateway-skin.mjs`) protects all 6 custom backdrops, 3 GLB models, licenses, and secrets automatically.
+4. **Never expose secrets** or commit `.env.local`.
+5. **100% Legal Compliance:** Sweet Psilocybe is an 18+ **educational & artistic merchandise brand**. Never write copy suggesting the site sells psilocybin mushrooms or controlled substances.

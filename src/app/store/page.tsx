@@ -38,7 +38,8 @@ const CATEGORIES: Array<ProductCategory | 'All'> = [
   'All',
   'Apparel',
   'Drinkware',
-  'Art Prints',
+  'Home & Holiday',
+  'Accessories',
 ];
 
 const containerVariants = {

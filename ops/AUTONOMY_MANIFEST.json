@@ -1,0 +1,53 @@
+{
+  "schema_version": "icm-manifest/1.0",
+  "project_id": "executiveusa/sweet-psilocybe-landing",
+  "project_name": "Sweet Psilocybe",
+  "owner": {
+    "name": "Aaron",
+    "pronouns": "she/her",
+    "technical_level": "non-technical",
+    "communication_style": "warm, plain-English, zero jargon, Matt Pocock Grill Me (1 question at a time, never guess)"
+  },
+  "classification": "SELL",
+  "state": "PRODUCTION_LIVE",
+  "repository": {
+    "url": "https://github.com/executiveusa/sweet-psilocybe-landing",
+    "default_branch": "main"
+  },
+  "domains": {
+    "production_vercel": "https://sweet-psilocybe-landing-nine.vercel.app",
+    "official_domain": "https://sweetpsilocybe.com",
+    "dns_registrar": "Hostinger"
+  },
+  "commerce": {
+    "provider": "Printify",
+    "shop_id": "29862406",
+    "live_products_seeded": 10,
+    "collection": "Holiday & Cold-Weather Crest Collection",
+    "vercel_env_configured": ["PRINTIFY_API_KEY", "PRINTIFY_SHOP_ID"]
+  },
+  "icm_files": {
+    "entrypoint": "AGENTS.md",
+    "soul_and_heart": "icm/00_SOUL_AND_HEART.md",
+    "system_map": "icm/01_SYSTEM_MAP.md",
+    "onboarding_grill": "icm/02_AARON_ONBOARDING_GRILL.md",
+    "playbooks": "icm/03_AUTONOMOUS_PLAYBOOKS.md",
+    "chrome_mcp": ".mcp.json",
+    "server_agent_handoff": "ops/SERVER_AGENT_HANDOFF.md"
+  },
+  "approval_boundaries": {
+    "autonomous_allowed": [
+      "Research worldwide mycology studies and draft cited blog posts",
+      "Add verified HTTP-200 books/documentaries to the 3D Library",
+      "Draft seasonal Printify products and social media promo copy",
+      "Run npm run build and Chrome MCP visual QA checks",
+      "Identify vetted brand partnerships and affiliate opportunities"
+    ],
+    "requires_aaron_approval": [
+      "Spending money or enabling paid third-party subscriptions",
+      "Changing DNS, domain ownership, or Stripe payout/bank settings",
+      "Deleting live products or production database tables",
+      "Publicly posting on social media before she enables auto-post"
+    ]
+  }
+}

@@ -6,10 +6,11 @@ import {
 } from "@/data/storeCatalog";
 
 export async function GET() {
-  const PRINTIFY_API_TOKEN = process.env.PRINTIFY_API_TOKEN;
-  const PRINTIFY_SHOP_ID = process.env.PRINTIFY_SHOP_ID;
+  const PRINTIFY_API_TOKEN =
+    process.env.PRINTIFY_API_KEY || process.env.PRINTIFY_API_TOKEN;
+  let PRINTIFY_SHOP_ID = process.env.PRINTIFY_SHOP_ID;
 
-  if (!PRINTIFY_API_TOKEN || !PRINTIFY_SHOP_ID) {
+  if (!PRINTIFY_API_TOKEN) {
     const fallback: StoreCatalogResponse = {
       source: "curated-preview",
       products: CURATED_PREVIEW_PRODUCTS,
@@ -18,14 +19,39 @@ export async function GET() {
   }
 
   try {
+    if (!PRINTIFY_SHOP_ID) {
+      const shopsRes = await fetch("https://api.printify.com/v1/shops.json", {
+        headers: {
+          Authorization: `Bearer ${PRINTIFY_API_TOKEN}`,
+          "User-Agent": "SweetPsilocybe/1.0",
+        },
+        next: { revalidate: 300 },
+      });
+      if (shopsRes.ok) {
+        const shops = await shopsRes.json();
+        if (Array.isArray(shops) && shops[0]?.id) {
+          PRINTIFY_SHOP_ID = String(shops[0].id);
+        }
+      }
+    }
+
+    if (!PRINTIFY_SHOP_ID) {
+      const fallback: StoreCatalogResponse = {
+        source: "curated-preview",
+        products: CURATED_PREVIEW_PRODUCTS,
+      };
+      return NextResponse.json(fallback, { status: 200 });
+    }
+
     const res = await fetch(
       `https://api.printify.com/v1/shops/${PRINTIFY_SHOP_ID}/products.json`,
       {
         headers: {
           Authorization: `Bearer ${PRINTIFY_API_TOKEN}`,
           "Content-Type": "application/json",
+          "User-Agent": "SweetPsilocybe/1.0",
         },
-        next: { revalidate: 300 },
+        next: { revalidate: 120 },
       }
     );
 

@@ -1,4 +1,8 @@
-export type ProductCategory = "Apparel" | "Drinkware" | "Art Prints";
+export type ProductCategory =
+  | "Apparel"
+  | "Drinkware"
+  | "Home & Holiday"
+  | "Accessories";
 
 export interface StoreVariant {
   id: string;
@@ -84,7 +88,7 @@ export const CURATED_PREVIEW_PRODUCTS: StoreProduct[] = [
   {
     id: "san-juan-canopy-print",
     title: "San Juan Canopy Archival Print",
-    category: "Art Prints",
+    category: "Home & Holiday",
     description:
       "Museum-grade matte giclée art print celebrating bioluminescent Pacific Northwest woodland fungi and old-growth cedar ecosystems.",
     priceCents: 2800,
@@ -122,11 +126,29 @@ interface RawPrintifyProduct {
 
 function inferCategory(title: string, tags: string[] = []): ProductCategory {
   const haystack = `${title} ${tags.join(" ")}`.toLowerCase();
-  if (haystack.includes("mug") || haystack.includes("tumbler") || haystack.includes("cup")) {
+  if (
+    haystack.includes("mug") ||
+    haystack.includes("tumbler") ||
+    haystack.includes("cup")
+  ) {
     return "Drinkware";
   }
-  if (haystack.includes("poster") || haystack.includes("print") || haystack.includes("canvas")) {
-    return "Art Prints";
+  if (
+    haystack.includes("ornament") ||
+    haystack.includes("blanket") ||
+    haystack.includes("poster") ||
+    haystack.includes("print") ||
+    haystack.includes("canvas") && !haystack.includes("tote")
+  ) {
+    return "Home & Holiday";
+  }
+  if (
+    haystack.includes("tote") ||
+    haystack.includes("beanie") ||
+    haystack.includes("hat") ||
+    haystack.includes("bag")
+  ) {
+    return "Accessories";
   }
   return "Apparel";
 }
