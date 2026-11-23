@@ -55,19 +55,25 @@ const AgeGate = () => {
             transition={{ duration: 0.22 }}
             className="w-full max-w-md rounded-3xl border border-[#F6AFCF]/35 bg-[#0B0D12]/95 p-7 text-center shadow-2xl sm:p-9"
           >
-            <div className="mx-auto mb-4 flex h-16 w-16 items-center justify-center">
+            <div className="mx-auto mb-3 flex flex-col items-center justify-center gap-3">
               <Image
                 src="/images/sweet-psilocybe-crest-transparent.png"
                 alt="Sweet Psilocybe Crest"
-                width={64}
-                height={64}
+                width={136}
+                height={136}
                 priority
-                className="h-16 w-16 rounded-full object-contain"
+                className="h-28 w-28 rounded-full object-contain sm:h-32 sm:w-32"
               />
+              <span
+                className="text-xl font-semibold text-[#F7F3EF] sm:text-2xl"
+                style={{ letterSpacing: '0.09em' }}
+              >
+                Sweet Psilocybe
+              </span>
             </div>
 
             <p className="text-[11px] font-semibold uppercase tracking-[0.18em] text-[#A9C0B0]">
-              Sweet Psilocybe &middot; 18+ Sanctuary
+              18+ Educational Sanctuary
             </p>
             <h2
               id="age-gate-title"

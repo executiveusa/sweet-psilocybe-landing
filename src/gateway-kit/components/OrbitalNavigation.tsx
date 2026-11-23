@@ -98,8 +98,8 @@ const containerVariants = {
 };
 
 const itemVariants = {
-  hidden: { scale: 0, opacity: 0 },
-  show: { scale: 1, opacity: 1 },
+  hidden: { scale: 0.92, opacity: 0 },
+  show: { scale: 1, opacity: 1, transition: { duration: 0.28, ease: "easeOut" } },
 };
 
 /**
@@ -128,7 +128,7 @@ export default function OrbitalNavigation({
     return () => window.removeEventListener("resize", update);
   }, []);
 
-  const isDesktopWheel = screenWidth >= 480;
+  const isDesktopWheel = screenWidth >= 640;
   const isLarge = screenWidth >= 1024;
   const isMedium = screenWidth >= 768;
   const angleIncrement = 360 / ORBITAL_DOORS.length;
@@ -140,13 +140,13 @@ export default function OrbitalNavigation({
     return (
       <nav
         aria-label="Gateway Navigation"
-        className="pointer-events-none fixed inset-0 z-30 flex items-center justify-between px-3"
+        className="pointer-events-none fixed inset-0 z-30 flex items-center justify-between px-2.5 pt-28 pb-16"
       >
         <motion.div
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="pointer-events-auto flex flex-col gap-3.5"
+          className="pointer-events-auto flex flex-col gap-2.5"
         >
           {leftHalf.map((btn) => (
             <motion.div key={btn.id} variants={itemVariants}>
@@ -155,9 +155,13 @@ export default function OrbitalNavigation({
                 aria-label={btn.label[lang]}
                 onMouseEnter={() => onHoverDoor(btn)}
                 onMouseLeave={() => onHoverDoor(null)}
-                className="custom-bg group relative flex h-12 w-12 items-center justify-center rounded-full text-cream"
+                style={{ touchAction: "manipulation" }}
+                className="custom-bg group relative flex min-h-[48px] min-w-[60px] flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 text-cream transition-transform duration-150 active:scale-[0.95]"
               >
-                <span className="text-lg">{btn.icon}</span>
+                <span className="text-base leading-none">{btn.icon}</span>
+                <span className="text-[10px] font-semibold leading-tight text-cream/90">
+                  {btn.label[lang].split(" ")[0]}
+                </span>
               </Link>
             </motion.div>
           ))}
@@ -167,7 +171,7 @@ export default function OrbitalNavigation({
           variants={containerVariants}
           initial="hidden"
           animate="show"
-          className="pointer-events-auto flex flex-col gap-3.5"
+          className="pointer-events-auto flex flex-col gap-2.5"
         >
           {rightHalf.map((btn) => (
             <motion.div key={btn.id} variants={itemVariants}>
@@ -176,9 +180,13 @@ export default function OrbitalNavigation({
                 aria-label={btn.label[lang]}
                 onMouseEnter={() => onHoverDoor(btn)}
                 onMouseLeave={() => onHoverDoor(null)}
-                className="custom-bg group relative flex h-12 w-12 items-center justify-center rounded-full text-cream"
+                style={{ touchAction: "manipulation" }}
+                className="custom-bg group relative flex min-h-[48px] min-w-[60px] flex-col items-center justify-center gap-0.5 rounded-2xl px-2 py-1.5 text-cream transition-transform duration-150 active:scale-[0.95]"
               >
-                <span className="text-lg">{btn.icon}</span>
+                <span className="text-base leading-none">{btn.icon}</span>
+                <span className="text-[10px] font-semibold leading-tight text-cream/90">
+                  {btn.label[lang].split(" ")[0]}
+                </span>
               </Link>
             </motion.div>
           ))}

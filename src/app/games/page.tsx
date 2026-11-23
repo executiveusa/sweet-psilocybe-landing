@@ -61,42 +61,6 @@ const ARCADE_GAMES: ArcadeGame[] = [
     embedUrl: "https://glimmerwood-dash.vercel.app",
     credit: "Open-Source React Canvas",
   },
-  {
-    id: "fungus-puzzle",
-    title: "Fungus (Decomposition Puzzle)",
-    description:
-      "Award-style js13kgames puzzle where you guide fungal networks to decompose organic matter — complete with a built-in level editor.",
-    tech: "html5",
-    badgeLabel: "Puzzle",
-    kind: "embed",
-    embedUrl: "https://fungus.vercel.app",
-    repoUrl: "https://github.com/alexejrotar/fungus",
-    credit: "alexejrotar (Open Source)",
-  },
-  {
-    id: "mycelium-first-bloom",
-    title: "Mycelium — First Bloom",
-    description:
-      "Real-time-with-pause underground survival roguelike. Expand from a single spore through dark soil to trade nitrogen and sugar with trees.",
-    tech: "webgl",
-    badgeLabel: "Roguelike",
-    kind: "embed",
-    embedUrl: "https://koramak.github.io/mycelium/",
-    repoUrl: "https://github.com/koramak/mycelium",
-    credit: "koramak (Open Source)",
-  },
-  {
-    id: "underneath-fungal",
-    title: "Underneath (Fungal Network)",
-    description:
-      "Deep incremental forest-floor simulator: switch to the Fungal Network theme to balance nutrients, grow hyphal tips, and fruit spores.",
-    tech: "html5",
-    badgeLabel: "Simulation",
-    kind: "embed",
-    embedUrl: "https://mundaplus.github.io/Underneath/",
-    repoUrl: "https://github.com/MundaPlus/Underneath",
-    credit: "MundaPlus (Open Source)",
-  },
 ];
 
 export default function GamesPage() {
@@ -246,9 +210,9 @@ export default function GamesPage() {
       >
         <h1>Mycology Arcade</h1>
         <p>
-          Play our original Sweet Psilocybe game or launch 5 live-verified
-          open-source mushroom games right inside the arcade — 100% free, no
-          downloads, and always one click back home.
+          Play our original Sweet Psilocybe game or jump into 2 hand-picked
+          animated mushroom games right inside the arcade — 100% free, no
+          downloads.
         </p>
       </GamesHero>
 
@@ -272,21 +236,24 @@ export default function GamesPage() {
               <button
                 type="button"
                 onClick={returnHome}
-                className="rounded-full bg-petal px-3.5 py-1.5 text-xs font-bold text-ink hover:bg-spore transition cursor-pointer"
+                style={{ touchAction: "manipulation" }}
+                className="min-h-[44px] rounded-full bg-petal px-4 py-2 text-xs font-bold text-ink hover:bg-spore transition-transform duration-150 active:scale-[0.97] cursor-pointer"
               >
                 🍄 ← Return Home
               </button>
               <button
                 type="button"
                 onClick={() => setTheaterMode(true)}
-                className="rounded-full border border-fern/50 bg-fern/15 px-3.5 py-1.5 text-xs font-semibold text-fern hover:bg-fern/25 transition cursor-pointer"
+                style={{ touchAction: "manipulation" }}
+                className="min-h-[44px] rounded-full border border-fern/50 bg-fern/15 px-4 py-2 text-xs font-semibold text-fern hover:bg-fern/25 transition-transform duration-150 active:scale-[0.97] cursor-pointer"
               >
                 ⛶ Full Screen (With Home Bar)
               </button>
               <button
                 type="button"
                 onClick={exitGame}
-                className="rounded-full border border-white/20 bg-ink/70 px-3.5 py-1.5 text-xs font-semibold text-cream hover:border-petal transition cursor-pointer"
+                style={{ touchAction: "manipulation" }}
+                className="min-h-[44px] rounded-full border border-white/20 bg-ink/70 px-4 py-2 text-xs font-semibold text-cream hover:border-petal transition-transform duration-150 active:scale-[0.97] cursor-pointer"
               >
                 ✕ Close Game
               </button>
@@ -294,7 +261,8 @@ export default function GamesPage() {
                 <button
                   type="button"
                   onClick={restartEmbed}
-                  className="rounded-full border border-white/20 bg-ink/70 px-3.5 py-1.5 text-xs font-semibold text-cream hover:border-petal cursor-pointer"
+                  style={{ touchAction: "manipulation" }}
+                  className="min-h-[44px] rounded-full border border-white/20 bg-ink/70 px-4 py-2 text-xs font-semibold text-cream hover:border-petal transition-transform duration-150 active:scale-[0.97] cursor-pointer"
                 >
                   ↻ Restart
                 </button>
@@ -367,7 +335,8 @@ export default function GamesPage() {
                   <button
                     type="button"
                     onClick={() => selectGame(game, false)}
-                    className={`rounded-full px-4 py-2 text-xs font-bold transition cursor-pointer ${
+                    style={{ touchAction: "manipulation" }}
+                    className={`min-h-[44px] rounded-full px-4 py-2 text-xs font-bold transition-transform duration-150 active:scale-[0.97] cursor-pointer ${
                       isCurrent
                         ? "bg-fern text-ink"
                         : "bg-petal text-ink hover:bg-spore"
@@ -378,7 +347,8 @@ export default function GamesPage() {
                   <button
                     type="button"
                     onClick={() => selectGame(game, true)}
-                    className="rounded-full border border-white/20 bg-white/5 px-3.5 py-2 text-xs font-semibold text-cream hover:border-petal hover:text-petal transition cursor-pointer"
+                    style={{ touchAction: "manipulation" }}
+                    className="min-h-[44px] rounded-full border border-white/20 bg-white/5 px-3.5 py-2 text-xs font-semibold text-cream hover:border-petal hover:text-petal transition-transform duration-150 active:scale-[0.97] cursor-pointer"
                   >
                     ⛶ Full Screen
                   </button>

@@ -194,8 +194,11 @@ export default function LibraryPage() {
                     href={item.url}
                     target="_blank"
                     rel="noopener noreferrer"
+                    style={{ minHeight: "44px" }}
                   >
-                    Explore on {item.sourceLabel}
+                    {activeTab === "books"
+                      ? `Explore on ${item.sourceLabel}`
+                      : `Watch on ${item.sourceLabel}`}
                   </ViewLink>
                 </div>
               </MediaCard>

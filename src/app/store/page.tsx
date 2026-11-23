@@ -133,7 +133,8 @@ export default function StorePage() {
               key={cat}
               type="button"
               onClick={() => setActiveCategory(cat)}
-              className={`rounded-full px-4 py-1.5 text-sm font-medium transition cursor-pointer border ${
+              style={{ touchAction: 'manipulation' }}
+              className={`min-h-[44px] rounded-full px-4 py-2 text-sm font-medium transition-transform duration-150 active:scale-[0.97] cursor-pointer border ${
                 activeCategory === cat
                   ? 'border-[#F6AFCF]/70 bg-[#F6AFCF]/20 text-[#F6AFCF]'
                   : 'border-white/15 bg-black/50 text-white/75 hover:text-white'
@@ -146,7 +147,8 @@ export default function StorePage() {
           <button
             type="button"
             onClick={() => setBagOpen((v) => !v)}
-            className="rounded-full px-4 py-1.5 text-sm font-semibold border border-[#A9C0B0]/50 bg-[#A9C0B0]/15 text-[#A9C0B0] hover:bg-[#A9C0B0]/25 transition cursor-pointer"
+            style={{ touchAction: 'manipulation' }}
+            className="min-h-[44px] rounded-full px-4 py-2 text-sm font-semibold border border-[#A9C0B0]/50 bg-[#A9C0B0]/15 text-[#A9C0B0] hover:bg-[#A9C0B0]/25 transition-transform duration-150 active:scale-[0.97] cursor-pointer"
           >
             Bag ({totalItems})
           </button>

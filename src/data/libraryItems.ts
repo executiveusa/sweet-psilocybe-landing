@@ -107,8 +107,19 @@ export const LIBRARY_DATA: Record<LibraryTab, LibraryItem[]> = {
       language: "English",
       description:
         "A time-lapse cinematic journey into the fungal kingdom, highlighting mycelial networks, ecological regeneration, and clinical mycology.",
-      url: "https://fantasticfungi.com/",
-      sourceLabel: "Official Site",
+      url: "https://www.netflix.com/title/81183477",
+      sourceLabel: "Netflix",
+    },
+    {
+      id: "how-to-change-your-mind-series",
+      title: "How to Change Your Mind (Docuseries)",
+      creator: "Michael Pollan & Alex Gibney",
+      year: "2022",
+      language: "English",
+      description:
+        "Four-part Netflix documentary series exploring the history, clinical trials, and neuroscience of psilocybin and psychedelic-assisted therapy.",
+      url: "https://www.netflix.com/title/80229847",
+      sourceLabel: "Netflix",
     },
     {
       id: "fungi-web-of-life",
@@ -118,8 +129,8 @@ export const LIBRARY_DATA: Record<LibraryTab, LibraryItem[]> = {
       language: "English",
       description:
         "Explores the vital role fungi play in Earth's ecosystems, guided by biologist Merlin Sheldrake through ancient rainforests.",
-      url: "https://www.merlinsheldrake.com/",
-      sourceLabel: "Merlin Sheldrake",
+      url: "https://www.youtube.com/results?search_query=Fungi+Web+of+Life+Merlin+Sheldrake",
+      sourceLabel: "YouTube",
     },
     {
       id: "the-magic-of-mushrooms",
@@ -129,8 +140,8 @@ export const LIBRARY_DATA: Record<LibraryTab, LibraryItem[]> = {
       language: "English",
       description:
         "Paleontologist and natural historian Professor Richard Fortey explores the hidden kingdom of fungi and its evolutionary history.",
-      url: "https://en.wikipedia.org/wiki/Richard_Fortey",
-      sourceLabel: "Wikipedia",
+      url: "https://www.youtube.com/results?search_query=The+Magic+of+Mushrooms+Richard+Fortey+documentary",
+      sourceLabel: "YouTube",
     },
     {
       id: "know-your-mushrooms",
@@ -140,8 +151,8 @@ export const LIBRARY_DATA: Record<LibraryTab, LibraryItem[]> = {
       language: "English",
       description:
         "Follows mycologists Gary Lincoff and Larry Evans on a wild mushroom foray in Telluride, blending foraging lore with fungal science.",
-      url: "https://en.wikipedia.org/wiki/Know_Your_Mushrooms",
-      sourceLabel: "Wikipedia",
+      url: "https://www.youtube.com/results?search_query=Know+Your+Mushrooms+Ron+Mann+documentary",
+      sourceLabel: "YouTube",
     },
     {
       id: "dosed",
@@ -152,7 +163,7 @@ export const LIBRARY_DATA: Record<LibraryTab, LibraryItem[]> = {
       description:
         "A Canadian documentary examining personal recovery journeys and the growing clinical conversation around psychedelic-assisted therapy.",
       url: "https://www.dosedmovie.com/",
-      sourceLabel: "Official Site",
+      sourceLabel: "Official Film Site",
     },
     {
       id: "magic-medicine",
@@ -162,22 +173,11 @@ export const LIBRARY_DATA: Record<LibraryTab, LibraryItem[]> = {
       language: "English",
       description:
         "An intimate documentary following Imperial College London's landmark clinical trial investigating psilocybin for treatment-resistant depression.",
-      url: "https://www.imperial.ac.uk/psychedelic-research-centre/",
-      sourceLabel: "Imperial College London",
+      url: "https://www.youtube.com/results?search_query=Magic+Medicine+psilocybin+documentary",
+      sourceLabel: "YouTube",
     },
   ],
   movies: [
-    {
-      id: "matango",
-      title: "Matango",
-      creator: "Ishirō Honda",
-      year: "1963",
-      language: "Japanese",
-      description:
-        "A classic Toho psychological sci-fi film about castaways on a misty island transformed by an eerie bioluminescent mushroom ecosystem.",
-      url: "https://en.wikipedia.org/wiki/Matango",
-      sourceLabel: "Wikipedia",
-    },
     {
       id: "annihilation",
       title: "Annihilation",
@@ -186,8 +186,8 @@ export const LIBRARY_DATA: Record<LibraryTab, LibraryItem[]> = {
       language: "English",
       description:
         "A visually arresting sci-fi thriller featuring intricate fungal-inspired biological refraction and ecological interconnectedness.",
-      url: "https://en.wikipedia.org/wiki/Annihilation_(film)",
-      sourceLabel: "Wikipedia",
+      url: "https://www.netflix.com/title/80206300",
+      sourceLabel: "Netflix",
     },
     {
       id: "the-last-of-us",
@@ -197,8 +197,19 @@ export const LIBRARY_DATA: Record<LibraryTab, LibraryItem[]> = {
       language: "English",
       description:
         "A drama series inspired by real-world entomopathogenic Cordyceps fungi, sparking widespread public curiosity about mycology.",
-      url: "https://en.wikipedia.org/wiki/The_Last_of_Us_(TV_series)",
-      sourceLabel: "Wikipedia",
+      url: "https://www.hbo.com/the-last-of-us",
+      sourceLabel: "HBO / Max",
+    },
+    {
+      id: "matango",
+      title: "Matango",
+      creator: "Ishirō Honda",
+      year: "1963",
+      language: "Japanese",
+      description:
+        "A classic Toho psychological sci-fi film about castaways on a misty island transformed by an eerie bioluminescent mushroom ecosystem.",
+      url: "https://www.youtube.com/results?search_query=Matango+1963+Ishiro+Honda",
+      sourceLabel: "YouTube",
     },
     {
       id: "shrooms",
@@ -208,8 +219,8 @@ export const LIBRARY_DATA: Record<LibraryTab, LibraryItem[]> = {
       language: "English",
       description:
         "An atmospheric Irish forest thriller centered around a group of travelers foraging in rural woodlands.",
-      url: "https://en.wikipedia.org/wiki/Shrooms_(film)",
-      sourceLabel: "Wikipedia",
+      url: "https://www.youtube.com/results?search_query=Shrooms+2007+film",
+      sourceLabel: "YouTube",
     },
   ],
 };

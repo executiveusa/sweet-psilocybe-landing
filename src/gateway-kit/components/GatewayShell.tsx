@@ -37,11 +37,18 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
   const [pointerPx, setPointerPx] = useState({ x: 0, y: 0 });
   const [activeDoor, setActiveDoor] = useState<OrbitalNavItem | null>(null);
   const [spinTrigger, setSpinTrigger] = useState(0);
+  const [isMobileViewport, setIsMobileViewport] = useState(false);
 
   const audio = useForestAudio({ volume: skin.audio.volume });
 
   useEffect(() => {
+    const mq = window.matchMedia("(max-width: 767px)");
+    const updateVp = () => setIsMobileViewport(mq.matches);
+    updateVp();
+    mq.addEventListener?.("change", updateVp);
+
     const onPointerMove = (e: PointerEvent) => {
+      if (mq.matches) return;
       const nx = (e.clientX / window.innerWidth - 0.5) * 2;
       const ny = (e.clientY / window.innerHeight - 0.5) * 2;
       setPointerOffset({ x: nx, y: ny });
@@ -50,19 +57,21 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
 
     window.addEventListener("pointermove", onPointerMove, { passive: true });
     return () => {
+      mq.removeEventListener?.("change", updateVp);
       window.removeEventListener("pointermove", onPointerMove);
     };
   }, []);
 
-  const bgTransform = motionPaused
-    ? "scale(1.02)"
-    : `scale(1.06) translate3d(${(-pointerOffset.x * 16).toFixed(1)}px, ${(-pointerOffset.y * 10).toFixed(1)}px, 0)`;
+  const bgTransform =
+    motionPaused || isMobileViewport
+      ? "scale(1)"
+      : `scale(1.04) translate3d(${(-pointerOffset.x * 12).toFixed(1)}px, ${(-pointerOffset.y * 8).toFixed(1)}px, 0)`;
 
   const activeAccent = activeDoor?.accent || "#F6AFCF";
 
   return (
     <main
-      className={`relative flex h-screen w-screen flex-col items-center justify-between overflow-hidden bg-ink ${
+      className={`relative flex h-[100dvh] w-full flex-col items-center justify-between overflow-hidden bg-ink ${
         motionPaused ? "motion-paused" : ""
       }`}
     >
@@ -136,52 +145,62 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
         onHoverDoor={setActiveDoor}
       />
 
-      {/* LAYER 7 (z-40): Top Identity Bar & Controls */}
-      <header className="pointer-events-none fixed left-0 right-0 top-0 z-40 flex flex-wrap items-start justify-between gap-3 p-4 sm:p-6">
-        <div className="custom-bg pointer-events-auto flex max-w-xs items-center gap-3 rounded-2xl px-3.5 py-2.5 text-cream">
+      {/* LAYER 7 (z-40): Top Identity Bar & Controls (320px-safe, 44x44 touch targets) */}
+      <header className="pointer-events-none fixed left-0 right-0 top-0 z-40 flex flex-wrap items-center justify-between gap-2 p-2.5 sm:items-start sm:gap-3 sm:p-6">
+        <div className="custom-bg pointer-events-auto flex items-center gap-2.5 rounded-2xl px-3 py-2 text-cream sm:max-w-sm sm:gap-3.5 sm:px-4 sm:py-2.5">
           <Image
             src="/images/sweet-psilocybe-crest-transparent.png"
             alt="Sweet Psilocybe Logo"
-            width={40}
-            height={40}
+            width={52}
+            height={52}
             priority
-            className="h-10 w-10 shrink-0 rounded-full object-contain"
+            className="h-10 w-10 shrink-0 rounded-full object-contain sm:h-12 sm:w-12"
           />
-          <div>
-            <h1 className="text-base font-bold tracking-tight text-petal sm:text-lg">
+          <div className="min-w-0">
+            <h1
+              className="truncate text-sm font-semibold text-[#F7F3EF] sm:text-xl"
+              style={{ letterSpacing: "0.08em" }}
+            >
               {skin.identity.brandName}
             </h1>
-            <p className="mt-0.5 text-[11px] leading-snug text-cream/80 sm:text-xs">
+            <p className="mt-0.5 hidden text-[11px] leading-snug text-cream/80 sm:block sm:text-xs">
               {skin.identity.complianceBadge[lang]}
             </p>
           </div>
         </div>
 
-        <div className="pointer-events-auto flex flex-wrap items-center gap-2">
+        <div className="pointer-events-auto flex flex-nowrap items-center gap-1.5 sm:flex-wrap sm:gap-2">
           <button
             type="button"
             onClick={() => setIsNight((v) => !v)}
-            className="custom-bg rounded-full px-3.5 py-2 text-xs font-semibold text-cream"
+            style={{ touchAction: "manipulation" }}
+            className="custom-bg inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-full px-2.5 text-xs font-semibold text-cream transition-transform duration-150 active:scale-[0.96] sm:px-3.5 cursor-pointer"
             aria-label="Toggle Golden Dusk or Twilight Mist backdrop"
           >
-            {isNight ? "🌅 Golden Dusk" : "🌙 Twilight Mist"}
+            <span aria-hidden="true">{isNight ? "🌅" : "🌙"}</span>
+            <span className="hidden md:inline">
+              {isNight ? "Golden Dusk" : "Twilight Mist"}
+            </span>
           </button>
 
           <button
             type="button"
             onClick={() => setMotionPaused((v) => !v)}
-            className="custom-bg rounded-full px-3 py-2 text-xs font-semibold text-cream"
+            style={{ touchAction: "manipulation" }}
+            className="custom-bg inline-flex min-h-[44px] min-w-[44px] items-center justify-center gap-1.5 rounded-full px-2.5 text-xs font-semibold text-cream transition-transform duration-150 active:scale-[0.96] sm:px-3 cursor-pointer"
             aria-label="Pause or resume animations"
             title={motionPaused ? "Resume animations" : "Pause animations"}
           >
-            {motionPaused ? "▶️ Motion" : "⏸ Motion"}
+            <span aria-hidden="true">{motionPaused ? "▶️" : "⏸"}</span>
+            <span className="hidden md:inline">Motion</span>
           </button>
 
           {skin.audio.enabled && (
             <button
               type="button"
               onClick={audio.toggle}
-              className="custom-bg flex h-9 w-9 items-center justify-center rounded-full text-sm text-cream"
+              style={{ touchAction: "manipulation" }}
+              className="custom-bg inline-flex h-11 w-11 items-center justify-center rounded-full text-sm text-cream transition-transform duration-150 active:scale-[0.96] cursor-pointer"
               aria-label="Toggle forest ambient audio"
               title={audio.isPlaying ? "Mute forest sound" : "Play forest sound"}
             >
@@ -192,7 +211,8 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
           <button
             type="button"
             onClick={() => setLang((l) => (l === "en" ? "es" : "en"))}
-            className="custom-bg flex h-9 w-9 items-center justify-center rounded-full text-xs font-bold text-cream"
+            style={{ touchAction: "manipulation" }}
+            className="custom-bg inline-flex h-11 w-11 items-center justify-center rounded-full text-xs font-bold text-cream transition-transform duration-150 active:scale-[0.96] cursor-pointer"
             aria-label="Switch language"
           >
             {lang === "en" ? "ES" : "EN"}
@@ -200,15 +220,17 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
 
           <Link
             href={skin.navigation.skipHref}
-            className="rounded-full bg-petal px-4 py-2 text-xs font-bold text-ink shadow-glow-petal transition hover:bg-spore"
+            style={{ touchAction: "manipulation" }}
+            className="inline-flex min-h-[44px] items-center whitespace-nowrap rounded-full bg-petal px-3.5 text-xs font-bold text-ink shadow-glow-petal transition-transform duration-150 hover:bg-spore active:scale-[0.97] sm:px-4"
           >
-            {skin.navigation.skipLabel[lang]} &rarr;
+            <span className="sm:hidden">{lang === "en" ? "Explore →" : "Explorar →"}</span>
+            <span className="hidden sm:inline">{skin.navigation.skipLabel[lang]} &rarr;</span>
           </Link>
         </div>
       </header>
 
       {/* Live Bottom Portal Spotlight Pill */}
-      <div className="pointer-events-none fixed bottom-5 left-1/2 z-40 w-[min(92vw,520px)] -translate-x-1/2 text-center">
+      <div className="pointer-events-none fixed bottom-[max(1rem,env(safe-area-inset-bottom))] left-1/2 z-40 w-[min(92vw,520px)] -translate-x-1/2 text-center">
         <div
           className="custom-bg inline-flex items-center gap-2.5 rounded-full px-5 py-2 text-xs font-medium text-cream transition-all duration-300"
           style={

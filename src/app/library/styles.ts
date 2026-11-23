@@ -85,12 +85,14 @@ export const LanguageRow = styled.div`
 `;
 
 export const LanguagePill = styled.button<{ $active?: boolean }>`
-  padding: 0.35rem 0.9rem;
+  min-height: 44px;
+  padding: 0.5rem 1rem;
   border-radius: 9999px;
-  font-size: 0.8rem;
+  font-size: 0.85rem;
   font-weight: 500;
   cursor: pointer;
-  transition: all 0.2s ease;
+  touch-action: manipulation;
+  transition: transform 150ms ease, border-color 150ms ease, background-color 150ms ease;
   border: 1px solid
     ${(props) =>
       props.$active ? "rgba(169, 192, 176, 0.65)" : "rgba(255, 255, 255, 0.14)"};

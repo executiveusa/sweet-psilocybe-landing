@@ -47,7 +47,7 @@ export default function PageBackdrop({ pathname }: { pathname: string }) {
     <>
       <div
         aria-hidden="true"
-        className="pointer-events-none fixed inset-0 z-0 overflow-hidden bg-ink"
+        className="pointer-events-none fixed inset-0 z-0 h-[100dvh] w-full overflow-hidden bg-ink"
       >
         <Image
           key={src}
@@ -56,7 +56,7 @@ export default function PageBackdrop({ pathname }: { pathname: string }) {
           fill
           sizes="100vw"
           priority
-          className="object-cover object-center opacity-95"
+          className="h-full w-full object-cover object-center opacity-95"
         />
         <div
           className="absolute inset-0"
