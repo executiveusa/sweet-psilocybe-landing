@@ -271,8 +271,7 @@ export default function OrbitalNavigation({
                     <span className="text-xl" aria-hidden="true">
                       {btn.icon}
                     </span>
-                    <span className="peer absolute inset-0 rounded-full" />
-                    <span className="pointer-events-none absolute left-full top-1/2 ml-3 hidden -translate-y-1/2 whitespace-nowrap rounded-lg border border-petal/40 bg-ink/90 px-3 py-1.5 text-xs font-semibold tracking-wide text-cream shadow-lg backdrop-blur-md peer-hover:block">
+                    <span className="pointer-events-none absolute top-full mt-1.5 whitespace-nowrap rounded-full border border-white/15 bg-ink/85 px-2.5 py-0.5 text-[10px] font-semibold tracking-wide text-cream shadow-md backdrop-blur-md">
                       {btn.label[lang]}
                     </span>
                   </span>

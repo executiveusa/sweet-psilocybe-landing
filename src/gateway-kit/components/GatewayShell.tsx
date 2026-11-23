@@ -251,9 +251,13 @@ export default function GatewayShell({ skin }: GatewayShellProps) {
             </>
           ) : (
             <span className="tracking-wider uppercase text-[11px] text-cream/85">
-              {lang === "en"
-                ? "Click the Mushroom Spirit to spin • Hover any portal to explore"
-                : "Haz clic en el Espíritu Hongo • Pasa el cursor por cualquier portal"}
+              {isMobileViewport
+                ? lang === "en"
+                  ? "Tap any portal to explore • Tap the Spirit to spin"
+                  : "Toca cualquier portal • Toca el Espíritu Hongo"
+                : lang === "en"
+                  ? "Click the Mushroom Spirit to spin • Hover any portal to explore"
+                  : "Haz clic en el Espíritu Hongo • Pasa el cursor por cualquier portal"}
             </span>
           )}
         </div>

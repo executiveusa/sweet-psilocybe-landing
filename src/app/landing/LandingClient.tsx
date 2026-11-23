@@ -171,7 +171,7 @@ export default function LandingClient() {
             >
               3D Gateway
             </Link>
-            . You will see four glowing portals orbiting the central Mushroom
+            . You will see eight glowing portals orbiting the central Mushroom
             Spirit. Choose any area to see what lives inside and jump straight
             in.
           </p>

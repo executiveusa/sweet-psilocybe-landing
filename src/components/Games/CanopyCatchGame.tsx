@@ -463,16 +463,11 @@ export default function CanopyCatchGame() {
           <button
             type="button"
             onClick={() => setSfxOn((v) => !v)}
-            className="rounded-full border border-white/20 px-2.5 py-1 text-xs text-cream hover:border-petal cursor-pointer"
+            style={{ touchAction: "manipulation" }}
+            className="min-h-[44px] rounded-full border border-white/20 px-4 py-2 text-xs font-semibold text-cream hover:border-petal transition-transform duration-150 active:scale-[0.97] cursor-pointer"
           >
             {sfxOn ? "🔊 SFX" : "🔇 SFX"}
           </button>
-          <Link
-            href="/"
-            className="rounded-full border border-fern/50 bg-fern/15 px-3 py-1 text-xs font-semibold text-fern hover:bg-fern/25 transition"
-          >
-            ← Home
-          </Link>
         </div>
       </div>
 
@@ -511,17 +506,11 @@ export default function CanopyCatchGame() {
               <button
                 type="button"
                 onClick={startGame}
-                className="rounded-full bg-petal px-6 py-2.5 text-sm font-bold text-ink shadow-glow-petal transition hover:bg-spore cursor-pointer"
+                style={{ touchAction: "manipulation" }}
+                className="min-h-[48px] rounded-full bg-petal px-7 py-3 text-sm font-bold text-ink shadow-glow-petal transition-transform duration-150 hover:bg-spore active:scale-[0.97] cursor-pointer"
               >
                 {phase === "idle" ? "Start Foraging" : "Play Again"}
               </button>
-
-              <Link
-                href="/"
-                className="rounded-full border border-white/25 bg-ink/80 px-5 py-2.5 text-sm font-semibold text-cream transition hover:border-petal hover:text-petal"
-              >
-                ← Return Home
-              </Link>
 
               {phase === "gameover" && score >= 250 && (
                 <Link
