@@ -14,16 +14,13 @@ const BOKEH_ORBS = [
   { left: "28%", top: "82%", size: 28, delay: "3s", dur: "12s" },
   { left: "72%", top: "78%", size: 48, delay: "1.5s", dur: "16s" },
   { left: "84%", top: "72%", size: 32, delay: "4.5s", dur: "13s" },
-  { left: "48%", top: "88%", size: 36, delay: "2.2s", dur: "15s" },
-  { left: "62%", top: "84%", size: 24, delay: "6s", dur: "11s" },
 ];
 
 /**
- * Upgrades #3, #4, #5:
- * - Drifting San Juan Islands coastal mist ribbons
- * - Breathing diagonal canopy light shafts (golden sunbeams / twilight moonbeams)
- * - Bioluminescent breathing halo behind the 3D Mushroom Spirit (reacts to hovered portal color)
- * - Soft midground bokeh spores + subtle desktop cursor glow
+ * Living PNW Atmosphere (Android-optimized):
+ * - On mobile (<768px): skips expensive multi-layer CSS blur-3xl / blur-2xl filters
+ *   and renders a single GPU-friendly radial aura so Android stays silky at 60fps.
+ * - On desktop (>=768px): full canopy rays, coastal mist, bokeh orbs & cursor glow.
  */
 export default function LivingAtmosphere({
   isNight,
@@ -32,17 +29,17 @@ export default function LivingAtmosphere({
   reducedMotion,
 }: LivingAtmosphereProps) {
   const rayColor = isNight
-    ? "rgba(169, 192, 176, 0.24)"
-    : "rgba(255, 224, 170, 0.30)";
+    ? "rgba(169, 192, 176, 0.22)"
+    : "rgba(255, 224, 170, 0.28)";
 
   return (
     <div
       aria-hidden="true"
       className="pointer-events-none fixed inset-0 z-10 overflow-hidden"
     >
-      {/* Canopy Light Rays filtering through the Douglas Firs */}
+      {/* Desktop-only Canopy Light Rays */}
       <div
-        className="absolute -top-24 left-[18%] h-[115vh] w-[28vw] origin-top blur-2xl"
+        className="hidden md:block absolute -top-24 left-[18%] h-[115vh] w-[28vw] origin-top blur-2xl"
         style={{
           background: `linear-gradient(180deg, ${rayColor} 0%, transparent 78%)`,
           animation: reducedMotion
@@ -51,7 +48,7 @@ export default function LivingAtmosphere({
         }}
       />
       <div
-        className="absolute -top-20 right-[16%] h-[110vh] w-[24vw] origin-top blur-2xl"
+        className="hidden md:block absolute -top-20 right-[16%] h-[110vh] w-[24vw] origin-top blur-2xl"
         style={{
           background: `linear-gradient(180deg, ${rayColor} 0%, transparent 72%)`,
           animation: reducedMotion
@@ -60,9 +57,9 @@ export default function LivingAtmosphere({
         }}
       />
 
-      {/* Drifting Salish Sea Coastal Mist Bands */}
+      {/* Desktop-only Drifting Salish Sea Coastal Mist */}
       <div
-        className="absolute bottom-[18%] left-[-10%] h-[28vh] w-[120vw] blur-3xl"
+        className="hidden md:block absolute bottom-[18%] left-[-10%] h-[28vh] w-[120vw] blur-3xl"
         style={{
           background: isNight
             ? "radial-gradient(ellipse at 50% 50%, rgba(169, 192, 176, 0.22), transparent 70%)"
@@ -72,23 +69,12 @@ export default function LivingAtmosphere({
             : "mist-drift 18s ease-in-out infinite",
         }}
       />
-      <div
-        className="absolute bottom-[8%] left-[-15%] h-[24vh] w-[130vw] blur-3xl"
-        style={{
-          background: isNight
-            ? "radial-gradient(ellipse at 50% 50%, rgba(246, 175, 207, 0.14), transparent 72%)"
-            : "radial-gradient(ellipse at 50% 50%, rgba(246, 175, 207, 0.20), transparent 72%)",
-          animation: reducedMotion
-            ? "none"
-            : "mist-drift 24s ease-in-out 4s infinite reverse",
-        }}
-      />
 
-      {/* Bioluminescent Breathing Halo behind the 3D Mushroom Spirit */}
+      {/* Lightweight Bioluminescent Breathing Halo (radial gradient — zero blur filter on mobile!) */}
       <div
-        className="absolute left-1/2 top-1/2 h-[340px] w-[340px] rounded-full blur-3xl transition-colors duration-500 sm:h-[420px] sm:w-[420px]"
+        className="absolute left-1/2 top-1/2 h-[300px] w-[300px] rounded-full transition-colors duration-500 sm:h-[420px] sm:w-[420px] md:blur-2xl"
         style={{
-          background: `radial-gradient(circle, ${accentColor}52 0%, rgba(255, 224, 163, 0.24) 42%, transparent 72%)`,
+          background: `radial-gradient(circle, ${accentColor}45 0%, rgba(255, 224, 163, 0.18) 42%, transparent 70%)`,
           animation: reducedMotion
             ? "none"
             : "aura-breathe 5.5s ease-in-out infinite",
@@ -96,12 +82,12 @@ export default function LivingAtmosphere({
         }}
       />
 
-      {/* Midground Soft Bokeh Spores */}
+      {/* Desktop-only Midground Soft Bokeh Spores */}
       {!reducedMotion &&
         BOKEH_ORBS.map((orb, i) => (
           <div
             key={i}
-            className="absolute rounded-full blur-md"
+            className="hidden md:block absolute rounded-full blur-md"
             style={{
               left: orb.left,
               top: orb.top,
@@ -116,7 +102,7 @@ export default function LivingAtmosphere({
           />
         ))}
 
-      {/* Subtle Desktop Cursor Spotlight Halo */}
+      {/* Desktop-only Cursor Spotlight Halo */}
       {!reducedMotion && pointerPx.x > 0 && (
         <div
           className="hidden h-56 w-56 -translate-x-1/2 -translate-y-1/2 rounded-full blur-3xl transition-opacity duration-300 md:block"

@@ -15,13 +15,15 @@ const createFirefly = (idx: number): Firefly => ({
   id: idx + Math.random(),
   top: `${Math.random() * 88 + 6}%`,
   left: `${Math.random() * 90 + 5}%`,
-  size: Math.floor(Math.random() * 8 + 9),
+  size: Math.floor(Math.random() * 7 + 8),
   animationDuration: `${(Math.random() * 4 + 4.5).toFixed(1)}s`,
   delay: `${(Math.random() * 3).toFixed(1)}s`,
 });
 
 /**
- * Layer 4 (Piece #10): 22 luminous drifting fireflies/spores floating across the PNW scene.
+ * Layer 4 (Piece #10): Luminous drifting fireflies/spores.
+ * Mobile-optimized: renders 7 lightweight GPU-composited fireflies on <768px
+ * (without expensive box-shadow repaints) and 18 on desktop.
  */
 export default function FireFliesBackground({
   reducedMotion = false,
@@ -29,9 +31,13 @@ export default function FireFliesBackground({
   reducedMotion?: boolean;
 }) {
   const [fireflies, setFireflies] = useState<Firefly[]>([]);
+  const [isMobile, setIsMobile] = useState(false);
 
   useEffect(() => {
-    setFireflies(Array.from({ length: 22 }, (_, i) => createFirefly(i)));
+    const mobile = window.innerWidth < 768;
+    setIsMobile(mobile);
+    const count = mobile ? 7 : 18;
+    setFireflies(Array.from({ length: count }, (_, i) => createFirefly(i)));
   }, []);
 
   return (
@@ -48,7 +54,8 @@ export default function FireFliesBackground({
             left: f.left,
             width: `${f.size}px`,
             height: `${f.size}px`,
-            boxShadow: "0 0 14px rgba(254, 240, 165, 0.7)",
+            boxShadow: isMobile ? "none" : "0 0 12px rgba(254, 240, 165, 0.65)",
+            willChange: reducedMotion ? "auto" : "transform, opacity",
             animation: reducedMotion
               ? "none"
               : `firefly-drift ${f.animationDuration} ease-in-out ${f.delay} infinite alternate`,

@@ -1,10 +1,17 @@
 import Layout from '@/components/Layout';
 import './globals.css';
-import type { Metadata } from 'next';
+import type { Metadata, Viewport } from 'next';
 import { Analytics } from '@vercel/analytics/react';
 import { WebVitals } from '@/components/WebVitals';
 
 const siteUrl = process.env.NEXT_PUBLIC_SITE_URL || 'https://sweetpsilocybe.com';
+
+export const viewport: Viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  viewportFit: 'cover',
+  themeColor: '#0B0B0B',
+};
 
 export const metadata: Metadata = {
   metadataBase: new URL(siteUrl),

@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Component, Suspense, useRef, useState } from "react";
+import React, { Component, Suspense, useEffect, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import * as THREE from "three";
 import SanctuaryCenterpiece from "./SanctuaryCenterpiece";
@@ -140,6 +140,14 @@ export default function TransparentModelStage({
   spinTrigger,
 }: TransparentModelStageProps) {
   const [webglLost, setWebglLost] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   if (webglLost) return null;
 
@@ -151,8 +159,8 @@ export default function TransparentModelStage({
         <Canvas
           className="h-full w-full"
           camera={{ position: [0, 0.2, 5.2], fov: 42 }}
-          dpr={[1, 2]}
-          gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+          dpr={isMobile ? 1 : [1, 1.5]}
+          gl={{ alpha: true, antialias: !isMobile, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
             gl.setClearColor(0x000000, 0);
             gl.domElement.addEventListener("webglcontextlost", (e) => {

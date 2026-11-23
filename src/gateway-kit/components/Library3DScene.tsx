@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Component, Suspense, useMemo, useRef, useState } from "react";
+import React, { Component, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Html, OrbitControls, useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -186,6 +186,14 @@ export default function Library3DScene({
   onSelectTab,
 }: Library3DSceneProps) {
   const [lost, setLost] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
 
   const wings: Array<{
     id: LibraryTab;
@@ -248,8 +256,8 @@ export default function Library3DScene({
       <div className="relative mx-auto mb-10 h-[340px] w-full max-w-4xl overflow-hidden rounded-3xl border border-fern/30 bg-[#0B0D12]/30 backdrop-blur-[4px] shadow-2xl sm:h-[400px]">
         <Canvas
           camera={{ position: [0, 0.8, 6.2], fov: 44 }}
-          dpr={[1, 2]}
-          gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+          dpr={isMobile ? 1 : [1, 1.5]}
+          gl={{ alpha: true, antialias: !isMobile, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
             gl.setClearColor(0x000000, 0);
             gl.domElement.addEventListener("webglcontextlost", (e) => {

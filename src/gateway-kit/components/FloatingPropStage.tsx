@@ -1,6 +1,6 @@
 "use client";
 
-import React, { Component, Suspense, useMemo, useRef, useState } from "react";
+import React, { Component, Suspense, useEffect, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -71,6 +71,15 @@ export default function FloatingPropStage({
   accentColor = "#F6AFCF",
 }: FloatingPropStageProps) {
   const [lost, setLost] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    const check = () => setIsMobile(window.innerWidth < 768);
+    check();
+    window.addEventListener("resize", check);
+    return () => window.removeEventListener("resize", check);
+  }, []);
+
   if (lost) return null;
 
   return (
@@ -82,8 +91,8 @@ export default function FloatingPropStage({
       >
         <Canvas
           camera={{ position: [0, 0.2, 4.2], fov: 40 }}
-          dpr={[1, 2]}
-          gl={{ alpha: true, antialias: true, powerPreference: "high-performance" }}
+          dpr={isMobile ? 1 : [1, 1.5]}
+          gl={{ alpha: true, antialias: !isMobile, powerPreference: "high-performance" }}
           onCreated={({ gl }) => {
             gl.setClearColor(0x000000, 0);
             gl.domElement.addEventListener("webglcontextlost", (e) => {

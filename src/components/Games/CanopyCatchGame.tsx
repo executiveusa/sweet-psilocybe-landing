@@ -224,15 +224,17 @@ export default function CanopyCatchGame() {
       ctx.restore();
     };
 
+    // Pre-build static backdrop gradient once instead of every animation frame
+    const bgGradient = ctx.createLinearGradient(0, 0, 0, H);
+    bgGradient.addColorStop(0, "#091014");
+    bgGradient.addColorStop(0.65, "#11211B");
+    bgGradient.addColorStop(1, "#0B1612");
+
     const loop = (now: number) => {
       const s = stateRef.current;
 
       // Twilight PNW canvas backdrop
-      const bg = ctx.createLinearGradient(0, 0, 0, H);
-      bg.addColorStop(0, "#091014");
-      bg.addColorStop(0.65, "#11211B");
-      bg.addColorStop(1, "#0B1612");
-      ctx.fillStyle = bg;
+      ctx.fillStyle = bgGradient;
       ctx.fillRect(0, 0, W, H);
 
       // Subtle silhouette evergreen treeline
@@ -297,16 +299,20 @@ export default function CanopyCatchGame() {
           ctx.translate(item.x, item.y);
           ctx.rotate(item.rot);
           if (item.kind === "spore") {
+            ctx.fillStyle = "rgba(255, 233, 168, 0.24)";
+            ctx.beginPath();
+            ctx.arc(0, 0, item.r * 1.15, 0, Math.PI * 2);
+            ctx.fill();
             ctx.fillStyle = "#FFE9A8";
-            ctx.shadowColor = "#FFE9A8";
-            ctx.shadowBlur = 12;
             ctx.beginPath();
             ctx.arc(0, 0, item.r * 0.7, 0, Math.PI * 2);
             ctx.fill();
           } else if (item.kind === "chanterelle") {
+            ctx.fillStyle = "rgba(246, 175, 207, 0.22)";
+            ctx.beginPath();
+            ctx.arc(0, 0, item.r * 1.25, 0, Math.PI * 2);
+            ctx.fill();
             ctx.fillStyle = "#F6AFCF";
-            ctx.shadowColor = "#F6AFCF";
-            ctx.shadowBlur = 14;
             ctx.beginPath();
             ctx.arc(0, -3, item.r, Math.PI, Math.PI * 2);
             ctx.lineTo(5, 8);
@@ -314,9 +320,11 @@ export default function CanopyCatchGame() {
             ctx.closePath();
             ctx.fill();
           } else if (item.kind === "starcap") {
+            ctx.fillStyle = "rgba(255, 233, 168, 0.28)";
+            ctx.beginPath();
+            ctx.arc(0, 0, item.r * 1.38, 0, Math.PI * 2);
+            ctx.fill();
             ctx.fillStyle = "#A9C0B0";
-            ctx.shadowColor = "#FFE9A8";
-            ctx.shadowBlur = 18;
             ctx.beginPath();
             ctx.arc(0, 0, item.r, 0, Math.PI * 2);
             ctx.fill();
